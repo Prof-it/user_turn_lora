@@ -1,0 +1,1 @@
+{"model_name": "Qwen/Qwen2.5-3B-Instruct", "chat_pairs": 100, "training_pairs": 5000, "do_sample": true, "config": {"min_turns": 2, "wildchat_languages": ["English"]}, "NUM_CONVS_TO_PROCESS": 100, "NUM_CONV_FOR_TRAINING": 5000}
