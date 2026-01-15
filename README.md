@@ -56,6 +56,8 @@ Successfully run on **Google Colab A100 GPU**.
 
 ### Data Sources & Composition
 
+![Dataset Split](dataset_split.png)
+
 | Dataset                                                                              | Domain        | Samples   | Proportion |
 | ------------------------------------------------------------------------------------ | ------------- | --------- | ---------- |
 | [allenai/WildChat-1M](https://huggingface.co/datasets/allenai/WildChat-1M)           | Open-domain   | 2,550     | 50%        |
