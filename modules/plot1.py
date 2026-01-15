@@ -152,9 +152,9 @@ def create_benchmark_comparison_plot(
         ax.plot(
             [bracket_x, bracket_x],
             [smaller_val, larger_val],
-            color="gray",
+            color="black",
             linewidth=1.2,
-            linestyle="--",
+            linestyle="-",
             alpha=0.8
         )
         
@@ -162,10 +162,10 @@ def create_benchmark_comparison_plot(
         cap_width = 0.12
         ax.plot([bracket_x - cap_width, bracket_x + cap_width], 
                 [smaller_val, smaller_val],
-                color="gray", linewidth=1.2, linestyle="-", alpha=0.8)
+                color="black", linewidth=1.2, linestyle="-", alpha=0.8)
         ax.plot([bracket_x - cap_width, bracket_x + cap_width], 
                 [larger_val, larger_val],
-                color="gray", linewidth=1.2, linestyle="-", alpha=0.8)
+                color="black", linewidth=1.2, linestyle="-", alpha=0.8)
         
         # Add improvement annotation ABOVE the bracket (above larger_val)
         annotation_y = larger_val * 1.02
