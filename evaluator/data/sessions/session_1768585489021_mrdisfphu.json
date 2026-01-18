@@ -1,0 +1,52 @@
+{
+  "id": "session_1768585489021_mrdisfphu",
+  "raterId": "Sebastian",
+  "selectedModels": [
+    "LiquidAI/LFM2.5-1.2B-Instruct-userturn-qlora"
+  ],
+  "sampleIds": [
+    "eval-32",
+    "eval-30",
+    "eval-41",
+    "eval-73",
+    "eval-9"
+  ],
+  "seed": 42,
+  "startedAt": "2026-01-16T17:44:49.021Z",
+  "ratings": [
+    {
+      "sampleId": "eval-32",
+      "blindedLabel": "A",
+      "modelId": "LiquidAI/LFM2.5-1.2B-Instruct-userturn-qlora",
+      "predictionType": "fineTuned",
+      "relevance": 4,
+      "coherence": 4,
+      "naturalness": 3,
+      "raterId": "Sebastian",
+      "timestamp": "2026-01-16T17:45:43.999Z"
+    },
+    {
+      "sampleId": "eval-32",
+      "blindedLabel": "B",
+      "modelId": "LiquidAI/LFM2.5-1.2B-Instruct-userturn-qlora",
+      "predictionType": "base",
+      "relevance": 4,
+      "coherence": 4,
+      "naturalness": 3,
+      "raterId": "Sebastian",
+      "timestamp": "2026-01-16T17:47:50.739Z"
+    }
+  ],
+  "labelValidations": [
+    {
+      "sampleId": "eval-32",
+      "isValid": true,
+      "raterId": "Sebastian",
+      "timestamp": "2026-01-16T17:45:00.088Z"
+    }
+  ],
+  "progress": {
+    "completed": 1,
+    "total": 5
+  }
+}

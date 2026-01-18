@@ -16,3 +16,7 @@ __pycache__/
 .ipynb_checkpoints/
 
 lambda.ai.pem
+
+
+# Node.js
+node_modules
