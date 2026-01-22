@@ -1,0 +1,51 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.venv
+venv
+env
+
+# Jupyter
+.ipynb_checkpoints
+notebook/
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Output and data (mount as volumes instead)
+output/
+data/
+*.zip
+*.tar.gz
+
+# Large files
+*.bin
+*.safetensors
+*.pt
+*.pth
+
+# Logs
+*.log
+wandb/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Evaluator app
+evaluator/node_modules
+evaluator/.next
+
+# Journal (local only)
+journal/

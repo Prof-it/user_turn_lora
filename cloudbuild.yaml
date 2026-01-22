@@ -1,0 +1,19 @@
+steps:
+  # Build the Docker image
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "us-central1-docker.pkg.dev/$PROJECT_ID/userturn-lora/userturn-lora:latest", "."]
+    timeout: "1800s"
+
+  # Push to Artifact Registry
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "us-central1-docker.pkg.dev/$PROJECT_ID/userturn-lora/userturn-lora:latest"]
+
+images:
+  - "us-central1-docker.pkg.dev/$PROJECT_ID/userturn-lora/userturn-lora:latest"
+
+options:
+  machineType: "E2_HIGHCPU_8"
+  diskSizeGb: 100
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: "3600s"

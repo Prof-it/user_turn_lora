@@ -144,7 +144,7 @@ def create_domain_comparison_plot(
     """
     metrics = calculate_domain_metrics(model_dir)
     
-    fig, ax = plt.subplots(figsize=figsize)
+    fig, ax = plt.subplots(figsize=figsize, constrained_layout=True)
     
     metric_names = ["BERTScore-F1", "BLEURT", "Perplexity"]
     domains = ["Open-domain", "Task-oriented"]
@@ -185,7 +185,6 @@ def create_domain_comparison_plot(
                 textcoords="offset points",
                 ha="center",
                 va=va,
-                fontsize=10,
                 fontweight="bold"
             )
     
@@ -193,13 +192,11 @@ def create_domain_comparison_plot(
     ax.axhline(y=0, color="black", linewidth=0.8, linestyle="-")
     
     # Styling
-    ax.set_ylabel("Relative Change Δ (%)", fontsize=12)
-    ax.set_xlabel("Metrics", fontsize=12)
+    ax.set_ylabel("Relative Change Δ (%)")
+    ax.set_xlabel("Metrics")
     ax.set_xticks(x)
-    ax.set_xticklabels(metric_names, fontsize=11)
-    ax.legend(title="Domain", loc="upper right", fontsize=10)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
+    ax.set_xticklabels(metric_names)
+    ax.legend(title="Domain", loc="upper right")
     
     # Set y-axis limits with some padding
     all_values = []
@@ -213,10 +210,8 @@ def create_domain_comparison_plot(
         y_max = max(all_values) * 1.2 if max(all_values) > 0 else max(all_values) * 0.8
         ax.set_ylim(y_min - 10, y_max + 10)
     
-    plt.tight_layout()
-    
     if output_path:
-        fig.savefig(output_path, dpi=dpi, bbox_inches="tight", facecolor="white")
+        fig.savefig(output_path, dpi=dpi, bbox_inches="tight")
         print(f"Saved domain comparison plot to: {output_path}")
     
     return fig
@@ -233,12 +228,12 @@ def create_domain_absolute_comparison_plot(
     """
     metrics = calculate_domain_metrics(model_dir)
     
-    fig, axes = plt.subplots(1, 3, figsize=figsize)
+    fig, axes = plt.subplots(1, 3, figsize=figsize, constrained_layout=True)
     
     metric_configs = [
-        ("BERTScore-F1", "BERTScore-F1 ↑"),
-        ("BLEURT", "BLEURT ↑"),
-        ("Perplexity", "Perplexity ↓")
+        ("BERTScore-F1", "BERTScore-F1"),
+        ("BLEURT", "BLEURT"),
+        ("Perplexity", "Perplexity")
     ]
     
     domains = ["Open-domain", "Task-oriented"]
@@ -276,17 +271,13 @@ def create_domain_absolute_comparison_plot(
         ax.errorbar(x + width/2, ft_vals, yerr=ft_stds, fmt="none",
                    color="black", capsize=3, capthick=1)
         
-        ax.set_ylabel(ylabel, fontsize=11)
+        ax.set_ylabel(ylabel)
         ax.set_xticks(x)
-        ax.set_xticklabels(domains, fontsize=10)
-        ax.legend(fontsize=9)
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
-    
-    plt.tight_layout()
+        ax.set_xticklabels(domains)
+        ax.legend()
     
     if output_path:
-        fig.savefig(output_path, dpi=dpi, bbox_inches="tight", facecolor="white")
+        fig.savefig(output_path, dpi=dpi, bbox_inches="tight")
         print(f"Saved domain absolute comparison plot to: {output_path}")
     
     return fig

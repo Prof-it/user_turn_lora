@@ -1,30 +1,48 @@
 """
 Helper utilities for plotting modules.
+
+Uses tueplots icml2024 bundle for conference-quality figures.
 """
 
 import matplotlib.pyplot as plt
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
+
+# Import tueplots
+from tueplots import bundles, figsizes
 
 
-def setup_plot_style():
-    """Configure matplotlib style for publication-quality figures."""
-    plt.rcParams.update({
-        "font.family": "sans-serif",
-        "font.sans-serif": ["Arial", "DejaVu Sans", "Helvetica"],
-        "font.size": 11,
-        "axes.labelsize": 12,
-        "axes.titlesize": 13,
-        "xtick.labelsize": 10,
-        "ytick.labelsize": 10,
-        "legend.fontsize": 10,
-        "figure.dpi": 100,
-        "savefig.dpi": 150,
-        "savefig.bbox": "tight",
-        "savefig.facecolor": "white",
-        "axes.spines.top": False,
-        "axes.spines.right": False,
-    })
+def setup_plot_style(usetex: bool = False, column: str = "half"):
+    """
+    Configure matplotlib style using tueplots icml2024 bundle.
+    
+    Args:
+        usetex: Use LaTeX rendering (requires LaTeX installation)
+        column: "half" for single column, "full" for full width
+    """
+    # Use ICML 2024 bundle - let tueplots handle all styling
+    config = bundles.icml2024(usetex=usetex, column=column)
+    plt.rcParams.update(config)
+
+
+def get_figsize(column: str = "half", nrows: int = 1, ncols: int = 1) -> tuple:
+    """
+    Get figure size using tueplots icml2024 sizing.
+    
+    Args:
+        column: "half" for single column, "full" for full width
+        nrows: Number of subplot rows
+        ncols: Number of subplot columns
+    
+    Returns:
+        Tuple of (width, height) in inches
+    """
+    if column == "full":
+        size_config = figsizes.icml2024_full(nrows=nrows, ncols=ncols)
+    else:
+        size_config = figsizes.icml2024_half(nrows=nrows, ncols=ncols)
+    
+    return size_config["figure.figsize"]
 
 
 def discover_model_directories(root_dir: Path) -> List[Path]:

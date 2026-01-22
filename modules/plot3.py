@@ -102,12 +102,12 @@ def create_cross_model_comparison_plot(
     if n_models == 0:
         raise ValueError("No models found to compare")
     
-    fig, axes = plt.subplots(1, 3, figsize=figsize)
+    fig, axes = plt.subplots(1, 3, figsize=figsize, constrained_layout=True)
     
     metric_configs = [
-        ("BERTScore-F1", "BERTScore-F1 ↑", True),
-        ("BLEURT", "BLEURT ↑", True),
-        ("Perplexity", "Perplexity ↓", False)
+        ("BERTScore-F1", "BERTScore-F1", True),
+        ("BLEURT", "BLEURT", True),
+        ("Perplexity", "Perplexity", False)
     ]
     
     # Bar width and positions
@@ -151,11 +151,9 @@ def create_cross_model_comparison_plot(
             x_positions.append((base_x + ft_x) / 2)
         
         # Styling
-        ax.set_ylabel(ylabel, fontsize=11)
+        ax.set_ylabel(ylabel)
         ax.set_xticks(x_positions)
-        ax.set_xticklabels(model_names, fontsize=9, rotation=15, ha="right")
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
+        ax.set_xticklabels(model_names, rotation=15, ha="right")
         
         # Set y-axis limits
         if metric_key == "BERTScore-F1":
@@ -183,13 +181,10 @@ def create_cross_model_comparison_plot(
     legend_elements.append(Patch(facecolor=COLORS["fine_tuned"], edgecolor="black", label="Fine-tuned"))
     
     fig.legend(handles=legend_elements, loc="upper center", ncol=len(model_names) + 2, 
-               bbox_to_anchor=(0.5, 1.02), fontsize=9)
-    
-    plt.tight_layout()
-    plt.subplots_adjust(top=0.88)
+               bbox_to_anchor=(0.5, 1.0))
     
     if output_path:
-        fig.savefig(output_path, dpi=dpi, bbox_inches="tight", facecolor="white")
+        fig.savefig(output_path, dpi=dpi, bbox_inches="tight")
         print(f"Saved cross-model comparison plot to: {output_path}")
     
     return fig

@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  userturn-lora:
+    build: .
+    image: userturn-lora:latest
+    container_name: userturn-lora
+    
+    # GPU support
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    
+    # Mount volumes for data persistence
+    volumes:
+      - ./output:/app/output
+      - ./data:/app/data
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    
+    # Environment variables
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
+      - WANDB_API_KEY=${WANDB_API_KEY}
+      - HF_HUB_ENABLE_HF_TRANSFER=1
+      - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True,max_split_size_mb:64
+    
+    # Default command
+    command: ["--model", "Qwen/Qwen2.5-3B-Instruct"]
+
+  # Quick test run with smaller dataset using fastest model
+  userturn-lora-test:
+    build: .
+    image: userturn-lora:latest
+    container_name: userturn-lora-test
+    
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    
+    volumes:
+      - ./output:/app/output
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
+      - WANDB_API_KEY=${WANDB_API_KEY}
+      - HF_HUB_ENABLE_HF_TRANSFER=1
+    
+    command: [
+      "--model", "LiquidAI/LFM2.5-1.2B-Instruct",
+      "--train-samples", "100",
+      "--eval-samples", "10",
+      "--epochs", "1",
+      "--no-wandb"
+    ]

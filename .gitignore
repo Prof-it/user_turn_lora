@@ -15,8 +15,12 @@ __pycache__/
 # Jupyter
 .ipynb_checkpoints/
 
-lambda.ai.pem
+*.pem
 
 
 # Node.js
 node_modules
+.env
+
+# Journal (local only, not committed)
+journal/

@@ -85,8 +85,8 @@ def calculate_improvement(base_val: float, ft_val: float, metric_name: str) -> f
 def create_benchmark_comparison_plot(
     model_dir: Path,
     output_path: Optional[Path] = None,
-    figsize: Tuple[int, int] = (12, 4),
-    dpi: int = 150
+    figsize: Tuple[float, float] = None,
+    dpi: int = 300
 ) -> plt.Figure:
     """
     Create benchmark comparison plot with base vs fine-tuned bars.
@@ -100,14 +100,20 @@ def create_benchmark_comparison_plot(
     Returns:
         matplotlib Figure object
     """
+    from .helpers import get_figsize
+    
     metrics = calculate_metrics_with_std(model_dir)
     
-    fig, axes = plt.subplots(1, 3, figsize=figsize)
+    # Use tueplots sizing if figsize not provided
+    if figsize is None:
+        figsize = get_figsize(column="full", nrows=1, ncols=3)
+    
+    fig, axes = plt.subplots(1, 3, figsize=figsize, constrained_layout=True)
     
     metric_configs = [
-        ("BERTScore-F1", "BERTScore-F1 ↑", True),
-        ("BLEURT", "BLEURT ↑", True),
-        ("Perplexity", "Perplexity ↓", False)  # Lower is better
+        ("BERTScore-F1", "BERTScore-F1", True),
+        ("BLEURT", "BLEURT", True),
+        ("Perplexity", "Perplexity", False)  # Lower is better
     ]
     
     for ax, (metric_key, ylabel, higher_is_better) in zip(axes, metric_configs):
@@ -132,79 +138,67 @@ def create_benchmark_comparison_plot(
             linewidth=0.5
         )
         
-        # Calculate and display improvement
+        # Calculate improvement
         improvement = calculate_improvement(base_mean, ft_mean, metric_key)
         
-        # Determine which bar is smaller (where we place the bracket)
-        if higher_is_better:
-            smaller_idx = 0 if base_mean < ft_mean else 1
-        else:
-            smaller_idx = 1 if ft_mean < base_mean else 0
+        # Academic-style significance bracket connecting the two bars
+        # Bracket height is above the taller bar
+        y_max_bar = max(base_mean, ft_mean)
+        bracket_height = y_max_bar * 1.08  # Bracket line position
         
-        smaller_val = [base_mean, ft_mean][smaller_idx]
-        larger_val = [base_mean, ft_mean][1 - smaller_idx]
-        
-        # Add single range indicator bracket over the smaller bar
-        # Shows difference from smaller bar value to larger bar value
-        bracket_x = smaller_idx  # Centered over smaller bar
-        
-        # Draw vertical bracket from smaller bar top to larger bar value
+        # Draw horizontal bracket line connecting the two bars
         ax.plot(
-            [bracket_x, bracket_x],
-            [smaller_val, larger_val],
+            [0, 1],  # x positions of the two bars
+            [bracket_height, bracket_height],
             color="black",
-            linewidth=1.2,
-            linestyle="-",
-            alpha=0.8
+            linewidth=0.8,
+            clip_on=False
         )
         
-        # Add small horizontal caps at top and bottom of bracket
-        cap_width = 0.12
-        ax.plot([bracket_x - cap_width, bracket_x + cap_width], 
-                [smaller_val, smaller_val],
-                color="black", linewidth=1.2, linestyle="-", alpha=0.8)
-        ax.plot([bracket_x - cap_width, bracket_x + cap_width], 
-                [larger_val, larger_val],
-                color="black", linewidth=1.2, linestyle="-", alpha=0.8)
+        # Draw vertical ticks at each end of the bracket
+        tick_height = y_max_bar * 0.02
+        ax.plot([0, 0], [bracket_height - tick_height, bracket_height],
+                color="black", linewidth=0.8, clip_on=False)
+        ax.plot([1, 1], [bracket_height - tick_height, bracket_height],
+                color="black", linewidth=0.8, clip_on=False)
         
-        # Add improvement annotation ABOVE the bracket (above larger_val)
-        annotation_y = larger_val * 1.02
-        
+        # Add delta annotation above the bracket
         sign = "+" if improvement > 0 else ""
         ax.annotate(
-            f"{sign}{improvement:.1f}%",
-            xy=(smaller_idx, annotation_y),
+            f"$\\Delta$ {sign}{improvement:.1f}%",
+            xy=(0.5, bracket_height),
+            xytext=(0, 2),
+            textcoords="offset points",
             ha="center",
             va="bottom",
-            fontsize=10,
             fontweight="bold",
             color="#2E7D32" if improvement > 0 else "#C62828"
         )
         
         # Styling
-        ax.set_ylabel(ylabel, fontsize=11)
+        ax.set_ylabel(ylabel)
         ax.set_xticks(x)
-        ax.set_xticklabels(["Base", "Fine-tuned"], fontsize=10)
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
+        ax.set_xticklabels(["Base", "Fine-tuned"])
         
-        # Set y-axis limits based on data
+        # Set y-axis limits with padding for bracket and annotation
+        y_max = max(base_mean, ft_mean)
+        y_min_data = min(base_mean, ft_mean)
+        
         if metric_key == "BERTScore-F1":
-            # BERTScore can be negative, fit to data domain
-            y_min = min(base_mean, ft_mean) * 1.1 if min(base_mean, ft_mean) < 0 else 0
-            ax.set_ylim(bottom=y_min)
+            # BERTScore can be negative
+            y_min = y_min_data * 1.1 if y_min_data < 0 else 0
         else:
-            # Perplexity and BLEURT start at 0
-            ax.set_ylim(bottom=0)
+            y_min = 0
+        
+        # Add top padding for bracket + annotation
+        ax.set_ylim(bottom=y_min, top=y_max * 1.22)
         
         # Format y-axis with 2 decimal places for BERTScore and BLEURT
         if metric_key in ["BERTScore-F1", "BLEURT"]:
             ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:.2f}'))
     
-    plt.tight_layout()
-    
     if output_path:
-        fig.savefig(output_path, dpi=dpi, bbox_inches="tight", facecolor="white")
+        fig.savefig(output_path, dpi=dpi, bbox_inches="tight")
         print(f"Saved benchmark comparison plot to: {output_path}")
     
     return fig
@@ -225,9 +219,9 @@ def create_detailed_benchmark_plot(
     fig, axes = plt.subplots(1, 3, figsize=figsize)
     
     metric_configs = [
-        ("BERTScore-F1", "BERTScore-F1 ↑"),
-        ("BLEURT", "BLEURT ↑"),
-        ("Perplexity", "Perplexity ↓")
+        ("BERTScore-F1", "BERTScore-F1"),
+        ("BLEURT", "BLEURT"),
+        ("Perplexity", "Perplexity")
     ]
     
     for ax, (metric_key, ylabel) in zip(axes, metric_configs):
@@ -258,21 +252,18 @@ def create_detailed_benchmark_plot(
             xy=(4, ft_mean),
             ha="center",
             va="bottom",
-            fontsize=10,
             fontweight="bold",
             color="#2E7D32" if improvement > 0 else "#C62828"
         )
         
-        ax.set_ylabel(ylabel, fontsize=11)
+        ax.set_ylabel(ylabel)
         ax.set_xticks(x)
-        ax.set_xticklabels(labels, fontsize=8, rotation=45, ha="right")
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
+        ax.set_xticklabels(labels, rotation=45, ha="right")
     
     plt.tight_layout()
     
     if output_path:
-        fig.savefig(output_path, dpi=dpi, bbox_inches="tight", facecolor="white")
+        fig.savefig(output_path, dpi=dpi, bbox_inches="tight")
         print(f"Saved detailed benchmark plot to: {output_path}")
     
     return fig

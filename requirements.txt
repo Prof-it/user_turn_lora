@@ -1,0 +1,35 @@
+# Core ML stack - pinned versions for reproducibility
+torch>=2.1.0
+transformers==4.57.3
+accelerate==1.12.0
+peft==0.18.1
+trl==0.26.2
+bitsandbytes>=0.41.0
+
+# Data handling
+datasets>=4.0.0
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Evaluation metrics
+bert-score>=0.3.13
+# TensorFlow for BLEURT (Python 3.11 compatible)
+tensorflow>=2.15.0,<2.16
+tensorflow-text>=2.15.0,<2.16
+# BLEURT installed from git (see Dockerfile)
+
+# Utilities
+tqdm>=4.65.0
+humanize>=4.0.0
+wandb>=0.15.0
+tzdata>=2024.1
+
+# Plotting
+tueplots>=0.0.15
+matplotlib>=3.7.0
+
+# For fast HF downloads
+hf_transfer>=0.1.4
+
+# Optional: Flash Attention (requires CUDA)
+# flash-attn>=2.0.0
