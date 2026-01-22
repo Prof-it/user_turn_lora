@@ -120,19 +120,17 @@ def compute_bleurt(
         Tuple of (per_example_scores, macro_score)
     """
     import os
-    # Force TensorFlow to use CPU only to avoid GPU memory conflicts with PyTorch
-    os.environ["CUDA_VISIBLE_DEVICES"] = ""
     os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"  # Suppress TF warnings
+    
+    import tensorflow as tf
+    # Force TensorFlow to use CPU only to avoid GPU memory conflicts with PyTorch
+    tf.config.set_visible_devices([], 'GPU')
     
     from bleurt import score as bleurt_score
     
     scorer = bleurt_score.BleurtScorer(checkpoint)
     scores = scorer.score(references=references, candidates=predictions)
     macro_score = float(np.mean(scores))
-    
-    # Restore CUDA visibility for PyTorch
-    if "CUDA_VISIBLE_DEVICES" in os.environ:
-        del os.environ["CUDA_VISIBLE_DEVICES"]
     
     return scores, macro_score
 
