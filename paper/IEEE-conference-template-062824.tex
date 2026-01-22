@@ -1,0 +1,116 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes.geometric}
+\usepackage{url}
+\usepackage{subcaption}
+\usepackage[compatibility=false]{caption}
+\usepackage{array,tabularx,booktabs}
+\usepackage{siunitx}
+\usepackage{ragged2e}
+\usepackage{etoolbox}
+\usepackage{enumitem}
+\usepackage{makecell}
+\usepackage{multirow}
+\usepackage{pifont}
+\usepackage{listings}
+\usepackage{comment}
+
+% IEEE compliance fixes
+\makeatletter
+\patchcmd{\@maketitle}{\par}{\vspace*{-2ex}\par}{}{}
+\makeatother
+
+% Custom commands
+\newcommand{\cmark}{\ding{51}}% ✓
+\newcommand{\xmark}{\ding{55}}% ✗
+
+% SI unit configuration
+\sisetup{
+ per-mode = symbol,
+ group-digits = integer,
+ output-decimal-marker = {.}
+}
+
+% Table formatting
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\renewcommand{\arraystretch}{1.2}
+\captionsetup[table]{font=small, labelfont=bf}
+\setlist[itemize]{noitemsep, topsep=2pt}
+
+% Code listing style
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+\begin{document}
+
+\title{Your Paper Title Here}
+
+\author{
+\IEEEauthorblockN{Sebastian Boehler\IEEEauthorrefmark{1} and Tianxiang Lu\IEEEauthorrefmark{1}}
+\IEEEauthorblockA{\IEEEauthorrefmark{1}IU International University of Applied Science, Juri-Gagarin-Ring 152, 99084 Erfurt, Germany \\
+Email: yourmail@gmail.com, tianxiang.lu@iu.org}
+}
+\maketitle
+
+\begin{abstract}
+% TODO: Write abstract
+\end{abstract}
+
+\begin{IEEEkeywords}
+% TODO: Add keywords
+\end{IEEEkeywords}
+
+\section{Introduction}
+% TODO: Write introduction
+
+\section{Related Work}
+% TODO: Write related work
+
+\section{Methodology}
+% TODO: Write methodology
+
+\section{Experiments}
+% TODO: Write experiments
+
+\section{Results}
+% TODO: Write results
+
+\section{Discussion}
+% TODO: Write discussion
+
+\section{Conclusion}
+% TODO: Write conclusion
+
+\bibliographystyle{IEEEtran}
+\bibliography{reference}
+
+\end{document}

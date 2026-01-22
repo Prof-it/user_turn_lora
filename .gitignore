@@ -24,3 +24,13 @@ node_modules
 
 # Journal (local only, not committed)
 journal/
+
+# Paper auxiliary files (keep .tex, .bib, .pdf)
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.synctex.gz
+paper/*.fdb_latexmk
+paper/*.fls

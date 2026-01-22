@@ -1,0 +1,38 @@
+{
+  "experiment_id": "exp_012_lr5e-05_e1",
+  "config": {
+    "lora_r": 8,
+    "lora_alpha": 64,
+    "lora_dropout": 0.0,
+    "learning_rate": 5e-05,
+    "num_epochs": 1,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01
+  },
+  "status": "completed",
+  "start_time": "2026-01-22T14:15:52.978003",
+  "end_time": "2026-01-22T14:18:32.349771",
+  "metrics": {
+    "train_losses": [
+      3.9535,
+      3.2838,
+      3.423,
+      3.496,
+      2.688,
+      2.8601
+    ],
+    "eval_losses": [
+      3.281534433364868
+    ],
+    "final_train_loss": 2.8601,
+    "final_eval_loss": 3.281534433364868,
+    "best_eval_loss": 3.281534433364868,
+    "min_train_loss": 2.688,
+    "total_steps": 6,
+    "eval_steps": 1,
+    "duration_seconds": 155.136417,
+    "train_runtime": 155.137,
+    "samples_per_second": 12.892
+  },
+  "error": null
+}

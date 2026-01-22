@@ -7,9 +7,9 @@ set -e
 PROJECT_ID="user-turn-lora"
 REGION="us-central1"
 ZONE="us-central1-a"
-INSTANCE_NAME="userturn-lora-gpu"
-MACHINE_TYPE="n1-standard-4"
-GPU_TYPE="nvidia-tesla-t4"
+INSTANCE_NAME="userturn-lora-a100"
+MACHINE_TYPE="a2-highgpu-1g"
+GPU_TYPE="nvidia-tesla-a100"
 GPU_COUNT=1
 IMAGE_NAME="userturn-lora"
 ARTIFACT_REGISTRY="us-central1-docker.pkg.dev/${PROJECT_ID}/${IMAGE_NAME}/${IMAGE_NAME}"

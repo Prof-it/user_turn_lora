@@ -96,12 +96,13 @@ Examples:
     # Setup matplotlib style
     setup_plot_style()
     
-    # Determine root directory
+    # Determine outputs directory (where model results are stored)
     root_dir = Path(__file__).parent
+    outputs_dir = root_dir / "outputs"
     
     if args.list_models:
         print("Discovered model directories:")
-        model_dirs = discover_model_directories(root_dir)
+        model_dirs = discover_model_directories(outputs_dir)
         for d in model_dirs:
             print(f"  - {d.relative_to(root_dir)}")
         return
@@ -120,7 +121,7 @@ Examples:
         generate_all_plots(model_dir, verbose=not args.quiet)
     else:
         # Discover and process all model directories
-        model_dirs = discover_model_directories(root_dir)
+        model_dirs = discover_model_directories(outputs_dir)
         
         if not model_dirs:
             print("No model directories found with required evaluation files.")
@@ -134,13 +135,13 @@ Examples:
         for model_dir in model_dirs:
             generate_all_plots(model_dir, verbose=not args.quiet)
         
-        # Generate cross-model comparison plot at root if multiple models
+        # Generate cross-model comparison plot in outputs/ if multiple models
         if len(model_dirs) > 1:
             if not args.quiet:
                 print("\n[Cross-Model] Creating cross-model comparison plot...")
             try:
-                output_path = root_dir / "cross_model_comparison.png"
-                fig = create_cross_model_comparison_plot(root_dir, output_path)
+                output_path = outputs_dir / "cross_model_comparison.png"
+                fig = create_cross_model_comparison_plot(outputs_dir, output_path)
                 fig.clf()
                 if not args.quiet:
                     print(f"  ✓ Saved: {output_path}")

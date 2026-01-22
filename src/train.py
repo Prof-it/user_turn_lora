@@ -15,6 +15,9 @@ from trl import SFTConfig, SFTTrainer
 from .config import PipelineConfig
 from .model import load_base_model, load_tokenizer, get_lora_config, cleanup_model
 
+# W&B project name
+WANDB_PROJECT = "userturn-lora"
+
 
 def get_training_config(config: PipelineConfig) -> SFTConfig:
     """Create SFT training configuration."""
@@ -67,6 +70,17 @@ def train(
     Returns:
         Path to saved adapter
     """
+    # Initialize wandb if enabled
+    if config.report_to == "wandb":
+        import wandb
+        model_short = config.model_name.split("/")[-1]
+        wandb.init(
+            project=WANDB_PROJECT,
+            name=f"{model_short}-{config.num_train_samples}samples",
+            config=config.to_dict(),
+            reinit=True,
+        )
+    
     print("\n" + "="*60)
     print("Starting Training")
     print("="*60)

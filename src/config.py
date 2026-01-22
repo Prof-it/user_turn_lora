@@ -36,13 +36,13 @@ SPECIAL_TOKENS = {
        "user_start": "<|start_header_id|>user<|end_header_id|>",
        "assistant_start": "<|start_header_id|>assistant<|end_header_id|>",
        "system_start": "<|start_header_id|>system<|end_header_id|>",
-       "end": "<|****eot_id|>" # remove ****
+       "end": "<|eot_id|>"
     },
     "meta-llama/Llama-3.2-3B-Instruct": {
        "user_start": "<|start_header_id|>user<|end_header_id|>",
        "assistant_start": "<|start_header_id|>assistant<|end_header_id|>",
        "system_start": "<|start_header_id|>system<|end_header_id|>",
-       "end": "<|****eot_id|>"
+       "end": "<|eot_id|>"
     },
 }
 
@@ -59,8 +59,8 @@ class PipelineConfig:
     model_name: str = "Qwen/Qwen2.5-3B-Instruct"
     
     # Data settings
-    num_train_samples: int = 5000
-    num_eval_samples: int = 100
+    num_train_samples: int = 6000
+    num_eval_samples: int = 400  # ~6.25% of total, used for human evaluation
     wildchat_ratio: float = 0.5  # 50% WildChat, 50% SGD
     
     # Generation settings
@@ -69,19 +69,19 @@ class PipelineConfig:
     top_p: float = 0.9
     do_sample: bool = True
     
-    # Training settings
-    num_epochs: int = 5
+    # Training settings (optimal from ablation study)
+    num_epochs: int = 3
     batch_size: int = 4
     gradient_accumulation_steps: int = 16
-    learning_rate: float = 1e-4
-    warmup_ratio: float = 0.05
-    weight_decay: float = 0.01
+    learning_rate: float = 2e-4
+    warmup_ratio: float = 0.1
+    weight_decay: float = 0.0
     max_grad_norm: float = 0.3
     
-    # LoRA settings
-    lora_r: int = 32
+    # LoRA settings (optimal from ablation study)
+    lora_r: int = 8
     lora_alpha: int = 64
-    lora_dropout: float = 0.05
+    lora_dropout: float = 0.0
     target_modules: List[str] = field(default_factory=lambda: [
         "q_proj", "k_proj", "v_proj", "o_proj",
         "gate_proj", "up_proj", "down_proj"
@@ -92,7 +92,10 @@ class PipelineConfig:
     adapter_subdir: str = "adapter"
     
     # Evaluation
-    max_context_len: int = 1536
+    # max_context_len: Maximum tokens for input context (conversation history + target).
+    # NOT the same as max_new_tokens (which controls generation length).
+    # This truncates long conversations to fit within model context window.
+    max_context_len: int = 4096
     
     # Hardware
     use_4bit: bool = True

@@ -223,7 +223,6 @@ def format_for_training(
     pairs: List[Dict],
     tokenizer,
     config: PipelineConfig,
-    max_len: int = 2048
 ) -> Dataset:
     """
     Format conversation pairs for SFT training.
@@ -269,9 +268,9 @@ def format_for_training(
         labels = [-100] * len(context_ids) + full_ids[len(context_ids):]
         
         # Truncate if needed
-        if len(full_ids) > max_len:
-            full_ids = full_ids[:max_len]
-            labels = labels[:max_len]
+        if len(full_ids) > config.max_context_len:
+            full_ids = full_ids[:config.max_context_len]
+            labels = labels[:config.max_context_len]
         
         return {
             "input_ids": full_ids,

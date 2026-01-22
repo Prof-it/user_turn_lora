@@ -49,9 +49,8 @@ RUN wget -q https://storage.googleapis.com/bleurt-oss-21/BLEURT-20.zip \
     && unzip -q BLEURT-20.zip -d /app \
     && rm BLEURT-20.zip
 
-# Copy source code
+# Copy source code (ablation is now in src/)
 COPY src/ ./src/
-COPY modules/ ./modules/
 COPY create_plots.py .
 
 # Create output directory

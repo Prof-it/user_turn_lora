@@ -1,0 +1,38 @@
+{
+  "experiment_id": "exp_027_lr2e-04_e1",
+  "config": {
+    "lora_r": 8,
+    "lora_alpha": 64,
+    "lora_dropout": 0.0,
+    "learning_rate": 0.0002,
+    "num_epochs": 1,
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.0
+  },
+  "status": "completed",
+  "start_time": "2026-01-22T15:38:29.197226",
+  "end_time": "2026-01-22T15:41:17.011562",
+  "metrics": {
+    "train_losses": [
+      3.8642,
+      2.7716,
+      2.7004,
+      2.6689,
+      2.0313,
+      2.0742
+    ],
+    "eval_losses": [
+      2.315744400024414
+    ],
+    "final_train_loss": 2.0742,
+    "final_eval_loss": 2.315744400024414,
+    "best_eval_loss": 2.315744400024414,
+    "min_train_loss": 2.0313,
+    "total_steps": 6,
+    "eval_steps": 1,
+    "duration_seconds": 163.585526,
+    "train_runtime": 163.5861,
+    "samples_per_second": 12.226
+  },
+  "error": null
+}

@@ -24,7 +24,6 @@ def compute_perplexity(
     tokenizer,
     item: Dict,
     config: PipelineConfig,
-    max_len: int = 1536,
 ) -> float:
     """
     Compute perplexity on the target user turn only.
@@ -58,8 +57,8 @@ def compute_perplexity(
     context_len = context_ids.shape[1]
     
     # Truncate if needed
-    if full_ids.shape[1] > max_len:
-        full_ids = full_ids[:, :max_len]
+    if full_ids.shape[1] > config.max_context_len:
+        full_ids = full_ids[:, :config.max_context_len]
     
     # Forward pass
     outputs = model(full_ids)
@@ -115,14 +114,25 @@ def compute_bleurt(
     """
     Compute BLEURT scores for predictions vs references.
     
+    Forces CPU execution to avoid GPU memory conflicts with PyTorch.
+    
     Returns:
         Tuple of (per_example_scores, macro_score)
     """
+    import os
+    # Force TensorFlow to use CPU only to avoid GPU memory conflicts with PyTorch
+    os.environ["CUDA_VISIBLE_DEVICES"] = ""
+    os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"  # Suppress TF warnings
+    
     from bleurt import score as bleurt_score
     
     scorer = bleurt_score.BleurtScorer(checkpoint)
     scores = scorer.score(references=references, candidates=predictions)
     macro_score = float(np.mean(scores))
+    
+    # Restore CUDA visibility for PyTorch
+    if "CUDA_VISIBLE_DEVICES" in os.environ:
+        del os.environ["CUDA_VISIBLE_DEVICES"]
     
     return scores, macro_score
 
