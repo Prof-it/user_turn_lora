@@ -1,0 +1,8 @@
+{
+  "model": "gpt-4o-mini",
+  "mode": "few-shot",
+  "temperature": 0.4,
+  "max_tokens": 256,
+  "num_samples": 400,
+  "num_few_shot_examples": 3
+}

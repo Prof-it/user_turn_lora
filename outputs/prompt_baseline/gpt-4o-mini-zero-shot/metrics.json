@@ -1,0 +1,11 @@
+{
+  "model": "gpt-4o-mini",
+  "mode": "zero-shot",
+  "temperature": 0.4,
+  "max_tokens": 256,
+  "num_samples": 400,
+  "bertscore_f1": 0.8408848643302917,
+  "bertscore_precision": 0.8395825028419495,
+  "bertscore_recall": 0.8431203961372375,
+  "bleurt": 0.392904051784426
+}

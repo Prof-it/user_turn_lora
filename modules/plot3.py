@@ -156,10 +156,16 @@ def create_cross_model_comparison_plot(
         ax.set_xticklabels(model_names, rotation=15, ha="right")
         
         # Set y-axis limits
+        all_vals = [all_metrics[m][metric_key][k] for m in model_names for k in ["base", "fine_tuned"]]
         if metric_key == "BERTScore-F1":
-            all_vals = [all_metrics[m][metric_key][k] for m in model_names for k in ["base", "fine_tuned"]]
             y_min = min(all_vals) * 1.1 if min(all_vals) < 0 else 0
-            ax.set_ylim(bottom=y_min)
+            y_max = max(all_vals) * 1.1 if max(all_vals) > 0 else 0.5
+            ax.set_ylim(bottom=y_min, top=y_max)
+        elif metric_key == "BLEURT":
+            # BLEURT typically ranges 0-1, don't force start at 0
+            y_min = min(all_vals) - 0.05
+            y_max = max(all_vals) + 0.05
+            ax.set_ylim(bottom=y_min, top=y_max)
         else:
             ax.set_ylim(bottom=0)
         

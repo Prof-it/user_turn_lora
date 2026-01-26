@@ -24,6 +24,7 @@ SPECIAL_TOKENS = {
         "start_of_text": "<|startoftext|>",
         "end": "<|im_end|>"
     },
+    # skip as it has its own weird tokenizer etc, causing issues
     "mistralai/Ministral-3-3B-Instruct-2512": {
         "user_start": "[INST]",
         "user_end": "[/INST]",
@@ -65,7 +66,7 @@ class PipelineConfig:
     
     # Generation settings
     max_new_tokens: int = 256
-    temperature: float = 0.7
+    temperature: float = 0.4
     top_p: float = 0.9
     do_sample: bool = True
     

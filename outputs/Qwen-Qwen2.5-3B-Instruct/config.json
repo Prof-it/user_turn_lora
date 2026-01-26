@@ -1,0 +1,14 @@
+{
+  "model_name": "Qwen/Qwen2.5-3B-Instruct",
+  "num_train_samples": 6000,
+  "num_eval_samples": 400,
+  "num_epochs": 3,
+  "batch_size": 4,
+  "gradient_accumulation_steps": 16,
+  "effective_batch_size": 64,
+  "learning_rate": 0.0002,
+  "lora_r": 8,
+  "lora_alpha": 64,
+  "lora_dropout": 0.0,
+  "compute_dtype": "torch.bfloat16"
+}

@@ -42,16 +42,30 @@ Deliverable:
 
 Minimal requirement: run on the same evaluation subset for clean comparisons.
 
-- [ ] Choose evaluation subset size for **metric evaluation**:
-  - Recommended: ~100–200 samples (as per plan)
-- [ ] For each model family:
-  - [ ] Base model predictions (no LoRA)
-  - [ ] LoRA fine‑tuned predictions (final config)
+- [x] Choose evaluation subset size for **metric evaluation**:
+  - Used: 400 samples (6.25% of 6400 total)
+- [x] For each model family:
+  - [x] Base model predictions (no LoRA)
+  - [x] LoRA fine‑tuned predictions (final config)
+
+**Completed 2026-01-23**: All 4 models trained and evaluated:
+
+- LiquidAI/LFM2.5-1.2B-Instruct
+- Qwen/Qwen2.5-3B-Instruct
+- allenai/OLMo-3-7B-Instruct
+- meta-llama/Llama-3.2-3B-Instruct
 
 Deliverables:
 
-- [ ] Saved predictions per model and condition (base vs LoRA)
-- [ ] Metric outputs per model and condition (PPL abs + Δ, BERTScore, BLEURT)
+- [x] Saved predictions per model and condition (base vs LoRA)
+- [x] Metric outputs per model and condition (PPL abs + Δ, BERTScore, BLEURT)
+
+### 2.1 Temperature Sweep (completed 2026-01-25)
+
+- [x] Run temperature sweep (0.3, 0.4, 0.5, 0.6, 0.7) on all 4 models
+- [x] Generate temperature sweep plots and LaTeX table
+- [x] Document results in `outputs/temperature_sweep_results.md`
+- [x] LaTeX table saved to `paper/temperature_sweep_table.tex`
 
 ---
 
@@ -197,8 +211,10 @@ Deliverable:
 
 ## 8) Plotting & Visualization
 
-- [ ] Use tueplots for conference-ready plots: https://github.com/pnkraemer/tueplots
-- [ ] Generate ablation heatmaps and training curves
+- [x] Use tueplots for conference-ready plots: https://github.com/pnkraemer/tueplots
+- [x] Generate ablation heatmaps and training curves
+- [x] Generate cross-model comparison plots
+- [x] Generate temperature sweep plots and heatmap
 
 ---
 

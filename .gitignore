@@ -34,3 +34,5 @@ paper/*.blg
 paper/*.synctex.gz
 paper/*.fdb_latexmk
 paper/*.fls
+
+paper/context*.md

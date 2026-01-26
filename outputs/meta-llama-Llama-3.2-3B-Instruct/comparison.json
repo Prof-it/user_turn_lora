@@ -1,0 +1,8 @@
+{
+  "bertscore_f1_macro_base": 0.8278632164001465,
+  "bertscore_f1_macro_ft": 0.8540571331977844,
+  "bertscore_f1_macro_delta": 0.02619391679763794,
+  "bleurt_macro_base": 0.33745931249916855,
+  "bleurt_macro_ft": 0.393199785046242,
+  "bleurt_macro_delta": 0.05574047254707343
+}

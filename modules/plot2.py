@@ -51,20 +51,24 @@ def load_chat_pairs_with_domain(model_dir: Path) -> pd.DataFrame:
 
 def load_and_merge_data(model_dir: Path) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """
-    Load CSV data and merge with domain info from JSON.
+    Load CSV data with domain info.
     
     Returns:
         Tuple of (base_df_with_domain, ft_df_with_domain)
     """
-    # Load domain info
-    domain_df = load_chat_pairs_with_domain(model_dir)
-    
     # Load per-example CSVs
     base_path = model_dir / "eval_bleurt_bertscore_per_example.csv"
     ft_path = model_dir / "eval_ft_bleurt_bertscore_per_example.csv"
     
     base_df = pd.read_csv(base_path)
     ft_df = pd.read_csv(ft_path)
+    
+    # Check if domain column exists directly in CSV (new format)
+    if "domain" in base_df.columns and "domain" in ft_df.columns:
+        return base_df, ft_df
+    
+    # Fallback: Load domain info from JSON (old format)
+    domain_df = load_chat_pairs_with_domain(model_dir)
     
     # Add index for merging
     base_df["index"] = base_df.index

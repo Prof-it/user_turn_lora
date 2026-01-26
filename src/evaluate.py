@@ -94,12 +94,14 @@ def compute_bertscore(
     """
     Compute BERTScore F1 for predictions vs references.
     
+    Uses raw BERTScore values (0-1 range), no rescaling.
+    
     Returns:
         Tuple of (per_example_f1, macro_f1)
     """
     from bert_score import score as bertscore
     
-    P, R, F1 = bertscore(predictions, references, lang=lang, rescale_with_baseline=True)
+    P, R, F1 = bertscore(predictions, references, lang=lang)
     f1_list = F1.tolist()
     macro_f1 = float(F1.mean().item())
     
@@ -157,18 +159,21 @@ def generate_predictions(
     Returns:
         eval_pairs with predictions added
     """
-    print(f"Generating predictions for {len(eval_pairs)} examples...")
+    import sys
+    print(f"Generating predictions for {len(eval_pairs)} examples...", flush=True)
+    sys.stdout.flush()
     
     for i, item in enumerate(eval_pairs):
         try:
             pred = predict_next_user(model, tokenizer, item, config, verbose=False)
             item[pred_key] = pred
         except Exception as e:
-            print(f"  Warning: Prediction failed for example {i}: {e}")
+            print(f"  Warning: Prediction failed for example {i}: {e}", flush=True)
             item[pred_key] = ""
         
         if verbose and (i + 1) % 10 == 0:
-            print(f"  {i + 1}/{len(eval_pairs)} completed")
+            print(f"  {i + 1}/{len(eval_pairs)} completed", flush=True)
+            sys.stdout.flush()
         
         # Clear cache periodically
         if (i + 1) % 20 == 0:
