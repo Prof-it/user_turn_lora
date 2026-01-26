@@ -14,14 +14,14 @@ Fine-tuning LLMs to predict user turns in conversations.
 │   ├── plot1.py             # Benchmark comparison (Base vs Fine-tuned)
 │   ├── plot2.py             # Domain-specific analysis
 │   └── helpers.py           # Utility functions
-├── Qwen/
-│   └── Qwen2.5-3B-Instruct/  # Model evaluation results
-│       ├── eval_bleurt_bertscore_summary.csv
-│       ├── eval_ft_bleurt_bertscore_summary.csv
-│       ├── chat_pairs.json
-│       ├── *.png             # Generated plots
-│       └── wandb_screenshot.png  # WandB run report
-└── UserTurnLoRA.ipynb       # Main experiment notebook
+├── outputs/                  # Model evaluation results
+│   ├── Qwen-Qwen2.5-3B-Instruct/
+│   ├── LiquidAI-LFM2.5-1.2B-Instruct/
+│   ├── allenai-OLMo-3-7B-Instruct/
+│   └── ablation/            # Ablation study results
+├── notebook/
+│   └── UserTurnLoRA.ipynb   # Main experiment notebook
+└── src/                     # Training and evaluation source code
 ```
 
 ## Generating Plots
@@ -31,7 +31,7 @@ Fine-tuning LLMs to predict user turns in conversations.
 python create_plots.py
 
 # Process specific model directory
-python create_plots.py --model-dir Qwen/Qwen2.5-3B-Instruct
+python create_plots.py --model-dir outputs/Qwen-Qwen2.5-3B-Instruct
 
 # List available models
 python create_plots.py --list-models
