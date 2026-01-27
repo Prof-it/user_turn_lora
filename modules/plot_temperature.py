@@ -7,9 +7,8 @@ for baseline vs fine-tuned models.
 
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
 from pathlib import Path
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, Tuple, Optional
 
 from .helpers import discover_model_directories, get_model_name, get_figsize
 
@@ -123,66 +122,6 @@ def create_temperature_sweep_plot(
     return fig
 
 
-def create_temperature_heatmap(
-    root_dir: Path,
-    output_path: Optional[Path] = None,
-    figsize: Tuple[float, float] = (10, 6),
-    dpi: int = 150
-) -> plt.Figure:
-    """
-    Create heatmap showing BLEURT improvement (FT - baseline) across temps and models.
-    """
-    data = load_temperature_sweep_data(root_dir)
-    
-    if not data:
-        raise ValueError("No temperature sweep data found")
-    
-    model_names = list(data.keys())
-    temperatures = [0.3, 0.4, 0.5, 0.6, 0.7]
-    
-    # Build improvement matrix
-    improvement_matrix = np.zeros((len(model_names), len(temperatures)))
-    
-    for i, model_name in enumerate(model_names):
-        df = data[model_name]
-        baseline = df[df["model_type"] == "baseline"].sort_values("temperature")
-        finetuned = df[df["model_type"] == "finetuned"].sort_values("temperature")
-        
-        for j, temp in enumerate(temperatures):
-            base_val = baseline[baseline["temperature"] == temp]["bleurt"].values
-            ft_val = finetuned[finetuned["temperature"] == temp]["bleurt"].values
-            
-            if len(base_val) > 0 and len(ft_val) > 0:
-                improvement_matrix[i, j] = ft_val[0] - base_val[0]
-    
-    fig, ax = plt.subplots(figsize=figsize, constrained_layout=True)
-    
-    im = ax.imshow(improvement_matrix, cmap="RdYlGn", aspect="auto", vmin=-0.05, vmax=0.1)
-    
-    ax.set_xticks(range(len(temperatures)))
-    ax.set_xticklabels([str(t) for t in temperatures])
-    ax.set_yticks(range(len(model_names)))
-    ax.set_yticklabels(model_names)
-    
-    ax.set_xlabel("Temperature")
-    ax.set_ylabel("Model")
-    
-    # Add text annotations
-    for i in range(len(model_names)):
-        for j in range(len(temperatures)):
-            val = improvement_matrix[i, j]
-            color = "white" if abs(val) > 0.03 else "black"
-            ax.text(j, i, f"{val:+.3f}", ha="center", va="center", color=color, fontsize=8)
-    
-    cbar = fig.colorbar(im, ax=ax, label="BLEURT Δ (FT - Baseline)")
-    
-    if output_path:
-        fig.savefig(output_path, dpi=dpi, bbox_inches="tight")
-        print(f"Saved temperature heatmap to: {output_path}")
-    
-    return fig
-
-
 def generate_latex_table(root_dir: Path) -> str:
     """Generate LaTeX table for temperature sweep results."""
     data = load_temperature_sweep_data(root_dir)
@@ -251,10 +190,6 @@ if __name__ == "__main__":
     # Generate plot
     output_path = root_dir / "temperature_sweep_comparison.png"
     fig = create_temperature_sweep_plot(root_dir, output_path)
-    
-    # Generate heatmap
-    heatmap_path = root_dir / "temperature_sweep_heatmap.png"
-    fig2 = create_temperature_heatmap(root_dir, heatmap_path)
     
     # Generate LaTeX table
     latex = generate_latex_table(root_dir)
