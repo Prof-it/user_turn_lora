@@ -60,12 +60,12 @@ Deliverables:
 - [x] Saved predictions per model and condition (base vs LoRA)
 - [x] Metric outputs per model and condition (PPL abs + Δ, BERTScore, BLEURT)
 
-### 2.1 Temperature Sweep (completed 2026-01-25)
+### 2.1 Temperature Sweep (completed 2026-01-27)
 
 - [x] Run temperature sweep (0.3, 0.4, 0.5, 0.6, 0.7) on all 4 models
+- [x] Re-run with corrected BERTScore (raw values, no rescaling) on A100 GPU
 - [x] Generate temperature sweep plots and LaTeX table
-- [x] Document results in `outputs/temperature_sweep_results.md`
-- [x] LaTeX table saved to `paper/temperature_sweep_table.tex`
+- [x] Plot saved to `outputs/temperature_sweep_comparison.png`
 
 ---
 
@@ -77,13 +77,13 @@ This baseline uses an **API model (e.g., OpenAI GPT-4o)** with **no fine-tuning*
 
 ### 3.1 Setup
 
-- [ ] Select API model (recommended: `gpt-4o` or `gpt-4o-mini` for cost)
-- [ ] Create a reusable inference script (`src/prompt_baseline.py`)
+- [x] Select API model: **GPT-4o-mini** (cost-effective)
+- [x] Create a reusable inference script (`src/prompt_baseline.py`)
 
 ### 3.2 Prompt conditions
 
-- [ ] **Zero-shot**: dialogue context + instruction only, no examples
-- [ ] **Few-shot (1–3 examples)**: include 1–3 exemplar (context → user turn) pairs in the prompt
+- [x] **Zero-shot**: dialogue context + instruction only, no examples
+- [x] **Few-shot (3 examples)**: include 3 exemplar (context → user turn) pairs in the prompt
 
 Prompt structure (example):
 
@@ -98,30 +98,27 @@ Dialogue context:
 Predict the next user turn:
 ```
 
-### 3.3 Run inference
+### 3.3 Run inference (completed 2026-01-27)
 
-- [ ] Generate predictions on the **same metric evaluation subset** used for Base/LoRA
-- [ ] Run both zero-shot and few-shot conditions
-- [ ] Log token usage / cost for reproducibility
+- [x] Generate predictions on the **same metric evaluation subset** used for Base/LoRA (400 samples)
+- [x] Run both zero-shot and few-shot conditions
+- [x] Predictions saved to `outputs/prompt_baseline/`
 
-### 3.4 Compute metrics
+### 3.4 Compute metrics (completed 2026-01-27)
 
-- [ ] Compute **same metrics** as other conditions:
-  - BERTScore
+- [x] Compute **same metrics** as other conditions:
+  - BERTScore (raw, 0-1 range)
   - BLEURT
   - (PPL not directly comparable since API models don't expose logprobs the same way)
 
 Deliverables:
 
-- [ ] `prompts/zero_shot.txt` and `prompts/few_shot.txt` — fixed prompt templates
-- [ ] `outputs/openai/gpt-4o-zero-shot/predictions.json`
-- [ ] `outputs/openai/gpt-4o-few-shot/predictions.json`
-- [ ] Metric results for prompt-only conditions
+- [x] Predictions: `outputs/prompt_baseline/zero_shot_predictions.json`, `outputs/prompt_baseline/few_shot_predictions.json`
+- [x] Metrics: `outputs/prompt_baseline/zero_shot_metrics.json`, `outputs/prompt_baseline/few_shot_metrics.json`
 
 Notes:
 
 - Keep prompts **identical** across samples (only the dialogue context changes).
-- Document exact model name + version (e.g., `gpt-4o-2024-08-06`).
 - Few-shot exemplars should be **fixed** (same examples for all samples) and drawn from **train set only**.
 
 ---

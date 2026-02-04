@@ -196,4 +196,4 @@ if __name__ == "__main__":
     print("\nLaTeX Table:")
     print(latex)
     
-    plt.show()
+    plt.close(fig)

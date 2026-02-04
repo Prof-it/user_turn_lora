@@ -1,0 +1,53 @@
+{
+  "id": "session_1770219057220_1kvtbc5qe",
+  "raterId": "Sebastian",
+  "selectedModels": [
+    "outputs/LiquidAI-LFM2.5-1.2B-Instruct",
+    "outputs/Qwen-Qwen2.5-3B-Instruct",
+    "outputs/allenai-OLMo-3-7B-Instruct",
+    "outputs/meta-llama-Llama-3.2-3B-Instruct"
+  ],
+  "sampleIds": [
+    "eval-360",
+    "eval-351",
+    "eval-278",
+    "eval-214",
+    "eval-8",
+    "eval-50",
+    "eval-262",
+    "eval-337",
+    "eval-219",
+    "eval-246",
+    "eval-3",
+    "eval-237",
+    "eval-130",
+    "eval-309",
+    "eval-17",
+    "eval-368",
+    "eval-356",
+    "eval-339",
+    "eval-73",
+    "eval-305"
+  ],
+  "seed": 42,
+  "startedAt": "2026-02-04T15:30:57.220Z",
+  "ratings": [],
+  "labelValidations": [
+    {
+      "sampleId": "eval-360",
+      "isValid": true,
+      "raterId": "Sebastian",
+      "timestamp": "2026-02-04T15:31:22.586Z"
+    },
+    {
+      "sampleId": "eval-351",
+      "isValid": true,
+      "raterId": "Sebastian",
+      "timestamp": "2026-02-04T15:31:43.054Z"
+    }
+  ],
+  "progress": {
+    "completed": 0,
+    "total": 20
+  }
+}
