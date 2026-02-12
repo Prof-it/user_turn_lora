@@ -1,13 +1,169 @@
-% Bibliography file for UserTurn LoRA paper
-% Add your references here
+% === Core Method ===
 
-% Example entry:
-% @article{example2024,
-%   author = {Author, A. and Author, B.},
-%   title = {Title of the Paper},
-%   journal = {Journal Name},
-%   year = {2024},
-%   volume = {1},
-%   pages = {1--10},
-%   doi = {10.1234/example},
-% }
+@article{hu2021lora,
+  author = {Hu, Edward and Shen, Yelong and Wallis, Phillip and Allen-Zhu, Zeyuan and Li, Yuanzhi and Wang, Shean and Wang, Lu and Chen, Weizhu},
+  title = {{LoRA}: Low-Rank Adaptation of Large Language Models},
+  journal = {arXiv preprint arXiv:2106.09685},
+  year = {2021}
+}
+
+@article{dettmers2023qlora,
+  author = {Dettmers, Tim and Pagnoni, Artidoro and Holtzman, Ari and Zettlemoyer, Luke},
+  title = {{QLoRA}: Efficient Finetuning of Quantized {LLMs}},
+  journal = {arXiv preprint arXiv:2305.14314},
+  year = {2023}
+}
+
+% === Key Related Work ===
+
+@article{naous2025flipping,
+  author = {Naous, Tarek and Laban, Philippe and Xu, Wei and Neville, Jennifer},
+  title = {Flipping the Dialogue: Training and Evaluating User Language Models},
+  journal = {arXiv preprint arXiv:2510.06552},
+  year = {2025}
+}
+
+@inproceedings{kim2022multitask,
+  author = {Kim, To Eun and Lipani, Aldo},
+  title = {A Multi-Task Based Neural Model to Simulate Users in Goal-Oriented Dialogue Systems},
+  booktitle = {Proceedings of the 45th International ACM SIGIR Conference},
+  year = {2022},
+  doi = {10.1145/3477495.3531814}
+}
+
+@inproceedings{shi2019simulators,
+  author = {Shi, Weiyan and Qian, Kun and Wang, Xuewei and Yu, Zhou},
+  title = {How to Build User Simulators to Train {RL}-based Dialog Systems},
+  booktitle = {Proceedings of EMNLP-IJCNLP},
+  pages = {1990--2000},
+  year = {2019}
+}
+
+@inproceedings{lin2022gentus,
+  author = {Lin, Hsien-Chin and Geishauser, Christian and Feng, Shutong and Lubis, Nurul and van Niekerk, Carel and Heck, Michael and Ga\v{s}i\'{c}, Milica},
+  title = {{GenTUS}: Simulating User Behaviour and Language in Task-oriented Dialogues with Generative Transformers},
+  booktitle = {Proceedings of SIGdial},
+  pages = {270--282},
+  year = {2022}
+}
+
+@inproceedings{yoon2024evaluating,
+  author = {Yoon, Se-eun and He, Zhankui and Echterhoff, Jessica Maria and McAuley, Julian},
+  title = {Evaluating Large Language Models as Generative User Simulators for Conversational Recommendation},
+  booktitle = {Proceedings of NAACL-HLT},
+  pages = {1490--1504},
+  year = {2024}
+}
+
+@article{lin2021predict,
+  author = {Lin, Zehao and Cui, Shaobo and Li, Guodun and Kang, Xiaoming and Ji, Feng and Li, Fenglin and Zhao, Zhongzhou and Chen, Haiqing and Zhang, Yin},
+  title = {Predict-Then-Decide: A Predictive Approach for Wait or Answer Task in Dialogue Systems},
+  journal = {IEEE/ACM Transactions on Audio, Speech, and Language Processing},
+  volume = {29},
+  pages = {3012--3025},
+  year = {2021}
+}
+
+@inproceedings{castillo2025turntaking,
+  author = {Castillo-L\'{o}pez, Galo and de Chalendar, Ga\"{e}l and Semmar, Nasredine},
+  title = {A Survey of Recent Advances on Turn-taking Modeling in Spoken Dialogue Systems},
+  booktitle = {Proceedings of the 15th International Workshop on Spoken Dialogue Systems Technology},
+  pages = {254--271},
+  year = {2025}
+}
+
+% === Datasets ===
+
+@inproceedings{zhao2024wildchat,
+  author = {Zhao, Wenting and Ren, Xiang and Hessel, Jack and Cardie, Claire and Choi, Yejin and Deng, Yuntian},
+  title = {{WildChat}: {1M} {ChatGPT} Interaction Logs in the Wild},
+  booktitle = {Proceedings of ICLR},
+  year = {2024}
+}
+
+@inproceedings{rastogi2020sgd,
+  author = {Rastogi, Abhinav and Zang, Xiaoxue and Sunkara, Srinivas and Gupta, Raghav and Khaitan, Pranav},
+  title = {Towards Scalable Multi-Domain Conversational Agents: The Schema-Guided Dialogue Dataset},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  year = {2020}
+}
+
+% === Models ===
+
+@article{qwen2025,
+  author = {{Qwen Team}},
+  title = {Qwen2.5 Technical Report},
+  journal = {arXiv preprint arXiv:2412.15115},
+  year = {2025}
+}
+
+% === Evaluation Metrics ===
+
+@inproceedings{zhang2020bertscore,
+  author = {Zhang, Tianyi and Kishore, Varsha and Wu, Felix and Weinberger, Kilian Q. and Artzi, Yoav},
+  title = {{BERTScore}: Evaluating Text Generation with {BERT}},
+  booktitle = {Proceedings of ICLR},
+  year = {2020}
+}
+
+@inproceedings{sellam2020bleurt,
+  author = {Sellam, Thibault and Das, Dipanjan and Parikh, Ankur P.},
+  title = {{BLEURT}: Learning Robust Metrics for Text Generation},
+  booktitle = {Proceedings of ACL},
+  pages = {7881--7892},
+  year = {2020}
+}
+
+% === Foundations ===
+
+@inproceedings{vaswani2017attention,
+  author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N. and Kaiser, {\L}ukasz and Polosukhin, Illia},
+  title = {Attention Is All You Need},
+  booktitle = {Proceedings of NeurIPS},
+  year = {2017}
+}
+
+@article{studer2021crispml,
+  author = {Studer, Stefan and Bui, Thanh Binh and Drescher, Christian and Hanuschkin, Alexander and Winkler, Ludwig and Peters, Steven and M\"{u}ller, Klaus-Robert},
+  title = {Towards {CRISP-ML(Q)}: A Machine Learning Process Model with Quality Assurance Methodology},
+  journal = {Machine Learning and Knowledge Extraction},
+  volume = {3},
+  number = {2},
+  pages = {392--413},
+  year = {2021}
+}
+
+@inproceedings{hosseini2020soloist,
+  author = {Hosseini-Asl, Ehsan and McCann, Bryan and Wu, Chien-Sheng and Yavuz, Semih and Socher, Richard},
+  title = {A Simple Language Model for Task-Oriented Dialogue},
+  booktitle = {Proceedings of NeurIPS},
+  year = {2020}
+}
+
+@article{zhang2020dialogpt,
+  author = {Zhang, Yizhe and Sun, Siqi and Galley, Michel and Chen, Yen-Chun and Brockett, Chris and Gao, Xiang and Gao, Jianfeng and Liu, Jingjing and Dolan, Bill},
+  title = {{DialoGPT}: Large-Scale Generative Pre-training for Conversational Response Generation},
+  journal = {arXiv preprint arXiv:1911.00536},
+  year = {2020}
+}
+
+@article{adiwardana2020meena,
+  author = {Adiwardana, Daniel and Luong, Minh-Thang and So, David R. and Hall, Jamie and Fiedel, Noah and Thoppilan, Romal and Yang, Zi and Kulshreshtha, Apoorv and Nemade, Gaurav and Lu, Yifeng and Le, Quoc V.},
+  title = {Towards a Human-like Open-Domain Chatbot},
+  journal = {arXiv preprint arXiv:2001.09977},
+  year = {2020}
+}
+
+@inproceedings{serban2016hierarchical,
+  author = {Serban, Iulian V. and Sordoni, Alessandro and Bengio, Yoshua and Courville, Aaron and Pineau, Joelle},
+  title = {Building End-To-End Dialogue Systems Using Generative Models: Advances to the {Ubuntu} Dialogue Corpus},
+  booktitle = {Proceedings of AAAI},
+  year = {2016}
+}
+
+@article{liu2017hownoteval,
+  author = {Liu, Chia-Wei and Lowe, Ryan and Serban, Iulian V. and Noseworthy, Michael and Charlin, Laurent and Pineau, Joelle},
+  title = {How {NOT} To Evaluate Your Dialogue System: An Empirical Study of Unsupervised Evaluation Metrics for Dialogue Response Generation},
+  journal = {arXiv preprint arXiv:1603.08023},
+  year = {2017}
+}
