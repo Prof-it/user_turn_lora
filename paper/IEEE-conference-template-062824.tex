@@ -284,37 +284,28 @@ LiquidAI-1.2B & 0.3 & 0.857 \\
 
 \subsection{Human Evaluation}
 
-Table~\ref{tab:human-eval} presents the blinded human evaluation results. Fine-tuning improves the average rating from 4.37 to 4.71 (+0.34 on a 5-point scale), with the largest gain on naturalness (+0.37). GPT-4o-mini scores highest overall (4.80--4.82), though the gap to the fine-tuned Qwen-3B is modest. Table~\ref{tab:human-eval-dataset} breaks down results by domain: task-oriented dialogue (SGD) benefits substantially more from fine-tuning (+0.45) than open-domain conversation (WildChat, +0.21), suggesting that the structured intent patterns in SGD are easier to learn from limited data.
+Table~\ref{tab:human-eval} presents the blinded human evaluation results (mean $\pm$ std over 369 paired samples). Fine-tuning improves the average rating from $4.37 \pm 1.19$ to $4.71 \pm 0.75$ (+0.34), with the largest gain on naturalness (+0.37). A paired Wilcoxon signed-rank test confirms this improvement is highly significant ($p < 10^{-5}$). GPT-4o-mini scores highest overall ($4.82 \pm 0.62$), though the gap to the fine-tuned model is modest; the fine-tuned model significantly differs from the few-shot baseline ($p < 0.01$). The domain breakdown reveals that task-oriented dialogue (SGD) benefits substantially more from fine-tuning ($+0.45$, $p < 10^{-8}$) than open-domain conversation (WildChat, $+0.21$, $p = 0.12$, n.s.), suggesting that structured intent patterns are easier to learn from limited data.
 
 \begin{table}[h]
 \centering
-\caption{Human Evaluation Results (n=369, 5.77\% of corpus)}
+\caption{Human Evaluation (mean $\pm$ std, $n{=}369$, 1--5 Likert)}
 \label{tab:human-eval}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Condition} & \textbf{Rel.} & \textbf{Coh.} & \textbf{Nat.} & \textbf{Avg.} \\
 \midrule
-Baseline (Qwen-3B) & 4.34 & 4.34 & 4.44 & 4.37 \\
-\textbf{Fine-tuned (Qwen-3B)} & 4.64 & 4.68 & 4.81 & \textbf{4.71} \\
-Zero-shot (GPT-4o-mini) & 4.78 & 4.82 & 4.85 & 4.82 \\
-Few-shot (GPT-4o-mini) & 4.77 & 4.80 & 4.83 & 4.80 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[h]
-\centering
-\caption{Human Evaluation by Dataset}
-\label{tab:human-eval-dataset}
-\begin{tabular}{l|cc|cc}
-\toprule
-& \multicolumn{2}{c|}{\textbf{Schema-Guided}} & \multicolumn{2}{c}{\textbf{WildChat}} \\
-\textbf{Condition} & Avg. & $\Delta$ & Avg. & $\Delta$ \\
+Baseline (Qwen-3B) & 4.34{\scriptsize$\pm$1.23} & 4.34{\scriptsize$\pm$1.25} & 4.44{\scriptsize$\pm$1.29} & 4.37{\scriptsize$\pm$1.19} \\
+Fine-tuned (Qwen-3B) & 4.64{\scriptsize$\pm$0.88} & 4.68{\scriptsize$\pm$0.85} & 4.81{\scriptsize$\pm$0.75} & \textbf{4.71}{\scriptsize$\pm$0.75} \\
+Zero-shot (GPT-4o-mini) & 4.78{\scriptsize$\pm$0.69} & 4.82{\scriptsize$\pm$0.67} & 4.85{\scriptsize$\pm$0.66} & 4.82{\scriptsize$\pm$0.62} \\
+Few-shot (GPT-4o-mini) & 4.77{\scriptsize$\pm$0.75} & 4.80{\scriptsize$\pm$0.72} & 4.83{\scriptsize$\pm$0.76} & 4.80{\scriptsize$\pm$0.72} \\
 \midrule
-Baseline & 4.50 & -- & 4.22 & -- \\
-Fine-tuned & 4.95 & +0.45 & 4.43 & +0.21 \\
+\multicolumn{5}{l}{\textit{Domain breakdown (Avg.):}} \\
+\quad SGD only ($n{=}200$) & \multicolumn{2}{l}{Base: 4.50{\scriptsize$\pm$1.06}} & \multicolumn{2}{l}{FT: \textbf{4.95}{\scriptsize$\pm$0.22} ($\Delta{=}{+}0.45^{***}$)} \\
+\quad WildChat only ($n{=}169$) & \multicolumn{2}{l}{Base: 4.22{\scriptsize$\pm$1.31}} & \multicolumn{2}{l}{FT: 4.43{\scriptsize$\pm$1.01} ($\Delta{=}{+}0.21^{\text{n.s.}}$)} \\
 \bottomrule
-\end{tabular}
+\multicolumn{5}{l}{\scriptsize Wilcoxon signed-rank: $^{***}p{<}0.001$; $^{\text{n.s.}}$ not significant ($p{=}0.12$).} \\
+\end{tabular}}
 \end{table}
 
 \section{Discussion}
