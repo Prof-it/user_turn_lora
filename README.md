@@ -1,8 +1,8 @@
-# LoRA Fine-Tuning for Next User Turn Prediction in Multi-Turn Dialogues
+# Single-Turn User Utterance Prediction in Dialogue Contexts with QLoRA
 
-This is a repo targeting the publication of a conference extending the outcome of a bachelor thesis.
+This repository targets a conference submission extending the outcome of a bachelor thesis.
 
-QLoRA fine-tuning of open-source instruction-tuned LLMs (1.2B–7B parameters) to predict the next user utterance in multi-turn conversations. Trained on 6,000 samples from WildChat (open-domain) and Schema-Guided Dialog (task-oriented), evaluated with BERTScore, BLEURT, perplexity, and a blinded human study of 369 samples.
+QLoRA fine-tuning of open-source instruction-tuned LLMs (1.2B–7B parameters) to predict a single next user utterance from dialogue context. Trained on 6,000 samples from WildChat (open-domain) and Schema-Guided Dialog (task-oriented), evaluated with BERTScore, BLEURT, perplexity, and a blinded human study of 369 samples.
 
 ![Cross-Model Comparison](paper/figures/cross_model_comparison.png)
 
