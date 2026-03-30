@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-"""
-Compute BERTScore and BLEURT metrics for prompt baseline predictions.
-"""
+"""Recompute prompt-baseline metrics from a saved predictions file."""
 
 import json
 import sys
@@ -20,6 +18,9 @@ def main():
     
     output_dir = Path(sys.argv[1])
     predictions_path = output_dir / "predictions.json"
+    if not predictions_path.exists():
+        candidates = sorted(output_dir.glob("*_predictions.json"))
+        predictions_path = candidates[0] if candidates else predictions_path
     
     if not predictions_path.exists():
         print(f"Error: {predictions_path} not found")
@@ -36,25 +37,25 @@ def main():
     
     # Compute metrics
     print("\nComputing BERTScore...")
-    bertscore_results = compute_bertscore(references, predictions)
+    bertscore_f1_per_example, bertscore_f1_macro = compute_bertscore(predictions, references)
     
     print("\nComputing BLEURT...")
-    bleurt_results = compute_bleurt(references, predictions)
+    bleurt_per_example, bleurt_macro = compute_bleurt(predictions, references)
     
     # Load config if exists
-    config_path = output_dir / "config.json"
-    if config_path.exists():
-        with open(config_path) as f:
-            config = json.load(f)
-    else:
-        config = {}
+    config = {}
+    for candidate in [output_dir / "metrics.json", output_dir / "config.json"]:
+        if candidate.exists():
+            with open(candidate) as f:
+                config = json.load(f)
+            break
     
     metrics = {
         **config,
-        "bertscore_f1": bertscore_results["f1"],
-        "bertscore_precision": bertscore_results["precision"],
-        "bertscore_recall": bertscore_results["recall"],
-        "bleurt": bleurt_results["mean"],
+        "bertscore_f1_macro": bertscore_f1_macro,
+        "bleurt_macro": bleurt_macro,
+        "bertscore_f1_per_example": bertscore_f1_per_example,
+        "bleurt_per_example": bleurt_per_example,
     }
     
     # Save metrics
@@ -67,8 +68,8 @@ def main():
     print(f"\n{'='*60}")
     print("Prompt Baseline Metrics")
     print(f"{'='*60}")
-    print(f"BERTScore F1: {metrics['bertscore_f1']:.4f}")
-    print(f"BLEURT: {metrics['bleurt']:.4f}")
+    print(f"BERTScore F1: {metrics['bertscore_f1_macro']:.4f}")
+    print(f"BLEURT: {metrics['bleurt_macro']:.4f}")
 
 
 if __name__ == "__main__":
