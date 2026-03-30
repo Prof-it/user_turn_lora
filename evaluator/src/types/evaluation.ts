@@ -20,10 +20,22 @@ export interface ConversationPair {
 export interface PredictionRow {
   ref: string;
   pred?: string;
-  pred_ft?: string;
-  bertscore_f1: number;
-  bleurt: number;
-  ppl_content: number;
+  bertscore_f1?: number;
+  bleurt?: number;
+  ppl_content?: number;
+}
+
+export interface ConditionMetrics {
+  bertscore_f1?: number | null;
+  bleurt?: number | null;
+  ppl_content?: number | null;
+}
+
+export interface PredictionCondition {
+  conditionId: string;
+  displayName: string;
+  text: string;
+  metrics: ConditionMetrics;
 }
 
 export interface ModelConfig {
@@ -52,23 +64,8 @@ export interface EvaluationSample {
   dataset: string;
   context: Message[];
   groundTruth: string;
-  predictions: {
-    modelId: string;
-    modelName: string;
-    base: string;
-    fineTuned: string;
-    baseMetrics: {
-      bertscore_f1: number;
-      bleurt: number;
-      ppl_content: number;
-    };
-    ftMetrics: {
-      bertscore_f1: number;
-      bleurt: number;
-      ppl_content: number;
-    };
-  }[];
-  // Blinded labels (A/B/C...) mapped to model IDs - hidden from UI
+  predictions: PredictionCondition[];
+  // Blinded labels (A/B/C...) mapped to condition IDs - hidden from UI
   blindedMapping: Record<string, string>;
 }
 
@@ -87,7 +84,7 @@ export interface Rating {
   sampleId: string;
   blindedLabel: string; // A, B, C...
   modelId: string; // Revealed after rating
-  predictionType: "base" | "fineTuned";
+  predictionType: string;
   relevance: number; // 1-5
   coherence: number; // 1-5
   naturalness: number; // 1-5

@@ -1,7 +1,17 @@
 import fs from "fs";
 import path from "path";
 import Papa from "papaparse";
-import { ModelData, ModelConfig, ConversationPair, PredictionRow, EvaluationSample, SamplingConfig, DEFAULT_SAMPLING_CONFIG } from "@/types/evaluation";
+import {
+  ConditionMetrics,
+  ConversationPair,
+  DEFAULT_SAMPLING_CONFIG,
+  EvaluationSample,
+  ModelConfig,
+  ModelData,
+  PredictionCondition,
+  PredictionRow,
+  SamplingConfig,
+} from "@/types/evaluation";
 
 const ROOT_DIR = path.resolve(process.cwd(), "..");
 
@@ -145,15 +155,21 @@ export function createStratifiedSample(samples: { index: number; dataset: string
   return shuffleArray(selectedIndices, random).slice(0, targetCount);
 }
 
+interface MergedCondition {
+  pred: string | null;
+  metrics: {
+    bertscore_f1: number | null;
+    bleurt: number | null;
+    ppl: number | null;
+  };
+}
+
 interface MergedPrediction {
   index: number;
   ground_truth: string;
   dataset: string;
   num_turns: number;
-  pred_base: string | null;
-  pred_ft: string | null;
-  metrics_base: { bertscore_f1: number | null; bleurt: number | null; ppl: number | null };
-  metrics_ft: { bertscore_f1: number | null; bleurt: number | null; ppl: number | null };
+  conditions: Record<string, MergedCondition>;
 }
 
 function loadMergedPredictions(): Record<string, MergedPrediction[]> | null {
@@ -162,6 +178,13 @@ function loadMergedPredictions(): Record<string, MergedPrediction[]> | null {
     return null;
   }
   return JSON.parse(fs.readFileSync(mergedPath, "utf-8"));
+}
+
+function displayNameForCondition(conditionId: string): string {
+  return conditionId
+    .split("_")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 }
 
 export function buildEvaluationSamples(models: ModelData[], samplingConfig: SamplingConfig = DEFAULT_SAMPLING_CONFIG): EvaluationSample[] {
@@ -208,41 +231,36 @@ export function buildEvaluationSamples(models: ModelData[], samplingConfig: Samp
 
     const groundTruth = pair.target_user.trim();
 
-    // Create blinded mapping (randomize order of predictions)
-    const predictionEntries: { modelId: string; type: "base" | "fineTuned" }[] = [];
+    const conditionSet = new Set<string>();
     for (const model of models) {
-      predictionEntries.push({ modelId: model.id, type: "base" });
-      predictionEntries.push({ modelId: model.id, type: "fineTuned" });
+      const pred = predictionsByGroundTruth[model.id]?.[groundTruth];
+      Object.keys(pred?.conditions || {}).forEach((conditionId) => conditionSet.add(`${model.id}:${conditionId}`));
     }
+    const predictionEntries = Array.from(conditionSet);
     const shuffledPreds = shuffleArray(predictionEntries, random);
     const blindedMapping: Record<string, string> = {};
     const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     shuffledPreds.forEach((entry, i) => {
-      blindedMapping[labels[i]] = `${entry.modelId}:${entry.type}`;
+      blindedMapping[labels[i]] = entry;
     });
 
-    // Build predictions array - match by GROUND TRUTH text
-    const predictions = models.map((model) => {
+    const predictions: PredictionCondition[] = [];
+    for (const model of models) {
       const modelPreds = predictionsByGroundTruth[model.id];
       const pred = modelPreds?.[groundTruth] || null;
-
-      return {
-        modelId: model.id,
-        modelName: model.name,
-        base: pred?.pred_base || "",
-        fineTuned: pred?.pred_ft || "",
-        baseMetrics: {
-          bertscore_f1: pred?.metrics_base?.bertscore_f1 || 0,
-          bleurt: pred?.metrics_base?.bleurt || 0,
-          ppl_content: pred?.metrics_base?.ppl || 0,
-        },
-        ftMetrics: {
-          bertscore_f1: pred?.metrics_ft?.bertscore_f1 || 0,
-          bleurt: pred?.metrics_ft?.bleurt || 0,
-          ppl_content: pred?.metrics_ft?.ppl || 0,
-        },
-      };
-    });
+      for (const [conditionId, condition] of Object.entries(pred?.conditions || {})) {
+        predictions.push({
+          conditionId: `${model.id}:${conditionId}`,
+          displayName: `${model.name} · ${displayNameForCondition(conditionId)}`,
+          text: condition.pred || "",
+          metrics: {
+            bertscore_f1: condition.metrics?.bertscore_f1,
+            bleurt: condition.metrics?.bleurt,
+            ppl_content: condition.metrics?.ppl,
+          } satisfies ConditionMetrics,
+        });
+      }
+    }
 
     samples.push({
       id: `${pair.split}-${pair.index}`,

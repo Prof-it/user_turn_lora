@@ -4,53 +4,35 @@ import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Slider } from "@/components/ui/slider";
-import { Label } from "@/components/ui/label";
 import { ChevronRight, Save, Download, RotateCcw } from "lucide-react";
+import { PredictionCard } from "@/components/prediction-card";
 
-interface Prediction {
-  label: string;
-  text: string;
-  type: "baseline" | "finetuned" | "prompt_zeroshot" | "prompt_fewshot";
-}
+import {
+  buildExportCsv,
+  createDefaultScores,
+  type PredictionRating,
+  type Rating,
+  type Sample,
+} from "@/lib/quick-eval";
 
-interface Sample {
-  id: string;
-  index: number;
-  dataset: string;
-  context: { role: string; content: string }[];
-  groundTruth: string;
-  predictions: Prediction[];
-  blindedMapping: Record<string, string>;
-}
 
-interface PredictionRating {
-  relevance: number;
-  coherence: number;
-  naturalness: number;
-}
-
-interface Rating {
-  sampleId: string;
-  scores: Record<string, PredictionRating>;
-  timestamp: string;
-}
-
-const STORAGE_KEY = "quick-eval-session-v3";
+const STORAGE_KEY = "quick-eval-session-v4";
 const AUTO_SAVE_INTERVAL = 5;
+const COLOR_STYLES = [
+  { border: "border-blue-200", bg: "bg-blue-50", text: "text-blue-600", circle: "bg-blue-600" },
+  { border: "border-purple-200", bg: "bg-purple-50", text: "text-purple-600", circle: "bg-purple-600" },
+  { border: "border-orange-200", bg: "bg-orange-50", text: "text-orange-600", circle: "bg-orange-600" },
+  { border: "border-green-200", bg: "bg-green-50", text: "text-green-600", circle: "bg-green-600" },
+  { border: "border-rose-200", bg: "bg-rose-50", text: "text-rose-600", circle: "bg-rose-600" },
+  { border: "border-cyan-200", bg: "bg-cyan-50", text: "text-cyan-600", circle: "bg-cyan-600" },
+];
 
-const createDefaultScores = (): Record<string, PredictionRating> => ({
-  A: { relevance: 3, coherence: 3, naturalness: 3 },
-  B: { relevance: 3, coherence: 3, naturalness: 3 },
-  C: { relevance: 3, coherence: 3, naturalness: 3 },
-  D: { relevance: 3, coherence: 3, naturalness: 3 },
-});
 
 export default function QuickEvalPage() {
   const [samples, setSamples] = useState<Sample[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [ratings, setRatings] = useState<Rating[]>([]);
-  const [scores, setScores] = useState<Record<string, PredictionRating>>(createDefaultScores());
+  const [scores, setScores] = useState<Record<string, PredictionRating>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<string | null>(null);
@@ -99,104 +81,35 @@ export default function QuickEvalPage() {
   }, [ratings.length, saveSession]);
 
   const currentSample = samples[currentIndex];
+  const existingRating = currentSample ? ratings.find((rating) => rating.sampleId === currentSample.id) : null;
+
+  useEffect(() => {
+    if (!currentSample) {
+      setScores({});
+      return;
+    }
+    if (existingRating) {
+      setScores(JSON.parse(JSON.stringify(existingRating.scores)));
+    } else {
+      setScores(createDefaultScores(currentSample.predictions));
+    }
+  }, [currentSample, existingRating]);
 
   const handleSubmitRating = () => {
     if (!currentSample) return;
-
     const newRating: Rating = {
       sampleId: currentSample.id,
       scores: JSON.parse(JSON.stringify(scores)),
       timestamp: new Date().toISOString(),
     };
-
-    setRatings((prev) => [...prev.filter((r) => r.sampleId !== currentSample.id), newRating]);
-
+    setRatings((prev) => [...prev.filter((rating) => rating.sampleId !== currentSample.id), newRating]);
     if (currentIndex < samples.length - 1) {
-      setCurrentIndex((i) => i + 1);
-      setScores(createDefaultScores());
+      setCurrentIndex((index) => index + 1);
     }
   };
 
   const handleExport = () => {
-    const headers = [
-      "sample_id",
-      "dataset",
-      "baseline_relevance",
-      "baseline_coherence",
-      "baseline_naturalness",
-      "baseline_avg",
-      "finetuned_relevance",
-      "finetuned_coherence",
-      "finetuned_naturalness",
-      "finetuned_avg",
-      "zeroshot_relevance",
-      "zeroshot_coherence",
-      "zeroshot_naturalness",
-      "zeroshot_avg",
-      "fewshot_relevance",
-      "fewshot_coherence",
-      "fewshot_naturalness",
-      "fewshot_avg",
-      "winner",
-      "timestamp",
-    ];
-
-    const rows = ratings.map((r) => {
-      const sample = samples.find((s) => s.id === r.sampleId);
-      if (!sample) return null;
-
-      const typeScores: Record<string, PredictionRating> = {
-        baseline: { relevance: 0, coherence: 0, naturalness: 0 },
-        finetuned: { relevance: 0, coherence: 0, naturalness: 0 },
-        prompt_zeroshot: { relevance: 0, coherence: 0, naturalness: 0 },
-        prompt_fewshot: { relevance: 0, coherence: 0, naturalness: 0 },
-      };
-
-      for (const [label, type] of Object.entries(sample.blindedMapping)) {
-        if (r.scores[label]) {
-          typeScores[type] = r.scores[label];
-        }
-      }
-
-      const avg = (s: PredictionRating) => (s.relevance + s.coherence + s.naturalness) / 3;
-      const baselineAvg = avg(typeScores.baseline);
-      const finetunedAvg = avg(typeScores.finetuned);
-      const zeroShotAvg = avg(typeScores.prompt_zeroshot);
-      const fewShotAvg = avg(typeScores.prompt_fewshot);
-
-      const maxAvg = Math.max(baselineAvg, finetunedAvg, zeroShotAvg, fewShotAvg);
-      const winners = [];
-      if (baselineAvg === maxAvg) winners.push("baseline");
-      if (finetunedAvg === maxAvg) winners.push("finetuned");
-      if (zeroShotAvg === maxAvg) winners.push("prompt_zeroshot");
-      if (fewShotAvg === maxAvg) winners.push("prompt_fewshot");
-      const winner = winners.length > 1 ? "tie" : winners[0];
-
-      return [
-        r.sampleId,
-        sample.dataset,
-        typeScores.baseline.relevance,
-        typeScores.baseline.coherence,
-        typeScores.baseline.naturalness,
-        baselineAvg.toFixed(2),
-        typeScores.finetuned.relevance,
-        typeScores.finetuned.coherence,
-        typeScores.finetuned.naturalness,
-        finetunedAvg.toFixed(2),
-        typeScores.prompt_zeroshot.relevance,
-        typeScores.prompt_zeroshot.coherence,
-        typeScores.prompt_zeroshot.naturalness,
-        zeroShotAvg.toFixed(2),
-        typeScores.prompt_fewshot.relevance,
-        typeScores.prompt_fewshot.coherence,
-        typeScores.prompt_fewshot.naturalness,
-        fewShotAvg.toFixed(2),
-        winner,
-        r.timestamp,
-      ].join(",");
-    }).filter(Boolean);
-
-    const csv = [headers.join(","), ...rows].join("\n");
+    const csv = buildExportCsv(samples, ratings);
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -213,18 +126,6 @@ export default function QuickEvalPage() {
       setLastSaved(null);
     }
   };
-
-  const existingRating = currentSample
-    ? ratings.find((r) => r.sampleId === currentSample.id)
-    : null;
-
-  useEffect(() => {
-    if (existingRating) {
-      setScores(JSON.parse(JSON.stringify(existingRating.scores)));
-    } else {
-      setScores(createDefaultScores());
-    }
-  }, [existingRating, currentIndex]);
 
   const updateScore = (label: string, category: keyof PredictionRating, value: number) => {
     setScores((prev) => ({
@@ -264,22 +165,14 @@ export default function QuickEvalPage() {
     );
   }
 
-  const colors: Record<string, { border: string; bg: string; text: string; circle: string }> = {
-    A: { border: "border-blue-200", bg: "bg-blue-50", text: "text-blue-600", circle: "bg-blue-600" },
-    B: { border: "border-purple-200", bg: "bg-purple-50", text: "text-purple-600", circle: "bg-purple-600" },
-    C: { border: "border-orange-200", bg: "bg-orange-50", text: "text-orange-600", circle: "bg-orange-600" },
-    D: { border: "border-green-200", bg: "bg-green-50", text: "text-green-600", circle: "bg-green-600" },
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 p-4">
       <div className="max-w-7xl mx-auto space-y-4">
-        {/* Header */}
         <div className="flex items-center justify-between bg-white rounded-lg p-4 shadow-sm">
           <div>
             <h1 className="text-xl font-bold">Human Evaluation</h1>
             <p className="text-sm text-gray-500">
-              Rate each prediction on Relevance, Coherence, Naturalness (1-5) • Auto-saves to browser every 5 samples
+              Rate each prediction on Relevance, Coherence, Naturalness (1-5) • Auto-saves every 5 samples
             </p>
           </div>
           <div className="flex items-center gap-4">
@@ -307,34 +200,28 @@ export default function QuickEvalPage() {
           </div>
         </div>
 
-        {/* Progress bar */}
         <div className="bg-white rounded-lg p-2 shadow-sm">
           <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-blue-600 transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
+            <div className="h-full bg-blue-600 transition-all duration-300" style={{ width: `${progress}%` }} />
           </div>
         </div>
 
-        {/* Sample info */}
         <div className="flex items-center gap-2">
           <Badge variant="outline">Sample {currentIndex + 1} of {samples.length}</Badge>
           <Badge variant="secondary">{currentSample.dataset}</Badge>
           {existingRating && <Badge className="bg-green-100 text-green-800">Already rated</Badge>}
         </div>
 
-        {/* Context Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg">Conversation Context (last 8 turns)</CardTitle>
+              <CardTitle className="text-lg">Conversation Context</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="max-h-[300px] overflow-y-auto space-y-2 pr-2">
-                {currentSample.context.slice(-12).map((msg, i) => (
+                {currentSample.context.slice(-12).map((msg, index) => (
                   <div
-                    key={i}
+                    key={index}
                     className={`p-3 rounded ${
                       msg.role === "user"
                         ? "bg-blue-50 border-l-3 border-blue-400"
@@ -356,98 +243,34 @@ export default function QuickEvalPage() {
             <CardContent>
               <p className="text-base whitespace-pre-wrap">{currentSample.groundTruth}</p>
               <p className="text-xs text-green-700 mt-3 italic">
-                Note: Rate predictions on intrinsic quality, not similarity to ground truth. 
-                A different but contextually appropriate response can score 5/5.
+                Rate intrinsic quality, not surface similarity. A different but contextually appropriate response can still score 5/5.
               </p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Predictions Row - 4 columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {currentSample.predictions.map((pred) => {
-            const color = colors[pred.label] || colors.A;
-            const predScores = scores[pred.label] || { relevance: 3, coherence: 3, naturalness: 3 };
+        <div
+          className="grid gap-4"
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}
+        >
+          {currentSample.predictions.map((prediction, index) => {
+            const color = COLOR_STYLES[index % COLOR_STYLES.length];
+            const predictionScores = scores[prediction.label] || { relevance: 3, coherence: 3, naturalness: 3 };
 
             return (
-              <Card key={pred.label} className={`border-2 ${color.border}`}>
-                <CardHeader className={`pb-2 ${color.bg}`}>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <span className={`w-8 h-8 rounded-full ${color.circle} text-white flex items-center justify-center font-bold`}>
-                      {pred.label}
-                    </span>
-                    Prediction {pred.label}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-3 space-y-4">
-                  <div className="bg-white p-3 rounded border max-h-[150px] overflow-y-auto">
-                    <p className="text-sm whitespace-pre-wrap">{pred.text}</p>
-                  </div>
-
-                  {/* Relevance */}
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <Label className="text-sm font-medium">Relevance</Label>
-                      <span className={`text-xl font-bold ${color.text}`}>{predScores.relevance}</span>
-                    </div>
-                    <Slider
-                      value={[predScores.relevance]}
-                      onValueChange={(v) => updateScore(pred.label, "relevance", v[0])}
-                      min={1}
-                      max={5}
-                      step={1}
-                      className="h-3"
-                    />
-                  </div>
-
-                  {/* Coherence */}
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <Label className="text-sm font-medium">Coherence</Label>
-                      <span className={`text-xl font-bold ${color.text}`}>{predScores.coherence}</span>
-                    </div>
-                    <Slider
-                      value={[predScores.coherence]}
-                      onValueChange={(v) => updateScore(pred.label, "coherence", v[0])}
-                      min={1}
-                      max={5}
-                      step={1}
-                      className="h-3"
-                    />
-                  </div>
-
-                  {/* Naturalness */}
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <Label className="text-sm font-medium">Naturalness</Label>
-                      <span className={`text-xl font-bold ${color.text}`}>{predScores.naturalness}</span>
-                    </div>
-                    <Slider
-                      value={[predScores.naturalness]}
-                      onValueChange={(v) => updateScore(pred.label, "naturalness", v[0])}
-                      min={1}
-                      max={5}
-                      step={1}
-                      className="h-3"
-                    />
-                  </div>
-
-                  <div className="text-center text-sm text-gray-500 pt-2 border-t">
-                    Avg: <span className="font-bold">{((predScores.relevance + predScores.coherence + predScores.naturalness) / 3).toFixed(1)}</span>
-                  </div>
-                </CardContent>
-              </Card>
+              <PredictionCard
+                key={prediction.label}
+                color={color}
+                prediction={prediction}
+                scores={predictionScores}
+                onUpdate={(category, value) => updateScore(prediction.label, category, value)}
+              />
             );
           })}
         </div>
 
-        {/* Submit + Navigation */}
         <div className="flex items-center justify-between bg-white rounded-lg p-4 shadow-sm">
-          <Button
-            variant="ghost"
-            onClick={() => setCurrentIndex((i) => Math.max(0, i - 1))}
-            disabled={currentIndex === 0}
-          >
+          <Button variant="ghost" onClick={() => setCurrentIndex((index) => Math.max(0, index - 1))} disabled={currentIndex === 0}>
             ← Previous
           </Button>
 
@@ -458,7 +281,7 @@ export default function QuickEvalPage() {
 
           <Button
             variant="ghost"
-            onClick={() => setCurrentIndex((i) => Math.min(samples.length - 1, i + 1))}
+            onClick={() => setCurrentIndex((index) => Math.min(samples.length - 1, index + 1))}
             disabled={currentIndex === samples.length - 1}
           >
             Skip →

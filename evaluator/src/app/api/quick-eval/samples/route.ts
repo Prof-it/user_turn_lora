@@ -7,6 +7,19 @@ interface Message {
   content: string;
 }
 
+interface MergedCondition {
+  pred: string | null;
+}
+
+interface MergedSample {
+  index: number;
+  ground_truth: string;
+  dataset: string;
+  num_turns: number;
+  conversation_hash: string;
+  conditions: Record<string, MergedCondition>;
+}
+
 interface Sample {
   id: string;
   index: number;
@@ -16,7 +29,7 @@ interface Sample {
   predictions: {
     label: string;
     text: string;
-    type: "baseline" | "finetuned" | "prompt_zeroshot" | "prompt_fewshot";
+    type: string;
   }[];
   blindedMapping: Record<string, string>;
 }
@@ -38,164 +51,110 @@ function shuffleArray<T>(array: T[], seed: number): T[] {
   return result;
 }
 
+function loadJson<T>(filePath: string): T | null {
+  if (!fs.existsSync(filePath)) {
+    return null;
+  }
+  return JSON.parse(fs.readFileSync(filePath, "utf-8")) as T;
+}
+
+function buildExampleKey(conversationHash: string, groundTruth: string, dataset: string): string {
+  return `${dataset}::${conversationHash}::${groundTruth.trim()}`;
+}
+
+function loadOpenAIPredictions(rootDir: string, mode: "zero-shot" | "few-shot"): Record<string, string> {
+  const pathName = path.join(rootDir, "outputs", "prompt_baseline", `gpt-4o-mini-${mode}`, "predictions.json");
+  const rows =
+    loadJson<
+      Array<{
+        target_user: string;
+        pred_prompt_baseline?: string;
+        meta?: { conversation_hash?: string; dataset?: string };
+      }>
+    >(pathName) || [];
+  return Object.fromEntries(
+    rows.map((row) => [
+      buildExampleKey(row.meta?.conversation_hash || "", row.target_user, row.meta?.dataset || ""),
+      row.pred_prompt_baseline || "",
+    ]),
+  );
+}
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const sampleCount = parseInt(searchParams.get("count") || "250");
     const seed = parseInt(searchParams.get("seed") || "42");
+    const includeOpenAI = searchParams.get("includeOpenAI") === "1";
+    const modelId = searchParams.get("model") || "outputs/Qwen-Qwen2.5-3B-Instruct";
 
     const rootDir = path.join(process.cwd(), "..");
+    const mergedPath = path.join(process.cwd(), "data", "merged_predictions.json");
+    const merged = loadJson<Record<string, MergedSample[]>>(mergedPath);
+    if (!merged || !merged[modelId]) {
+      return NextResponse.json({ error: `Merged predictions not found for ${modelId}` }, { status: 404 });
+    }
 
-    // Load model predictions (pick one model - Qwen as representative)
-    const modelDir = path.join(rootDir, "outputs", "Qwen-Qwen2.5-3B-Instruct");
-    const chatPairsPath = path.join(modelDir, "chat_pairs.json");
-
-    if (!fs.existsSync(chatPairsPath)) {
+    const modelDir = path.join(rootDir, modelId);
+    const chatPairs = loadJson<Array<{ conversation: Message[]; target_user: string; meta?: { dataset?: string } }>>(
+      path.join(modelDir, "chat_pairs.json"),
+    );
+    if (!chatPairs) {
       return NextResponse.json({ error: "chat_pairs.json not found" }, { status: 404 });
     }
 
-    const chatPairs = JSON.parse(fs.readFileSync(chatPairsPath, "utf-8"));
+    const openAIZeroShot = includeOpenAI ? loadOpenAIPredictions(rootDir, "zero-shot") : {};
+    const openAIFewShot = includeOpenAI ? loadOpenAIPredictions(rootDir, "few-shot") : {};
+    const labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    // Load baseline and finetuned predictions from eval CSVs
-    // CSV format: ref,pred,bertscore_f1,bleurt,ppl_content,dataset,...
-    const evalBasePath = path.join(modelDir, "eval_bleurt_bertscore_per_example.csv");
-    const evalFtPath = path.join(modelDir, "eval_ft_bleurt_bertscore_per_example.csv");
+    const allSamples: Sample[] = [];
+    for (const pair of merged[modelId]) {
+      const chatPair = chatPairs[pair.index];
+      if (!chatPair) continue;
 
-    // Proper CSV parser that handles multi-line quoted fields
-    function parseCSV(content: string): string[][] {
-      const rows: string[][] = [];
-      let currentRow: string[] = [];
-      let currentField = "";
-      let inQuotes = false;
+      const conditions = Object.entries(pair.conditions)
+        .filter(([, condition]) => Boolean(condition.pred))
+        .map(([conditionId, condition]) => ({
+          label: "",
+          text: condition.pred || "",
+          type: conditionId,
+        }));
 
-      for (let i = 0; i < content.length; i++) {
-        const char = content[i];
-        const nextChar = content[i + 1];
-
-        if (inQuotes) {
-          if (char === '"' && nextChar === '"') {
-            currentField += '"';
-            i++; // Skip escaped quote
-          } else if (char === '"') {
-            inQuotes = false;
-          } else {
-            currentField += char;
-          }
-        } else {
-          if (char === '"') {
-            inQuotes = true;
-          } else if (char === ",") {
-            currentRow.push(currentField);
-            currentField = "";
-          } else if (char === "\n" || (char === "\r" && nextChar === "\n")) {
-            currentRow.push(currentField);
-            if (currentRow.length > 1) rows.push(currentRow);
-            currentRow = [];
-            currentField = "";
-            if (char === "\r") i++; // Skip \r\n
-          } else if (char !== "\r") {
-            currentField += char;
-          }
+      const exampleKey = buildExampleKey(pair.conversation_hash, pair.ground_truth, pair.dataset);
+      if (includeOpenAI) {
+        if (openAIZeroShot[exampleKey]) {
+          conditions.push({ label: "", text: openAIZeroShot[exampleKey], type: "openai_zero_shot" });
+        }
+        if (openAIFewShot[exampleKey]) {
+          conditions.push({ label: "", text: openAIFewShot[exampleKey], type: "openai_few_shot" });
         }
       }
-      // Handle last row
-      if (currentField || currentRow.length > 0) {
-        currentRow.push(currentField);
-        if (currentRow.length > 1) rows.push(currentRow);
+
+      if (conditions.length < 2) {
+        continue;
       }
-      return rows;
-    }
 
-    // Build lookup maps by ground truth (ref) for proper alignment
-    const baselineByRef: Record<string, string> = {};
-    const finetunedByRef: Record<string, string> = {};
-
-    if (fs.existsSync(evalBasePath)) {
-      const baseCSV = fs.readFileSync(evalBasePath, "utf-8");
-      const rows = parseCSV(baseCSV).slice(1); // Skip header
-      // CSV columns: ref, pred, bertscore_f1, bleurt, ...
-      rows.forEach((row) => {
-        const ref = row[0] || "";
-        const pred = row[1] || "";
-        if (ref) baselineByRef[ref] = pred;
-      });
-    }
-
-    if (fs.existsSync(evalFtPath)) {
-      const ftCSV = fs.readFileSync(evalFtPath, "utf-8");
-      const rows = parseCSV(ftCSV).slice(1);
-      rows.forEach((row) => {
-        const ref = row[0] || "";
-        const pred = row[1] || "";
-        if (ref) finetunedByRef[ref] = pred;
-      });
-    }
-
-    // Load prompt baseline predictions (zero-shot and few-shot)
-    const zeroShotPath = path.join(rootDir, "outputs", "prompt_baseline", "gpt-4o-mini-zero-shot", "predictions.json");
-    const fewShotPath = path.join(rootDir, "outputs", "prompt_baseline", "gpt-4o-mini-few-shot", "predictions.json");
-    let zeroShotPreds: string[] = [];
-    let fewShotPreds: string[] = [];
-
-    if (fs.existsSync(zeroShotPath)) {
-      const data = JSON.parse(fs.readFileSync(zeroShotPath, "utf-8"));
-      zeroShotPreds = data.map((item: { pred_prompt_baseline?: string }) => item.pred_prompt_baseline || "");
-    }
-
-    if (fs.existsSync(fewShotPath)) {
-      const data = JSON.parse(fs.readFileSync(fewShotPath, "utf-8"));
-      fewShotPreds = data.map((item: { pred_prompt_baseline?: string }) => item.pred_prompt_baseline || "");
-    }
-
-    // Build samples with all 4 conditions, aligned by ground truth
-    const allSamples: Sample[] = [];
-
-    for (let i = 0; i < chatPairs.length; i++) {
-      const pair = chatPairs[i];
-      const groundTruth = pair.target_user;
-
-      // Look up predictions by ground truth text for proper alignment
-      const basePred = baselineByRef[groundTruth] || "";
-      const ftPred = finetunedByRef[groundTruth] || "";
-      const zsPred = zeroShotPreds[i] || ""; // Prompt baselines are already aligned with chat_pairs
-      const fsPred = fewShotPreds[i] || "";
-
-      // Skip if any prediction is missing
-      if (!basePred || !ftPred || !zsPred || !fsPred) continue;
-
-      // Create blinded labels (A, B, C, D) with randomized order per sample
-      const conditions: { label: string; text: string; type: "baseline" | "finetuned" | "prompt_zeroshot" | "prompt_fewshot" }[] = [
-        { label: "", text: basePred, type: "baseline" },
-        { label: "", text: ftPred, type: "finetuned" },
-        { label: "", text: zsPred, type: "prompt_zeroshot" },
-        { label: "", text: fsPred, type: "prompt_fewshot" },
-      ];
-
-      // Shuffle conditions for this sample
-      const shuffled = shuffleArray(conditions, seed + i);
-      const labels = ["A", "B", "C", "D"];
-      shuffled.forEach((cond, idx) => {
-        cond.label = labels[idx];
+      const shuffled = shuffleArray(conditions, seed + pair.index);
+      shuffled.forEach((condition, idx) => {
+        condition.label = labels[idx];
       });
 
-      // Build blinded mapping (revealed after rating)
       const blindedMapping: Record<string, string> = {};
-      shuffled.forEach((cond) => {
-        blindedMapping[cond.label] = cond.type;
-      });
+      for (const condition of shuffled) {
+        blindedMapping[condition.label] = condition.type;
+      }
 
       allSamples.push({
-        id: `sample_${i}`,
-        index: i,
-        dataset: pair.meta?.dataset || "unknown",
-        context: pair.conversation,
-        groundTruth: pair.target_user,
+        id: `sample_${pair.index}`,
+        index: pair.index,
+        dataset: pair.dataset,
+        context: chatPair.conversation,
+        groundTruth: chatPair.target_user,
         predictions: shuffled,
         blindedMapping,
       });
     }
 
-    // Shuffle and limit samples
     const shuffledSamples = shuffleArray(allSamples, seed);
     const selectedSamples = shuffledSamples.slice(0, sampleCount);
 
@@ -203,6 +162,8 @@ export async function GET(request: Request) {
       samples: selectedSamples,
       totalAvailable: allSamples.length,
       seed,
+      modelId,
+      includeOpenAI,
     });
   } catch (error) {
     console.error("Error loading samples:", error);
