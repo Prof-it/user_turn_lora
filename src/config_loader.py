@@ -13,13 +13,20 @@ if TYPE_CHECKING:
     from .config import PipelineConfig
 
 
+def find_saved_config_path(model_dir: Path) -> Path:
+    """Find the nearest config.json at or above a model directory."""
+    for candidate_dir in (model_dir, *model_dir.parents):
+        config_path = candidate_dir / "config.json"
+        if config_path.exists():
+            return config_path
+    raise FileNotFoundError(f"Config not found at or above {model_dir}")
+
+
 def load_saved_pipeline_config(model_dir: Path) -> "PipelineConfig":
     """Load config.json and reapply saved values after PipelineConfig initialization."""
     from .config import PipelineConfig
 
-    config_path = model_dir / "config.json"
-    if not config_path.exists():
-        raise FileNotFoundError(f"Config not found at {config_path}")
+    config_path = find_saved_config_path(model_dir)
 
     with open(config_path) as f:
         raw = json.load(f)

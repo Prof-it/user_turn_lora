@@ -5,6 +5,7 @@ Targeted per-model alpha/lr sweeps for reviewer-driven follow-up experiments.
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 from typing import TYPE_CHECKING, Dict, List, Tuple
 
@@ -13,6 +14,13 @@ import pandas as pd
 
 if TYPE_CHECKING:
     from .config import PipelineConfig
+
+
+def persist_config(config: "PipelineConfig", exp_dir: Path) -> None:
+    """Save a runnable config.json inside one sweep experiment directory."""
+    exp_dir.mkdir(parents=True, exist_ok=True)
+    with open(exp_dir / "config.json", "w") as f:
+        json.dump(config.to_dict(), f, indent=2)
 
 
 def load_pipeline_config(model_dir: Path) -> "PipelineConfig":
@@ -90,6 +98,7 @@ def run_targeted_sweep(
             config.num_epochs = epochs or base_config.num_epochs
             config.output_dir = str(exp_dir)
             config.report_to = "none"
+            persist_config(config, exp_dir)
 
             print(f"\nRunning {exp_name}...")
             adapter_path = train(config, train_ds, eval_ds)
