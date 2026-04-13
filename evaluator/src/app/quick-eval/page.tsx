@@ -4,8 +4,11 @@ import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ChevronRight, Save, Download, RotateCcw } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import { EvalCompleteCard } from "@/components/eval-complete-card";
+import { EvalHeader } from "@/components/eval-header";
 import { PredictionCard } from "@/components/prediction-card";
+import { RATING_CATEGORIES, useRatingKeyboard, type RatingCursor } from "@/hooks/use-rating-keyboard";
 
 import {
   buildExportCsv,
@@ -14,7 +17,6 @@ import {
   type Rating,
   type Sample,
 } from "@/lib/quick-eval";
-
 
 const STORAGE_KEY = "quick-eval-session-v4";
 const AUTO_SAVE_INTERVAL = 5;
@@ -27,12 +29,12 @@ const COLOR_STYLES = [
   { border: "border-cyan-200", bg: "bg-cyan-50", text: "text-cyan-600", circle: "bg-cyan-600" },
 ];
 
-
 export default function QuickEvalPage() {
   const [samples, setSamples] = useState<Sample[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [ratings, setRatings] = useState<Rating[]>([]);
   const [scores, setScores] = useState<Record<string, PredictionRating>>({});
+  const [ratingCursor, setRatingCursor] = useState<RatingCursor>({ predictionIndex: 0, categoryIndex: 0 });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<string | null>(null);
@@ -40,7 +42,7 @@ export default function QuickEvalPage() {
   useEffect(() => {
     async function loadData() {
       try {
-        const res = await fetch("/api/quick-eval/samples?count=400");
+        const res = await fetch("/api/quick-eval/samples?sampleSet=frozen_human_eval");
         if (res.ok) {
           const data = await res.json();
           setSamples(data.samples);
@@ -95,7 +97,7 @@ export default function QuickEvalPage() {
     }
   }, [currentSample, existingRating]);
 
-  const handleSubmitRating = () => {
+  const handleSubmitRating = useCallback(() => {
     if (!currentSample) return;
     const newRating: Rating = {
       sampleId: currentSample.id,
@@ -106,7 +108,7 @@ export default function QuickEvalPage() {
     if (currentIndex < samples.length - 1) {
       setCurrentIndex((index) => index + 1);
     }
-  };
+  }, [currentIndex, currentSample, samples.length, scores]);
 
   const handleExport = () => {
     const csv = buildExportCsv(samples, ratings);
@@ -127,15 +129,38 @@ export default function QuickEvalPage() {
     }
   };
 
-  const updateScore = (label: string, category: keyof PredictionRating, value: number) => {
+  const handlePrevious = useCallback(() => {
+    setCurrentIndex((index) => Math.max(0, index - 1));
+  }, []);
+
+  const handleSkip = useCallback(() => {
+    setCurrentIndex((index) => Math.min(samples.length - 1, index + 1));
+  }, [samples.length]);
+
+  const updateScore = useCallback((label: string, category: keyof PredictionRating, value: number) => {
     setScores((prev) => ({
       ...prev,
       [label]: { ...prev[label], [category]: value },
     }));
-  };
+  }, []);
 
   const completedCount = ratings.length;
   const progress = samples.length > 0 ? Math.round((completedCount / samples.length) * 100) : 0;
+
+  useEffect(() => {
+    setRatingCursor({ predictionIndex: 0, categoryIndex: 0 });
+  }, [currentSample?.id]);
+
+  useRatingKeyboard({
+    sample: currentSample,
+    scores,
+    cursor: ratingCursor,
+    setCursor: setRatingCursor,
+    onUpdate: updateScore,
+    onSubmit: handleSubmitRating,
+    onPrevious: handlePrevious,
+    onSkip: handleSkip,
+  });
 
   if (loading) {
     return (
@@ -149,56 +174,26 @@ export default function QuickEvalPage() {
   }
 
   if (!currentSample) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Card className="max-w-md">
-          <CardContent className="p-8 text-center">
-            <h2 className="text-xl font-bold mb-4">Evaluation Complete!</h2>
-            <p className="text-gray-600 mb-4">You have rated all {samples.length} samples.</p>
-            <Button onClick={handleExport}>
-              <Download className="h-4 w-4 mr-2" />
-              Export Results
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
+    return <EvalCompleteCard totalCount={samples.length} onExport={handleExport} />;
   }
+
+  const activePrediction = currentSample.predictions[ratingCursor.predictionIndex] || currentSample.predictions[0];
+  const activeCategory = RATING_CATEGORIES[ratingCursor.categoryIndex];
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
       <div className="max-w-7xl mx-auto space-y-4">
-        <div className="flex items-center justify-between bg-white rounded-lg p-4 shadow-sm">
-          <div>
-            <h1 className="text-xl font-bold">Human Evaluation</h1>
-            <p className="text-sm text-gray-500">
-              Rate each prediction on Relevance, Coherence, Naturalness (1-5) • Auto-saves every 5 samples
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="text-right">
-              <p className="text-sm font-medium">
-                {completedCount} / {samples.length} ({progress}%)
-              </p>
-              {lastSaved && (
-                <p className="text-xs text-gray-400">
-                  Saved: {new Date(lastSaved).toLocaleTimeString()}
-                </p>
-              )}
-            </div>
-            <Button variant="outline" size="sm" onClick={saveSession}>
-              <Save className="h-4 w-4 mr-1" />
-              Save
-            </Button>
-            <Button variant="outline" size="sm" onClick={handleExport}>
-              <Download className="h-4 w-4 mr-1" />
-              Export
-            </Button>
-            <Button variant="ghost" size="sm" onClick={handleReset}>
-              <RotateCcw className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
+        <EvalHeader
+          completedCount={completedCount}
+          totalCount={samples.length}
+          progress={progress}
+          lastSaved={lastSaved}
+          activeLabel={activePrediction.label}
+          activeCategory={activeCategory}
+          onSave={saveSession}
+          onExport={handleExport}
+          onReset={handleReset}
+        />
 
         <div className="bg-white rounded-lg p-2 shadow-sm">
           <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
@@ -263,6 +258,10 @@ export default function QuickEvalPage() {
                 color={color}
                 prediction={prediction}
                 scores={predictionScores}
+                activeCategory={activePrediction.label === prediction.label ? activeCategory : null}
+                onSelectCategory={(category) =>
+                  setRatingCursor({ predictionIndex: index, categoryIndex: RATING_CATEGORIES.indexOf(category) })
+                }
                 onUpdate={(category, value) => updateScore(prediction.label, category, value)}
               />
             );
@@ -270,7 +269,7 @@ export default function QuickEvalPage() {
         </div>
 
         <div className="flex items-center justify-between bg-white rounded-lg p-4 shadow-sm">
-          <Button variant="ghost" onClick={() => setCurrentIndex((index) => Math.max(0, index - 1))} disabled={currentIndex === 0}>
+          <Button variant="ghost" onClick={handlePrevious} disabled={currentIndex === 0}>
             ← Previous
           </Button>
 
@@ -281,7 +280,7 @@ export default function QuickEvalPage() {
 
           <Button
             variant="ghost"
-            onClick={() => setCurrentIndex((index) => Math.min(samples.length - 1, index + 1))}
+            onClick={handleSkip}
             disabled={currentIndex === samples.length - 1}
           >
             Skip →

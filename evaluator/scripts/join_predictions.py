@@ -21,6 +21,16 @@ CONDITION_FILES = {
 }
 
 
+def json_value(value):
+    """Convert pandas missing values into strict JSON-compatible nulls."""
+    return None if pd.isna(value) else value
+
+
+def json_float(value):
+    """Convert numeric cells into JSON-compatible floats."""
+    return None if pd.isna(value) else float(value)
+
+
 def build_example_key(*, conversation_hash: str, ground_truth: str, dataset: str) -> str:
     """Build a stable merge key for one evaluation example."""
     return f"{dataset}::{conversation_hash}::{ground_truth.strip()}"
@@ -64,11 +74,11 @@ def load_condition_map(model_dir: Path, filename: str) -> Dict[str, Dict]:
             dataset=str(row.get("dataset", "")).strip(),
         )
         rows[key] = {
-            "pred": row.get("pred"),
+            "pred": json_value(row.get("pred")),
             "metrics": {
-                "bertscore_f1": float(row["bertscore_f1"]) if pd.notna(row.get("bertscore_f1")) else None,
-                "bleurt": float(row["bleurt"]) if pd.notna(row.get("bleurt")) else None,
-                "ppl": float(row["ppl_content"]) if pd.notna(row.get("ppl_content")) else None,
+                "bertscore_f1": json_float(row.get("bertscore_f1")),
+                "bleurt": json_float(row.get("bleurt")),
+                "ppl": json_float(row.get("ppl_content")),
             },
         }
     return rows

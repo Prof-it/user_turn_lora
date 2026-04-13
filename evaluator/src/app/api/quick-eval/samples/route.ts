@@ -86,6 +86,7 @@ export async function GET(request: Request) {
     const sampleCount = parseInt(searchParams.get("count") || "250");
     const seed = parseInt(searchParams.get("seed") || "42");
     const includeOpenAI = searchParams.get("includeOpenAI") === "1";
+    const sampleSet = searchParams.get("sampleSet");
     const modelId = searchParams.get("model") || "outputs/Qwen-Qwen2.5-3B-Instruct";
 
     const rootDir = path.join(process.cwd(), "..");
@@ -155,8 +156,14 @@ export async function GET(request: Request) {
       });
     }
 
-    const shuffledSamples = shuffleArray(allSamples, seed);
-    const selectedSamples = shuffledSamples.slice(0, sampleCount);
+    const frozenSet =
+      sampleSet === "frozen_human_eval"
+        ? loadJson<{ sample_ids: string[] }>(path.join(process.cwd(), "data", "frozen_human_eval_sample_ids.json"))
+        : null;
+    const samplesById = new Map(allSamples.map((sample) => [sample.id, sample]));
+    const selectedSamples = frozenSet
+      ? frozenSet.sample_ids.map((sampleId) => samplesById.get(sampleId)).filter((sample): sample is Sample => Boolean(sample))
+      : shuffleArray(allSamples, seed).slice(0, sampleCount);
 
     return NextResponse.json({
       samples: selectedSamples,
@@ -164,6 +171,7 @@ export async function GET(request: Request) {
       seed,
       modelId,
       includeOpenAI,
+      sampleSet,
     });
   } catch (error) {
     console.error("Error loading samples:", error);
