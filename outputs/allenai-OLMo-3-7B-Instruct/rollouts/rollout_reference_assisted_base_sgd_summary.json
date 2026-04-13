@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "rollout_mode": "reference_assisted",
+    "dataset": "sgd",
+    "num_dialogues": 25,
+    "seed_pairs": 1,
+    "max_rollout_steps": 3,
+    "simulator": {
+      "model_name": "allenai/OLMo-3-7B-Instruct",
+      "simulator_kind": "base",
+      "num_few_shot_examples": 0
+    },
+    "assistant": null
+  },
+  "summary": {
+    "num_dialogues": 25,
+    "num_rollout_steps": 75,
+    "average_completed_steps": 3,
+    "user_bertscore_f1_macro": 0.826215386390686,
+    "user_bleurt_macro": 0.29223487416903177,
+    "assistant_bertscore_f1_macro": null,
+    "assistant_bleurt_macro": null,
+    "empty_user_rate": 0.0,
+    "repeated_user_stop_rate": 0.0,
+    "collapse_rate": 0.0,
+    "user_bertscore_degradation": 0.025482127666473398,
+    "per_step": {
+      "user_bertscore_f1_macro": {
+        "0": 0.8436548805236816,
+        "1": 0.8168183445930481,
+        "2": 0.8181727528572083
+      },
+      "user_bleurt_macro": {
+        "0": 0.2703690168261528,
+        "1": 0.2794720312952995,
+        "2": 0.326863574385643
+      }
+    }
+  }
+}

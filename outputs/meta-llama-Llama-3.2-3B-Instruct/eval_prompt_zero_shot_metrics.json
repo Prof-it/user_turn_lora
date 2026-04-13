@@ -1,0 +1,10 @@
+{
+  "model_name": "meta-llama/Llama-3.2-3B-Instruct",
+  "condition_id": "eval_prompt_zero_shot",
+  "mode": "zero-shot",
+  "temperature": 0.4,
+  "num_few_shot_examples": 0,
+  "bertscore_f1_macro": 0.833240270614624,
+  "bleurt_macro": 0.33626947985962036,
+  "num_examples": 398
+}

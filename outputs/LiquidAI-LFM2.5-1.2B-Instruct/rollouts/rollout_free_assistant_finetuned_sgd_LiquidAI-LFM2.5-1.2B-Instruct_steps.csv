@@ -1,0 +1,272 @@
+dialogue_id,dataset,conversation_hash,seed_pairs,step_index,history_pairs_before_step,predicted_user,gold_user,gold_assistant,generated_assistant,user_bertscore_f1,user_bleurt,assistant_bertscore_f1,assistant_bleurt
+1_00000,GEM/schema_guided_dialog,7fa2a9b3d811,1,0,1,"Yes, I would like the place to be in the San Francisco area.",I would like for it to be in San Jose.,"Is there a specific cuisine type you enjoy, such as Mexican, Italian or something else?","Great! Here are some popular dining options in the San Francisco area:
+
+1. The French Laundry - A three-Michelin-star restaurant known for its exceptional French cuisine.
+2. The Capital Grille - A popular steakhouse with a wide variety of dishes.
+3. The Grindhouse - A casual diner serving classic American comfort food.
+4. The Cracker Barrel - A classic Southern-style restaurant with a wide selection of barbecue.",0.946098268032074,0.6799669861793518,0.8143490552902222,0.39392703771591187
+1_00000,GEM/schema_guided_dialog,7fa2a9b3d811,1,1,2,What are the prices of the food and drinks at these restaurants?,I usually like eating the American type of food.,I see that at 71 Saint Peter there is a good restaurant which is in San Jose.,"The prices at these restaurants can vary depending on the specific dishes and menu items you choose. Here are some general price ranges for each of these restaurants:
+
+1) The French Lau condire: $200-$300 per person for a tasting menu.
+2) The Capital Grill: $15-$25 per burger, $10-$15 per entree.
+3) The Grind House: $10-$20 per burger or sandwich, $5-$10 per",0.8788014650344849,0.3773393929004669,0.8219232559204102,0.23273204267024994
+1_00000,GEM/schema_guided_dialog,7fa2a9b3d811,1,2,3,Please find out the prices for the food and the drinks at these places.,Can you give me the address of this restaurant.,If you want to go to this restaurant you can find it at 71 North San Pedro Street.,"I'm sorry for the confusion, but the prices I provided earlier are estimates and can vary depending upon the specific menu items and any additional items you choose to order.
+
+To get the most accurate prices, I recommend checking the restaurants' websites or calling them directly. Would you like me to help you find the contact information for these restaurants? Or do you want me to suggest some other dining options in San Francisco?",0.879504919052124,0.49560970067977905,0.8443629145622253,0.4196624159812927
+1_00001,GEM/schema_guided_dialog,f5ec69bc8b50,1,0,1,I am looking for food in San Francisco,Some Punjabi kind of foods in milpitas,"I found a good restaurant in Milpitas, The restaurant name is Anjappar Chettinad Restaurant","Great! San Francisco has a wide variety of restaurants. Here are a few popular options:
+
+1. **Cava** - A popular Italian restaurant with a great atmosphere.
+2. **Carmine's** - A classic Italian restaurant with great pasta dishes.
+3. **The Crab Shack** - A seafood restaurant with a fun atmosphere.
+4. **The Pink Door** - A cozy spot for Italian cuisine.
+5. **Café Grumpy",0.8812292218208313,0.3560020327568054,0.8159292936325073,0.15604181587696075
+1_00001,GEM/schema_guided_dialog,f5ec69bc8b50,1,1,2,What is the price range?,"Ok, What is the address? How pricey are they?","Price range is moderate, The address is Milpitas Square","The price range for these restaurants in San Francisco is generally moderate to high. Here are some approximate price ranges:
+
+1 - **Cava:** $15 - $30 per person
+2 - **Carmin's:** $15 per person
+3 - **The Crackers:** $15-$25 per person
+4 - **The Pink Door:** $15-25 per person
+
+Please note that prices can vary depending on the specific menu and any additional items you",0.8937228322029114,0.5112509727478027,0.815761387348175,0.3896195888519287
+1_00001,GEM/schema_guided_dialog,f5ec69bc8b50,1,2,3,Can you suggest something more expensive?,"Ok, Find me another restaurant?","I found another restaurant for you, Aria Dining & Banquets Fine Indian Cuisine Restaurant at Milpitas","Certainly! Here are some more upscale options in San Francisco:
+
+1 **The French Laundry** - A Michelin-starred restaurant known for its exceptional French cuisine.
+2 **The Capital Grille** - A high-end steakhouse with a wide selection of dishes.
+3 **The Capital Diner** - A retro-style diner with a focus on classic American comfort food.
+4 **The Gris Wagon** - A modern, upscale restaurant with a",0.8596503138542175,0.410638689994812,0.8190352320671082,0.11825356632471085
+1_00002,GEM/schema_guided_dialog,88742c1c4d42,1,0,1,I am looking for a restaurant in San Francisco that serves sushi.,Find me Ethiopian cuisine in Berkeley.,"Of the 4 Ethiopian restaurants in Berkeley, Addis Restaurant is a good one.","There are several great sushi restaurants in San Francisco. Some popular options include:
+
+1. Sushi Saito - Known for its high-quality sushi and traditional Japanese atmosphere.
+2. Sushi Katsu - Offers a modern twist on classic sushi with a wide variety of options.
+3. Sushi Bar - A casual spot with a wide selection of sushi and other Japanese dishes.
+4. Sushi Daiwa - A popular spot for sushi with an",0.8874704837799072,0.3840552866458893,0.8561834692955017,0.2085587978363037
+1_00002,GEM/schema_guided_dialog,88742c1c4d42,1,1,2,Please recommend a restaurant that serves American cuisine.,Do they have live music?,I'm sorry. They do not have live music.,"If you're looking for a good American restaurant in San Francisc, here are a few recommendations:
+
+1) **The Original Pancake House** - Known for their delicious pancakes and breakfast favorites.
+2) **The Cafe Grumpy** - Offers classic American comfort food with a fun and quirky atmosphere.
+3) **The Butcher's Daughter** - A farm-to-table American restaurant with a cozy, rustic vibe",0.8692379593849182,0.34564512968063354,0.8130702376365662,0.29201215505599976
+1_00002,GEM/schema_guided_dialog,88742c1c4d42,1,2,3,Can you suggest a restaurant that is not too expensive?,That's okay. I'd like to reserve a table for the 4th.,At what time will you be arriving at the restaurant?,"Certainly! Here are a few budget-friendly American restaurants in San Francico:
+
+1.) **The Butchery** - A casual, no-frills spot with a focus on fresh, locally sourced ingredients. Their menu is straightforward and affordable.
+2.) **The Pancake Shack** - Known as ""America's favorite diner,"" they offer classic American comfort foods like burgers, fries, and milkshakes at reasonable prices.
+3.) **",0.8356680274009705,0.3305407166481018,0.8116809725761414,0.34433817863464355
+1_00003,GEM/schema_guided_dialog,a87f6299da91,1,0,1,"In the San Francisco area, I want to eat some food.",Some Freshwater fish kind of food in Palo Alto would be perfect.,I found 4 restaurants. Odori Japanese Cuisine is a nice restaurant in Palo Alto.,"There are many great restaurants in the San Francisco Bay Area. Here are a few options:
+
+1. The Grindhouse - a casual, family-friendly diner serving burgers, fries, and milkshakes.
+2. The Butcher's Daughter - a farm-to-table restaurant offering seasonal dishes.
+3. The Crab Shack - a seafood restaurant with a casual atmosphere.
+4. The Original Pizza Company - a popular pizza joint with a wide selection",0.8713564276695251,0.42282021045684814,0.8578498959541321,0.3721553087234497
+1_00003,GEM/schema_guided_dialog,a87f6299da91,1,1,2,What is the price range?,Could you suggest any other restaurant?,P.f. Chang's is another nice restaurant in Palo Alto.,"The price range for these restaurants varies, but here are some general estimates:
+
+1, The GrindHouse: $10-$15 per person
+2, The Butcher’s Daughter: $15-$25 per person
+3, The CrabShack: $10 per person
+4, The Original Pizzeria: $10-20 per person
+
+Keep in mind that prices may vary depending on the location, time of day, and any additional items you",0.8549724221229553,0.39090296626091003,0.8296549916267395,0.2689972519874573
+1_00003,GEM/schema_guided_dialog,a87f6299da91,1,2,3,Can you recommend a restaurant in the San Jose area?,"Yes, that works for me.",Would you like to reserve a table here?,"Certainly! Here are a couple of highly-rated restaurants in the Santa Clara County (San Jose) area:
+
+1) The Crab Shop - A casual seafood restaurant with fresh, locally sourced ingredients. Prices range from $10 to $20 per person.
+2) The Grind - A casual, family-owned diner serving classic American comfort food. Prices are generally between $10 and $15 per person.
+
+If you're looking for something more upscale",0.8394045233726501,0.37545347213745117,0.8195545077323914,0.41069692373275757
+1_00004,GEM/schema_guided_dialog,a4ccd76e75de,1,0,1,Can you find a place that serves seafood?,Lobster sounds great. Please search in San Mateo.,I have found 9 restaurants. Andes Cafe San Mateo is a great restaurant in San Mateo.,"Sure! I can help you find a seafood restaurant. Could you tell me your location or the area you're in? That way, I can suggest some places nearby.",0.8490917682647705,0.41348350048065186,0.8634182214736938,0.420856773853302
+1_00004,GEM/schema_guided_dialog,a4ccd76e75de,1,1,2,"Sure, I'm in the Bronx.",What's their phone number?,Their number is 650-581-1305.,"Great! Here are a few seafood restaurants in the Bronxe:
+
+1. **The Lobster Pot** - This restaurant offers a variety of seafood dishes, including lobster, shrimp, and crab.
+2. **The Fish Market** - Known for its fresh seafood, this place has a great selection of seafood options.
+3. **The Seafood Grill** - A popular spot for seafood lovers, offering a wide range of dishes.
+4. **The Crab",0.8440656065940857,0.2852335274219513,0.7972171902656555,0.3247050642967224
+1_00004,GEM/schema_guided_dialog,a4ccd76e75de,1,2,3,What's their address?,Any other suggestions?,Fuji Sukiyaki is another great choice in San Mateo.,"Here are the addresses for the seafood restaurants I mentioned:
+
+1- **The Lobstar** - 1 East 5th Street, Bronx, NY 10451
+2- **The Fishmarket** - 101 5th Ave, Bronxville, NY 11111
+3- **The Seaside** - 1100 5th Avenue, Bronx 10451 (near the Bronx Zoo)
+4- **The Crustace",0.8503645062446594,0.371304988861084,0.7876074314117432,0.2252446860074997
+1_00005,GEM/schema_guided_dialog,83a2fbb29206,1,0,1,In San Francisco.,I want to eat in San Bruno,"I have 3 restaurants, Cabalen is a nice one in San Bruno.","I'm not sure, could you please specify which part of San Francisco you're interested in? For example, are you looking for a particular neighborhood or type of cuisine?",0.8883989453315735,0.31959444284439087,0.8404542803764343,0.29699668288230896
+1_00005,GEM/schema_guided_dialog,83a2fbb29206,1,1,2,It's in the Mission area and I'm looking for something with live music.,Any other suggestions?,What about Isla Restaurant in San Bruno?,"Great! There are several great spots in the Mission District with live music performances. Here are a few recommendations:
+
+1. **The Mission Theater**: This venue hosts a variety of live music events, including concerts, comedy shows, and theater performances.
+2. **The Lighthouse**: Known for its eclectic mix of live music, from jazz to rock, this venue offers a great atmosphere.
+3. **The Echo**: A popular spot for live music",0.8159777522087097,0.32716983556747437,0.8235824704170227,0.3518601655960083
+1_00005,GEM/schema_guided_dialog,83a2fbb29206,1,2,3,That sounds great.,How cheap is it and how much does it cost?,It is moderate pricing and they are at 448 San Mateo Avenue,"That sounds like a fantastic choice! The Mission District is known for its vibrant arts and culture scene. If you have any other questions or need more recommendations, feel free to ask. Enjoy your time in San Francisco!",0.8608936667442322,0.38065338134765625,0.8328742384910583,0.34487855434417725
+1_00006,GEM/schema_guided_dialog,91e1eddf9993,1,0,1,I want to eat at a restaurant in San Francisco.,I would like Freshwater fish.,Do you have a city?,"Sure, there are many great restaurants in San Francisco to choose from. Would you like to know about a specific cuisine or type of restaurant?",0.8844287991523743,0.339388370513916,0.8572999238967896,0.3832731246948242
+1_00006,GEM/schema_guided_dialog,91e1eddf9993,1,1,2,Let's go with a restaurant that serves seafood.,The city is San Jose.,I have one in San Jose called Ariake.,"Great choice! San Francisco has several excellent seafood restaurants. Here are a few recommendations:
+
+1. **Crab Shack**: Known for its fresh seafood and casual atmosphere.
+2. **The Fish Market**: Offers a variety of seafood dishes and a great atmosphere.
+3. **Sushi Saito**: If you're interested in sushi, this is a top-rated restaurant.
+4. **The Lobster Pot**: Offerings include",0.8632736206054688,0.2742499113082886,0.8263351917266846,0.2721138298511505
+1_00006,GEM/schema_guided_dialog,91e1eddf9993,1,2,3,What's the price range?,Yes that is fine.,Would you like a reservation?,"The price range for these seafood restaurants in San Francisco varies, but generally, you can expect to pay between $15 to $30 per person for a meal. It's always a good idea to check the specific restaurant's website or call ahead to confirm the current prices and any special offers.",0.8373411297798157,0.3347228169441223,0.815087080001831,0.3472362160682678
+1_00007,GEM/schema_guided_dialog,83a4d5fc4cfc,1,0,1,I am looking for a restaurant in San Francisco that serves Chinese food.,My family and I are in San Jose and the perfect place would have pizza and pasta. We don't have a price preference.,San Jose has a restaurant called Al Castello Ristorante that is nice.,"Great! Here are a few Chinese restaurants in San Francisco:
+
+1. **Golden Dragon** - Located in the Mission District, this restaurant offers a variety of Chinese dishes, including dim sum, noodles, and stir-fries.
+2. **Yan Dynasty** - Situated in the Mission district, this restaurant serves traditional Chinese cuisine, including dim umbrellas, dumplings, and more.
+3. **The Chow Chow** - Located at",0.8909162878990173,0.34922534227371216,0.83082115650177,0.25267523527145386
+1_00007,GEM/schema_guided_dialog,83a4d5fc4cfc,1,1,2,Please make a reservation for me and my friend at the restaurant.,Is there any other restaurant that you can suggest?,There is also a nice restaurant called Angelo's Italian Restaurant in San Jose.,"I'm sorry, but I don't have the ability to make reservations directly. However, I can help you find the contact information for the restaurant so you can make the reservation yourself. Would you like me, or you, to provide the name and phone number of the restaurant?",0.8365804553031921,0.46515369415283203,0.8371206521987915,0.44700610637664795
+1_00007,GEM/schema_guided_dialog,83a4d5fc4cfc,1,2,3,"Yes, please. I want to make a reservation at the restaurant for 5:30 in the evening.",Can I please have the address and contact number?,408-227-5502 is their phone and it is located at 436 Blossom Hill Road.,"Sure! Here are the contact details for the restaurants I mentioned earlier:
+
+1) **Golden Dragon**
+   - Address: 1-14th St, San Francisco, CA 94103
+   - Phone: (415) 555-1234
+   - Website: [Golden Dragon](https://www.goldendragonsf.com/)
+
+2) **Yan dynasty**
+   - Location: 1 Mission St, San Jose, CA 95112",0.8457305431365967,0.4164639115333557,0.8157849907875061,0.3415379524230957
+1_00008,GEM/schema_guided_dialog,92d5ff307c41,1,0,1,Indian food would be great.,I would like some Italian food.,Found 5 restaurants for you out of which De La Torre's Trattoria seems a great from Pleasanton.,"Great! There are several options in Pleasantan for Indian food. You can try out the following:
+
+1. The Indian Restaurant - They offer a variety of Indian dishes at reasonable prices.
+2. The Spice Route - This restaurant offers a range of Indian food at affordable prices.
+3. The Curry House - They have a wide variety of Indian curries and other dishes.
+4. The Indian Food Shop - They sell a variety of spices and ingredients for Indian cooking",0.9177371263504028,0.5158645510673523,0.8182359933853149,0.44376087188720703
+1_00008,GEM/schema_guided_dialog,92d5ff307c41,1,1,2,Which one is the best?,Can you provide the address and do they have live music?,"No, they do not have live music and its address is 6025 West Las Positas Boulevard.","It's hard to say which one is the absolute best as it depends on your personal preferences. However, all of the options I mentioned offer a good selection of Indian food.
+
+If you're looking for a more authentic experience, The Indian Restaurant or The SpiceRoute might be a good choice. If you're looking to try a variety of dishes, The CurryHouse or The Indian Food shop might be a better option.
+
+Let me know if you have any other questions",0.8644648790359497,0.2682276666164398,0.81805020570755,0.3654997646808624
+1_00008,GEM/schema_guided_dialog,92d5ff307c41,1,2,3,What is the address?,Any other recommendation?,Forno Vecchio also seems nice and its located n Pleasanton as well.,"I'm sorry, I am not able to provide the address of the restaurants I mentioned. You can easily find the address of any restaurant by searching for it on a map or by using a search engine.
+
+If there's anything else you need help with, feel free to ask!",0.854710042476654,0.3922702670097351,0.8090355396270752,0.3163553476333618
+1_00009,GEM/schema_guided_dialog,2372cff61e2a,1,0,1,Do you have a restaurant in San Francisco?,I want some breakfast in Fairfield,I recommend Mimi's cafe in fairfield,"Yes, there are many great restaurants in San Francisco. Would you like to know about Italian restaurants, or do you want to try something different?",0.8678622245788574,0.3588528633117676,0.837340235710144,0.29739147424697876
+1_00009,GEM/schema_guided_dialog,2372cff61e2a,1,1,2,Let's try something different. I want to go somewhere in San Francisco that serves Mexican food.,Do they have live music with liquor,They do not have live music but they do have alcohol,"Great choice! San Francisco has a vibrant Mexican food scene. Here are some popular options:
+
+1. **El Tovar** – A historic restaurant with a mix of Mexican and American cuisine.
+2. **La Taqueria** – Known for its authentic Mexican dishes and lively atmosphere.
+3. **La Fonda** – Offers a variety of traditional Mexican dishes, including tacos and enchiladas.
+4. **El Pujol** – A high",0.8615964651107788,0.28873521089553833,0.810928463935852,0.16504348814487457
+1_00009,GEM/schema_guided_dialog,2372cff61e2a,1,2,3,What is the address?,ok that works,Do you want me to reserve a table for you,"El Tová is located at 1234 5th St, San Francisco, CA 94103.
+
+If you need more specific addresses or recommendations, let me know!",0.8362360000610352,0.33243030309677124,0.8156219720840454,0.3310687839984894
+1_00010,GEM/schema_guided_dialog,f5db0d912619,1,0,1,Can you tell me the address of the restaurant?,Is there a band playing there?,"No, unfortunately, they don't offer live music.","Mimi's Caffe is located at 123 Main Street, Fairfield, NY 10001.",0.8975988626480103,0.3664654493331909,0.8161526918411255,0.2995045781135559
+1_00010,GEM/schema_guided_dialog,f5db0d912619,1,1,2,That sounds good! What time do they open?,That's okay. It will work anyway.,Do you wish to make a reservation?,The restaurant opens at 8:00 AM and closes at 10:00 PM.,0.8625004291534424,0.4336032271385193,0.8169760704040527,0.3739105463027954
+1_00010,GEM/schema_guided_dialog,f5db0d912619,1,2,3,Thanks! That's all I need.,"Yes, I'll need to make a reservation for a table for 2.",What time will you be visiting?,"You're welcome! If you need any more help, feel free to ask.",0.8731582760810852,0.4811277985572815,0.8310490846633911,0.47280120849609375
+1_00011,GEM/schema_guided_dialog,1455092970ce,1,0,1,I am looking in San Francisco.,"Cupertino, please.","What kind of food would you like? American, Indian, or something else?",Great! San Francisco has a wide variety of restaurants. Could you tell me what type of cuisine you're interested in or any specific preferences you have?,0.8784868121147156,0.43532896041870117,0.8757584691047668,0.5537471771240234
+1_00011,GEM/schema_guided_dialog,1455092970ce,1,1,2,They're all vegan.,Malaysian sounds good right now.,I've found 2 Malaysian restaurants in Cupertino. Merlion Restaurant & Bar is one.,"That's helpful! There are many vegan options in San Francisco, including:
+
+1. Shake Shack: A popular vegan burger chain.
+2. The Butcher's Daughter: A vegan restaurant with a focus on locally sourced ingredients.
+3. The Green Spoon: A vegan and gluten-free restaurant.
+4. Vegan Pizza Place: A vegan pizza place with a variety of toppings.
+5. The Buttery Biscuit: A vegan bakery",0.8700629472732544,0.17052416503429413,0.8407999873161316,0.33628392219543457
+1_00011,GEM/schema_guided_dialog,1455092970ce,1,2,3,That's great! I'll go with The Butcher’s Daughter.,What's the other one?,Rasa Sayang is also is Cupertino.,"The Butcher'sDaughter is a fantastic choice! They offer a variety of vegan dishes and have a cozy atmosphere. Enjoy your meal! If you need any more recommendations or have any other questions, feel free to ask.",0.8469751477241516,0.3100621700286865,0.8054226636886597,0.2440258115530014
+1_00012,GEM/schema_guided_dialog,e60d669eeef9,1,0,1,I am looking for a place in San Francisco with Italian food.,I would prefer a restaurant which serves up Cambodian food in SF.,I have managed to find a nice restaurant called Anh Hong which is located in San Francisco.,Great! There are several Italian restaurants in San Francisco. Would you like me to provide a list of some popular options?,0.9293342232704163,0.5152341723442078,0.8794440031051636,0.38753050565719604
+1_00012,GEM/schema_guided_dialog,e60d669eeef9,1,1,2,"Yes, please provide me with a list of restaurants.",Are there any alternative restaurants?,"Yes there is, Aux Delices is also a nice restaurant located in San Francisco.","Here are some popular Italian restaurants in the San Francisco area:
+
+1. Carbone - Known for its classic Italian-American dishes and lively atmosphere.
+2. L'Artusi - Offers modern Italian cuisine with a focus on seasonal ingredients.
+3. Il Mulino - A classic Italian restaurant with a cozy, elegant setting.
+4. Il Pagliaccio - A trendy spot with a focus in on creative Italian dishes.
+5. Il Buco - A cozy Italian restaurant",0.8574361205101013,0.5661354660987854,0.8404353857040405,0.420113205909729
+1_00012,GEM/schema_guided_dialog,e60d669eeef9,1,2,3,Please provide me with more options.,"Sure, that sounds great!",Would you like me to make a reservation?,"Certainly! Here are more Italian restaurants in and around San Francisco:
+
+1) Il Margarita - A casual Italian spot with a wide variety of dishes.
+2) Il Pescatore - A family-owned restaurant with a focus of fresh seafood and traditional Italian dishes.
+3) Il Postino - A modern Italian restaurant with an open kitchen and a cozy atmosphere.
+4) Il Buco di San Francisco - A popular spot for a traditional Italian meal.
+5) Il P",0.8221770524978638,0.3762085437774658,0.8022828698158264,0.33233779668807983
+1_00013,GEM/schema_guided_dialog,48c6fbdc5699,1,0,1,Can you suggest some places in San Francisco for Asian food?,Asian kind of food will be good for me and please search it in Fremont City.,"Found 3 results, Asian pearl Seafood Restaurant is the best one in Fremont city, hope you like it.","Sure, here are some highly-rated Asian restaurants in San Francisco:
+
+1. **Xi'an Famous Foods** - Known for its delicious Xi'an-style cuisine.
+2. **Sushi Saito** - A Michelin-starred sushi restaurant.
+3. **Hao's Sushi** - Offers a wide variety of sushi and sashimi.
+4. **The Fish Market** - A popular spot for fresh seafood and Asian dishes.
+5",0.8556892275810242,0.5573375821113586,0.836814284324646,0.3334304690361023
+1_00013,GEM/schema_guided_dialog,48c6fbdc5699,1,1,2,Please suggest some places for Chinese food in San Francisco.,"Yes, I like the same.",Shall I make a reservation at this restaurant?,"Certainly! Here are some highly recommended Chinese restaurants in San Fernandoville:
+
+1) **Xi'an Restaurant** - Offering a variety of authentic Xi'an dishes.
+2) **Chinese Kitchen** - Known as the ""Chinese restaurant with the best noodles in the city.""
+3) **The Chinese Restaurant** - A cozy spot with a wide range of Chinese dishes.
+4) **The Peking Restaurant** - Specializes in Peking duck and other traditional Chinese dishes",0.8626718521118164,0.3126564025878906,0.8226507306098938,0.4193044900894165
+1_00013,GEM/schema_guided_dialog,48c6fbdc5699,1,2,3,What is the price range for the restaurants?,"Yes, make it at half past 1 in the afternoon that will be the perfect time to eat.",Please confirm to book a table for 2 persons in Asian Pearl Seafood REstaurant in Fremont at 1:30 pm on today.,"The price ranges for these Chinese restaurants in the San Francisco area are generally as follows:
+
+1.) **Xi'an Kitchen** - $15 - $30 per person
+2.) **Chinese Kitchen 2** - $10 - $20 per person
+3.) **The Chinese Kitchen** - $$ - $25 per person
+4.) **The Pekin** - $$-$40 per person
+
+Please note that these prices can vary depending on the specific menu items and any",0.8445514440536499,0.3357776403427124,0.8045893311500549,0.2746752202510834
+1_00014,GEM/schema_guided_dialog,5df8285683a8,1,0,1,A restaurant that serves Chinese food would be great.,Barbecue is the best.,I have 2 options. Cafe Eugene in Albany is a good choice.,"Great! There are several Chinese restaurants in Albany. Some popular options include:
+
+1. 123 Main Street Chinese Restaurant
+2. 101 Main Street Chinese Food
+3. 456 Broadway Chinese Restaurant
+
+Would you like me to provide more information about any of these restaurants or help you with something else?",0.8928934931755066,0.40813279151916504,0.8588672876358032,0.4796346426010132
+1_00014,GEM/schema_guided_dialog,5df8285683a8,1,1,2,"No, I want to find restaurants that serve beer.",What is the other option?,Juanita & Maude in Albany is great.,"I apologize for the confusion. If you're looking for restaurants in Albany that serve beer, here are some options:
+
+1) The Ale House
+2) The Brewing House
+3) The Pub & Bar
+
+Would you prefer to know more about any of the restaurants I mentioned earlier, or would you like me for you to search for more options?",0.8665485382080078,0.3477172553539276,0.8223978877067566,0.35544219613075256
+1_00014,GEM/schema_guided_dialog,5df8285683a8,1,2,3,"Yes, I want more information about The Ale House.",Yes that sounds good.,Would you like a table?,"Certainly! The Ale House is a popular restaurant in Albany that serves a variety of beer options. Here are some details about The AleHouse:
+
+- Address: 123 Main St, Albany, NY 11201
+- Phone: (518) 555-1234
+- Website: www.thealehouse.com
+
+The Ale House offers a wide selection of craft beers, including local and international brands. They also have a menu of food options, including burg",0.8628292679786682,0.42483359575271606,0.7957906126976013,0.36439448595046997
+1_00015,GEM/schema_guided_dialog,771c048b4713,1,0,1,I would like to find some places in San Francisco that serve Korean food.,Search San Francisco for Asian Fusion food,"Sure, I found 8 Immortals Restaurant in San Francisco","Great! Here are some popular Korean restaurants in San Francisco:
+
+1. Myungdongdong - Located in the heart of San Francisco's Chinatown, this restaurant offers a variety of Korean dishes.
+2. The Korean Market - This restaurant offers a wide range of Korean food, from traditional dishes to modern fusion.
+3. The Korean BBQ - This restaurant is known for its delicious Korean BBQ, with a wide selection of meats and sides.
+4. Kim",0.888540506362915,0.48116451501846313,0.8399462699890137,0.35057365894317627
+1_00015,GEM/schema_guided_dialog,771c048b4713,1,1,2,Sounds good.,Is there live music?,Unfortunately no.,"You're welcome! Enjoy your meal at one of these Korean restaurants in the city. If you need more recommendations or have any other questions, feel free to ask.",0.8663326501846313,0.2881056070327759,0.8471395373344421,0.3028927445411682
+1_00015,GEM/schema_guided_dialog,771c048b4713,1,2,3,What is the address of the restaurant?,Do they serve alcohol? And what's their phone number?,No alcohol. The phone number is 415-731-5515,"Here are the addresses for the restaurants I mentioned:
+
+1) Myungdungdong - 1 Myungdang St, San Francisco, CA 94103
+2) The Korean Market – 1-2 1st St, San Jose, CA 95112
+3) The Korean BBq – 1 2nd St, San Rafael, CA 94080
+4) Kimchi King – 1 San Francisco St, San Diego,",0.8963561654090881,0.46326589584350586,0.8007815480232239,0.2678947448730469
+1_00016,GEM/schema_guided_dialog,67dc87e4c237,1,0,1,In the San Francisco area.,"Oh, I'm in Oakland. Please find an American restaurant.",I'd recommend Chop Bar in Oakland.,"Great! There are many great places to eat in the San Francisco Bay Area. Here are a few options:
+
+1. The Original Pancake House - They serve delicious pancakes and breakfast items.
+2. The Butcher's Daughter - A farm-to-table restaurant with a focus on seasonal ingredients.
+3. The Grill at the End - A casual spot with a variety of grilled meats and sides.
+4. The Crab Shack - A popular seafood",0.8708752393722534,0.32809606194496155,0.8343201279640198,0.353532612323761
+1_00016,GEM/schema_guided_dialog,67dc87e4c237,1,1,2,What about a good place for drinks?,Are their prices extravagant? How can I contact them.,"No, their prices are moderate. Their phone number is 510-834-2467.","If you're looking for a great place to drink in the San Franciscan area, here are a few recommendations:
+
+1) The French Laundry - A Michelin-starred restaurant known for its exquisite French cuisine.
+2) The Grindhouse - A popular spot for craft beer and cocktails.
+3) The Barrel Room - A speakeasy-style bar with a vintage vibe and a wide selection of drinks.
+4) The Coffee Bean",0.8713634610176086,0.35822147130966187,0.818129301071167,0.28469616174697876
+1_00016,GEM/schema_guided_dialog,67dc87e4c237,1,2,3,That's great. Can you recommend a place that serves vegan food?,"Okay, that sounds good. Can you reserve a table for me?",What time would you like it?,"Absolutely! Here are some vegan-friendly places to consider in the San Francsic area:
+
+1.) The Vegan Butcher - A popular vegan deli and deli counter offering a variety of plant-based options.
+2.) The Veggie Burger - A vegan burger joint with a cozy atmosphere.
+3.) The Veg Platter - A restaurant that offers a variety of vegan dishes and a great atmosphere.
+4.) The Vegas - A vegan restaurant with a",0.8977275490760803,0.4766504764556885,0.7905413508415222,0.165127694606781
+1_00017,GEM/schema_guided_dialog,e2f5eae1a586,1,0,1,In the San Francisco area.,In Oakland.,"What type of cuisine? For example, Chinese, American, or something else?",There are many great restaurants in the San Francisco Bay Area. Could you tell me what kind of cuisine or type of dining experience you're looking for?,0.9220531582832336,0.5983789563179016,0.8536227345466614,0.5155248045921326
+1_00017,GEM/schema_guided_dialog,e2f5eae1a586,1,1,2,Sushi would be great.,I want pizza and pasta.,I found 8 places. A16 is a nice restaurant in Oakland.,"Great choice! There are many excellent sushi restaurants in San Francisco. Some popular options include:
+
+1. Sushi Saito - Known for its high-quality sushi and exceptional service.
+2. Sushi Katsu - Offers a wide variety of sushi and sashimi.
+3. The Fish Market - A popular spot for fresh sushi and seafood.
+4. Sushi Dai - A well-known sushi chain with multiple locations.
+5. Sushi O",0.8773435354232788,0.3878031373023987,0.8579621911048889,0.3192206621170044
+1_00017,GEM/schema_guided_dialog,e2f5eae1a586,1,2,3,Where are they located?,Do they have liquor?,"Yes, they do.","Here are the locations of the sushi restaurants I mentioned:
+
+1) Sushi Sainichi - 1-10th St, San Francisco, CA 94103
+2) Sushi Katsudo - 1st St & 3rd St, San Jose, CA 95112
+3) The Fish Market (San Francisco) - 1 1st Ave, San Francisco 94103, USA
+4) Sushi Dai (San Francisco",0.9026166796684265,0.3877880275249481,0.7876573801040649,0.32910972833633423
+1_00018,GEM/schema_guided_dialog,2a9b33a4d1a7,1,0,1,"In San Francisco, I'm looking for Asian food.",Asian Fusion in Concord.,Ozora Sushi is a restaurant in Concord.,"I see, you're in San Francisco and looking for Asian cuisine. There are many great options to choose from. Can you tell me what kind of Asian food you're interested in? For example, are you looking for Chinese, Japanese, Thai, Korean, or something else?",0.8745815753936768,0.3726584315299988,0.8361638784408569,0.4127400517463684
+1_00018,GEM/schema_guided_dialog,2a9b33a4d1a7,1,1,2,It's sushi.,"Yes, that is good.",Would you like to reserve a table?,"Great choice! San Francisco has a fantastic selection of sushi restaurants. Here are a few highly-rated options:
+
+1. **Sushi Saito** - Known for its exceptional quality and traditional Japanese cuisine.
+2. **Sakura Sushi** - Offers a modern twist on sushi with a wide variety of options.
+3. **Suzume** - A popular spot for high-quality sushi with an extensive menu.
+4. **Sukiy",0.8697324991226196,0.282900869846344,0.8040677905082703,0.29750603437423706
+1_00018,GEM/schema_guided_dialog,2a9b33a4d1a7,1,2,3,What is the address and phone number for the restaurant?,"Yes, any date works.",What time would you like?,"Sure, I can help with that. Here are the details for the restaurant I suggested:
+
+1) **Sushi Sakura** - 123 Market Street, San Francisco, CA 94103
+   - Phone: (415) 555-1234
+
+2) **Sakuradon** - 456 Market Street, Santa Cruz, CA 95110
+   - (415)555-5678
+
+Please note that I recommend checking their websites",0.8453553318977356,0.3849046230316162,0.7779741883277893,0.38660725951194763
+1_00019,GEM/schema_guided_dialog,c59cff148ae1,1,0,1,Do they have live music?,Is it an inexpensive restaurant?,It is a moderate priced place.,I don't have the most current information on live music events at Chili's Grille & Bar. I recommend checking their website or calling them directly to find out if they have any live music scheduled.,0.92186039686203,0.3326769471168518,0.8309446573257446,0.4115709662437439
+1_00019,GEM/schema_guided_dialog,c59cff148ae1,1,1,2,Can you tell me if they have live live music?,What's their phone number?,It is 707-585-9069.,"Sorry for the confusion, but it seems there might be a typo in your question. Did you mean ""live music"" or ""live entertainment""? If you clarify, I can provide more accurate information.",0.8493813276290894,0.2594926357269287,0.8005932569503784,0.2652379274368286
+1_00019,GEM/schema_guided_dialog,c59cff148ae1,1,2,3,What about live music? Can you tell me about live music at Chili’s Grill & bar?,Are there any other restaurants? Something like Ramen would be good. I want something that is not very costly.,1 restaurant named Kyoto fits that description. It's in Rohnert Park as well.,"As of my last update, Chili’s Bar in RohnERT Park does not have a consistent schedule of live music. However, it's always a good idea to check their website or call them directly for the most current and accurate information about any upcoming events or performances. They might occasionally host live music events, but it's best to confirm in advance.",0.8555081486701965,0.40289974212646484,0.8461072444915771,0.3854305148124695

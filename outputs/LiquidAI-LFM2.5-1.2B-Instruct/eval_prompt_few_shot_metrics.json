@@ -1,0 +1,10 @@
+{
+  "model_name": "LiquidAI/LFM2.5-1.2B-Instruct",
+  "condition_id": "eval_prompt_few_shot",
+  "mode": "few-shot",
+  "temperature": 0.4,
+  "num_few_shot_examples": 3,
+  "bertscore_f1_macro": 0.8122382164001465,
+  "bleurt_macro": 0.3849690906330943,
+  "num_examples": 398
+}

@@ -1,0 +1,10 @@
+{
+  "model_name": "LiquidAI/LFM2.5-1.2B-Instruct",
+  "condition_id": "eval_prompt_zero_shot",
+  "mode": "zero-shot",
+  "temperature": 0.4,
+  "num_few_shot_examples": 0,
+  "bertscore_f1_macro": 0.8334628939628601,
+  "bleurt_macro": 0.36927390467375515,
+  "num_examples": 398
+}

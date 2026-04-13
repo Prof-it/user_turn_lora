@@ -1,0 +1,10 @@
+{
+  "model_name": "allenai/OLMo-3-7B-Instruct",
+  "condition_id": "eval_prompt_few_shot",
+  "mode": "few-shot",
+  "temperature": 0.4,
+  "num_few_shot_examples": 3,
+  "bertscore_f1_macro": 0.828108549118042,
+  "bleurt_macro": 0.3799653112888336,
+  "num_examples": 398
+}

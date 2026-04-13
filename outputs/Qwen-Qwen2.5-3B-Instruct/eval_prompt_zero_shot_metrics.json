@@ -1,0 +1,10 @@
+{
+  "model_name": "Qwen/Qwen2.5-3B-Instruct",
+  "condition_id": "eval_prompt_zero_shot",
+  "mode": "zero-shot",
+  "temperature": 0.4,
+  "num_few_shot_examples": 0,
+  "bertscore_f1_macro": 0.8320786952972412,
+  "bleurt_macro": 0.36720475951209663,
+  "num_examples": 398
+}

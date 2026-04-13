@@ -1,0 +1,162 @@
+[
+  {
+    "dialogue_id": "1_00000",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 12,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00001",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 13,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00002",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00003",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 8,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00004",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 10,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00005",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 8,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00006",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00007",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00008",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 13,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00009",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00010",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00011",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 12,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00012",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00013",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 8,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00014",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00015",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 10,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00016",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 7,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00017",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 10,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00018",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00019",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  }
+]

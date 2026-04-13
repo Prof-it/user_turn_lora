@@ -1,0 +1,7 @@
+experiment,lora_r,lora_alpha,learning_rate,num_epochs,bertscore_f1_macro,bleurt_macro,ppl_macro,output_dir
+alpha64_lr2e-04,8,64,0.0002,3,0.8111534118652344,0.24474657171560293,8.891981423259795,outputs/allenai-OLMo-3-7B-Instruct/targeted_sweep/alpha64_lr2e-04
+alpha16_lr2e-04,8,16,0.0002,3,0.8141725063323975,0.24110810529796323,6.981337675736105,outputs/allenai-OLMo-3-7B-Instruct/targeted_sweep/alpha16_lr2e-04
+alpha64_lr1e-04,8,64,0.0001,3,0.80738365650177,0.23648017543793923,6.942845550015776,outputs/allenai-OLMo-3-7B-Instruct/targeted_sweep/alpha64_lr1e-04
+alpha32_lr2e-04,8,32,0.0002,3,0.8108893632888794,0.23589527898996918,7.926917988911108,outputs/allenai-OLMo-3-7B-Instruct/targeted_sweep/alpha32_lr2e-04
+alpha32_lr1e-04,8,32,0.0001,3,0.8031817674636841,0.22594640031456947,6.443905655992432,outputs/allenai-OLMo-3-7B-Instruct/targeted_sweep/alpha32_lr1e-04
+alpha16_lr1e-04,8,16,0.0001,3,0.8016253113746643,0.22134857793249677,6.274603180089013,outputs/allenai-OLMo-3-7B-Instruct/targeted_sweep/alpha16_lr1e-04

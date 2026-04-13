@@ -1,0 +1,11 @@
+{
+  "experiment": "alpha64_lr2e-04",
+  "lora_r": 8,
+  "lora_alpha": 64,
+  "learning_rate": 0.0002,
+  "num_epochs": 3,
+  "bertscore_f1_macro": 0.8111534118652344,
+  "bleurt_macro": 0.24474657171560293,
+  "ppl_macro": 8.891981423259795,
+  "output_dir": "outputs/allenai-OLMo-3-7B-Instruct/targeted_sweep/alpha64_lr2e-04"
+}

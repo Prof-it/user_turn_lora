@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "rollout_mode": "free_assistant",
+    "dataset": "sgd",
+    "num_dialogues": 20,
+    "seed_pairs": 1,
+    "max_rollout_steps": 3,
+    "simulator": {
+      "model_name": "LiquidAI/LFM2.5-1.2B-Instruct",
+      "simulator_kind": "finetuned",
+      "num_few_shot_examples": 0
+    },
+    "assistant": {
+      "assistant_model_name": "LiquidAI/LFM2.5-1.2B-Instruct",
+      "assistant_temperature": 0.2,
+      "assistant_max_new_tokens": 96
+    }
+  },
+  "summary": {
+    "num_dialogues": 20,
+    "num_rollout_steps": 60,
+    "average_completed_steps": 3,
+    "user_bertscore_f1_macro": 0.8699887990951538,
+    "user_bleurt_macro": 0.3893233793477217,
+    "assistant_bertscore_f1_macro": 0.8255259394645691,
+    "assistant_bleurt_macro": 0.3371550171325604,
+    "empty_user_rate": 0.0,
+    "repeated_user_stop_rate": 0.0,
+    "collapse_rate": 0.0,
+    "user_bertscore_degradation": 0.033487215638160706,
+    "per_step": {
+      "user_bertscore_f1_macro": {
+        "0": 0.8908251523971558,
+        "1": 0.8618033409118653,
+        "2": 0.8573379367589951
+      },
+      "user_bleurt_macro": {
+        "0": 0.4267363727092743,
+        "1": 0.3470534272491932,
+        "2": 0.3941803380846977
+      },
+      "assistant_bertscore_f1_macro": {
+        "0": 0.8426957964897156,
+        "1": 0.8232398092746734,
+        "2": 0.8106420576572418
+      },
+      "assistant_bleurt_macro": {
+        "0": 0.3661713294684887,
+        "1": 0.3242098674178123,
+        "2": 0.3210838545113802
+      }
+    }
+  }
+}

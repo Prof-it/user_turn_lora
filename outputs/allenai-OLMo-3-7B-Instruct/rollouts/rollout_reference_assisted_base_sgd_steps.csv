@@ -1,0 +1,380 @@
+dialogue_id,dataset,conversation_hash,seed_pairs,step_index,history_pairs_before_step,predicted_user,gold_user,gold_assistant,generated_assistant,user_bertscore_f1,user_bleurt,assistant_bertscore_f1,assistant_bleurt
+1_00000,GEM/schema_guided_dialog,7fa2a9b3d811,1,0,1,user: I am feeling hungry and need a place to have a meal soon. Can you suggest some options?,I would like for it to be in San Jose.,"Is there a specific cuisine type you enjoy, such as Mexican, Italian or something else?",,0.863237202167511,0.337860643863678,,
+1_00000,GEM/schema_guided_dialog,7fa2a9b3d811,1,1,2,user: I'm looking for a good place to eat near me. Any recommendations?,I usually like eating the American type of food.,I see that at 71 Saint Peter there is a good restaurant which is in San Jose.,,0.8652572631835938,0.2798148989677429,,
+1_00000,GEM/schema_guided_dialog,7fa2a9b3d811,1,2,3,user: I need a recipe for a healthy dinner tonight.,Can you give me the address of this restaurant.,If you want to go to this restaurant you can find it at 71 North San Pedro Street.,,0.8711288571357727,0.3463623821735382,,
+1_00001,GEM/schema_guided_dialog,f5ec69bc8b50,1,0,1,"user
+I am in Warsaw, Poland. I am looking to eat Italian food tonight. Can you recommend a good restaurant?",Some Punjabi kind of foods in milpitas,"I found a good restaurant in Milpitas, The restaurant name is Anjappar Chettinad Restaurant",,0.8424670696258545,0.2395676076412201,,
+1_00001,GEM/schema_guided_dialog,f5ec69bc8b50,1,1,2,"user
+You are an expert in the field of data science and machine learning. I have a dataset with 3 columns: 'A', 'B' and 'C'. Column 'A' is the target variable that can take on 2 different values. Columns 'B' & 'C' are features with many different values. I want to train a classification model to predict the value in column 'A' based on columns 'B' an 'C'. I want to use a tree based model. Which hyperparameters of the model should I tune? Please give me a list of hyperparameters that are important to tune for this use case and explain why each of them are important.","Ok, What is the address? How pricey are they?","Price range is moderate, The address is Milpitas Square",,0.8130694627761841,0.37761253118515015,,
+1_00001,GEM/schema_guided_dialog,f5ec69bc8b50,1,2,3,"Hi, I'm looking for a good Italian restaurant in Warsaw tonight. Do you know any highly rated places near the city center or in a specific area? I don't mind trying something authentic or popular with good reviews. Please suggest a few options with addresses or how to get there if possible.","Ok, Find me another restaurant?","I found another restaurant for you, Aria Dining & Banquets Fine Indian Cuisine Restaurant at Milpitas",,0.8528225421905518,0.4809265732765198,,
+1_00002,GEM/schema_guided_dialog,88742c1c4d42,1,0,1,"user
+I'm planning a dinner with friends next weekend and want to try something new. I love Italian food but also enjoy a good sushi place occasionally. Any recommendations for a great restaurant in New York City?",Find me Ethiopian cuisine in Berkeley.,"Of the 4 Ethiopian restaurants in Berkeley, Addis Restaurant is a good one.",,0.8590143918991089,0.3120967745780945,,
+1_00002,GEM/schema_guided_dialog,88742c1c4d42,1,1,2,"user
+Write a script for a commercial for a new fast food chain called ""BiteBurger"". The mascot is a talking hot dog named Louie. The food is cheap, fast, and healthy.",Do they have live music?,I'm sorry. They do not have live music.,,0.8359292149543762,0.15552011132240295,,
+1_00002,GEM/schema_guided_dialog,88742c1c4d42,1,2,3,"user
+Write an essay about the importance of music in our daily lives",That's okay. I'd like to reserve a table for the 4th.,At what time will you be arriving at the restaurant?,,0.8529683351516724,0.027934178709983826,,
+1_00003,GEM/schema_guided_dialog,a87f6299da91,1,0,1,"user
+I want to eat at a nice Italian restaurant in New York City.",Some Freshwater fish kind of food in Palo Alto would be perfect.,I found 4 restaurants. Odori Japanese Cuisine is a nice restaurant in Palo Alto.,,0.8737598061561584,0.3044920265674591,,
+1_00003,GEM/schema_guided_dialog,a87f6299da91,1,1,2,"user
+You are given a **tree** (i.e., a connected undirected graph with no cycles) with 8 vertices labeled from `1` to `8`. The tree contains the following edges:
+(2, 7)
+(3, 4)
+(1, 5)
+(1 and 2)
+(3 and 6)
+(2,8)
+(3和5)
+
+You may remove **at most 3 edges** to delete as many vertices as possible from the tree so that it becomes a forest where each connected component has size at most 2. Try your best to maximize the number of deleted vertices (i.e. cut vertices that are not part of any edge you removed). Note that when you remove an edge, the two components it splits off become separate forests — try to maximize the total number of deleted nodes across these components.
+
+**Output Format:** Output a single line containing the endpoints of the edges you choose to remove, separated by spaces. Each edge should be written as two integers in a pair, separated by a space, and the pairs should be separated by spaces (e.g., ""1 2 3 4"").",Could you suggest any other restaurant?,P.f. Chang's is another nice restaurant in Palo Alto.,,0.768830418586731,0.3418079614639282,,
+1_00003,GEM/schema_guided_dialog,a87f6299da91,1,2,3,I want to book a table at a nice restaurant for two in Palo Alto tomorrow night. Suggest some options and give me a good time to call to make a reservation.,"Yes, that works for me.",Would you like to reserve a table here?,,0.8388084769248962,0.4155033230781555,,
+1_00004,GEM/schema_guided_dialog,a4ccd76e75de,1,0,1,"user
+Write a python script that takes a list of strings as input and prints the longest string",Lobster sounds great. Please search in San Mateo.,I have found 9 restaurants. Andes Cafe San Mateo is a great restaurant in San Mateo.,,0.8341723084449768,0.08699683845043182,,
+1_00004,GEM/schema_guided_dialog,a4ccd76e75de,1,1,2,"Write a python function that takes a 2D list of strings (i.e., a list of lists of strings) as input and returns the longest string found in the entire 2D structure. If there are multiple strings of the same maximum length, return the first one encountered (in reading order). If the input is empty (no rows or no columns), return an empty string.
+
+Input:
+- A 2D List of strings. For example: [[""apple"", ""banana""], [""cherry"", ""date""], [""fig""]]
+
+Output:
+- A single string: the longest string in the input.
+
+Example:
+```python
+# Example input
+data = [
+    [""apple"", ""pear""],
+    [""banana"", ""kiwi""],
+    [""strawberry""]
+]
+# Expected output: ""strawberry""
+```
+
+Please provide a function definition that accomplishes this task.",What's their phone number?,Their number is 650-581-1305.,,0.7635770440101624,0.337679922580719,,
+1_00004,GEM/schema_guided_dialog,a4ccd76e75de,1,2,3,"Write a Python function called `find_longest_string` that takes a two-dimensional list (list of lists) of strings as its only parameter and returns the single longest string found across all sublists. If multiple strings have the same maximum len(g), return the first such string encountered in left-to-right, top-to-bottom order. If the input list is empty (i.e. `[]` or `[[], [],...]`), return an `empty string`.
+
+Input:
+- `matrix`: A list of lists containing strings (e.g., `[[""a"", ""bb""], [""ccc"", ""d""], []]`)
+
+Output:
+- The longest string as described above.
+
+Example:
+```
+find_longest_strin([""a"", ""banana"", ""pear""], [[], [""apple""], [""grape""]]) 
+# Should return ""banana"" (length 6)
+```
+Wait, actually, let me clarify the example with proper 2D input:
+
+Example 1:
+```python 
+input_data = [
+    ['short','medium'],
+    ['longer', 'longerthanbefore'],
+    ['tiny']
+]
+# Expected Output: 'longer than before' (assuming the space is included, length 17)
+
+input_data2 = [",Any other suggestions?,Fuji Sukiyaki is another great choice in San Mateo.,,0.7528567314147949,0.3297753930091858,,
+1_00005,GEM/schema_guided_dialog,83a2fbb29206,1,0,1,"user
+Write a script for a commercial for a Filipino restaurant. The commercial should be 30 seconds long and include the following elements:
+
+1. A catchy jingle or theme song in Filipino (with English translation provided below the audio).
+2. Visuals of popular Filipino dishes (adobo, lechon, sinigang, etc.).
+3. A friendly host welcoming customers.
+4. Emphasis on the freshness of ingredients and traditional cooking methods.
+5. A call to action: “Come taste the Filipino flavor—only at [Restaurant Name], [Location]!”
+
+Include both the Filipino and English versions of the jingle/theme song. The script should be suitable for a video ad.",I want to eat in San Bruno,"I have 3 restaurants, Cabalen is a nice one in San Bruno.",,0.8142394423484802,0.2819853127002716,,
+1_00005,GEM/schema_guided_dialog,83a2fbb29206,1,1,2,"user
+Write me a script for an ad for a Filipino food restaurant. It should be 60 seconds long. It should include a catchy jingle in Filipino and English (with Filipino lyrics first, then English translation underneath). It should show popular Filipino dishes like adobo, siniganga, lechón, etc. It should have a friendly host welcoming people to the restaurant. It must emphasize the freshness of the ingredients and traditional methods. It should end with a call to action telling people to come taste the Filipino flavors at [Restaurant name] in [Location].",Any other suggestions?,What about Isla Restaurant in San Bruno?,,0.7834440469741821,0.3364916443824768,,
+1_00005,GEM/schema_guided_dialog,83a2fbb29206,1,2,3,"assistant
+Absolutely! Here’s a 60-second script for a Filipino Restaurant Ad featuring Isla Restaurant (you can substitute the actual name and location as needed). The ad includes a catchy jingles, vibrant visuals, warmth, and all the requested elements.
+
+---
+
+**[OPENING SHOT: Upbeat, lively Filipino pop music begins. Colorful shots of the restaurant’s interior, tables set for dining, and sizzling pans in the kitchen.]**
+
+**JINGLE (Filipino & English):**
+
+**Filipino (with music):**  
+*“Mabuhay! Mabuhay ka pa sa atin!”*  
+(Hello! Welcome to us!)
+
+**English (synchronized or below):**  
+“Hello! Welcome home to authentic Filipino flavors.”
+
+---
+
+**[CUT TO HOST—friendly, smiling, wearing a chef’s apron.]**
+
+**HOST (on camera):**  
+(With a warm smile)  
+“Kamusta ka, mga kaibigan at mabubuo! (Hello friends and families!) I’m [Host Name], and I’m so excited to have you at Isla Restaurant, where our tradition meets your taste buds!”
+
+---
+
+**[MONTAGE: Quick shots of dishes being prepared",How cheap is it and how much does it cost?,It is moderate pricing and they are at 448 San Mateo Avenue,,0.7770089507102966,0.3622334599494934,,
+1_00006,GEM/schema_guided_dialog,91e1eddf9993,1,0,1,"user
+You are an expert book writer. Write me a 1000 word book chapter on The Power of Mindful Eating: Savoring Every Bite for Better Health covering the following topics: 1. The Science Behind Mindful Eating 2. Practical Steps to Practice Mindful Eating in Your Daily Life 3. Benefits of Mindful eating. Chapter should be unique and original. Do not copy paste similar content in the internet. Rephrase and paraphrase to make it original.",I would like Freshwater fish.,Do you have a city?,,0.8242235779762268,0.28645971417427063,,
+1_00006,GEM/schema_guided_dialog,91e1eddf9993,1,1,2,"user
+Write me a 1500 word book introduction on the topic of ""The Science of Happiness: Unlocking the Secrets Within"". The book is for beginners and should be written in a friendly, conversational tone. The introduction should explain why this topic matters to readers, hint at the structure of the book, and create a sense of excitement and possibility.",The city is San Jose.,I have one in San Jose called Ariake.,,0.8310549855232239,0.22806037962436676,,
+1_00006,GEM/schema_guided_dialog,91e1eddf9993,1,2,3,"user
+Write a 100 word instagram post about a photo of a sunset over the ocean",Yes that is fine.,Would you like a reservation?,,0.8279136419296265,0.0788489580154419,,
+1_00007,GEM/schema_guided_dialog,83a4d5fc4cfc,1,0,1,"user
+You are an expert book writer. Write me a 1000 word book chapter on The Power of Mindfulness in Everyday Life covering the following topics: 1. Introduction to Mindfulness, 2. Practical Techniques for Incorporating Mindfulness into Daily Routine, 3. Overcoming Challenges and Staying Consistent.",My family and I are in San Jose and the perfect place would have pizza and pasta. We don't have a price preference.,San Jose has a restaurant called Al Castello Ristorante that is nice.,,0.821077287197113,0.2502245306968689,,
+1_00007,GEM/schema_guided_dialog,83a4d5fc4cfc,1,1,2,"You are an excellent professional writer and expert in writing engaging and compelling book chapters. Write me the chapter 1 of the book ""The Art of Mindful Living"" (the title must not be included). The book is about personal development and self-improvement. The chapter should have a title that accurately and creatively describes the content of the chapter. Write in an engaging, conversational tone. The chapter must be 1000 words long. The chapter outline is below:
+
+1. Introduction: Setting the Stage for Mindfulness
+2. The Science Behind Mindfulness: Why It Matters
+3. Recognizing the Benefits of Mindfulness
+4. Identifying Barriers and Common Misconceptions
+5. Taking the First Steps: Getting Practical
+6. Building a Mindful Routine for Everyday Life
+7. Overcoming Obstacles and Staying Motivated
+8. Integrating Mindfulness Into All Aspects of Life
+9. Conclusion: Embracing Mindfulness as a Lifelong Journey
+
+The first section is the introduction. The introduction should answer the following questions: What is mindfulness? Why is it important for readers to learn about it now? What will they gain from reading this chapter? The tone should be welcoming, inspiring, and accessible. Avoid jargon and",Is there any other restaurant that you can suggest?,There is also a nice restaurant called Angelo's Italian Restaurant in San Jose.,,0.7733042240142822,0.3681458830833435,,
+1_00007,GEM/schema_guided_dialog,83a4d5fc4cfc,1,2,3,"You are an acclaimed author and coach specializing in personal growth and mindfulness. I want you to write a 100-page self-help book on ""The Art and Science of Mindful Presence."" For this task, I need you to produce the first chapter based on the outline I've provided, but with a twist: instead of using the outline verbatim, creatively reinterpret the outline to craft a unique chapter structure that still covers all the required themes. The chapter title should be original and compelling. The chapter needs to be approximately 1,000 words, engaging, easy to read, and full of practical insights. The writing style should be warm, direct, and inspiring, as if speaking to a friend who is just beginning their mindfulness journey. Avoid being too academic or formal—make it feel like a conversation between two thoughtful friends. Please begin writing the chapter, starting with the introduction as described above.",Can I please have the address and contact number?,408-227-5502 is their phone and it is located at 436 Blossom Hill Road.,,0.8016321659088135,0.48418551683425903,,
+1_00008,GEM/schema_guided_dialog,92d5ff307c41,1,0,1,"user
+Can I get a list of budget friendly restaurants in Pleasanton, California?",I would like some Italian food.,Found 5 restaurants for you out of which De La Torre's Trattoria seems a great from Pleasanton.,,0.8660435676574707,0.19969654083251953,,
+1_00008,GEM/schema_guided_dialog,92d5ff307c41,1,1,2,"user
+Write a script for a youtube video about the best budget friendly restaurants near Pleasanton, CA. The video should be about 10 minutes long.",Can you provide the address and do they have live music?,"No, they do not have live music and its address is 6025 West Las Positas Boulevard.",,0.8358079791069031,0.19863608479499817,,
+1_00008,GEM/schema_guided_dialog,92d5ff307c41,1,2,3,"user
+You are an expert scriptwriter for YouTube. Write a script for an engaging and informative 10-minute video about the ""10 Best Budget-Friendly Restaurants Near Pleasanton,CA"". The script should include an introduction, a brief overview of Pleasanton, why budget-friendly dining matters, and a detailed review of each restaurant (with a brief description, what makes it budget-friendly, and a sample menu or dish recommendation). Include practical tips for viewers (like how to find deals or what to look for in a budget-friendly restaurant). End with a conclusion and a call to action (like suggesting viewers leave a comment or try one of the places). The tone should be friendly, enthusiastic, and informative. 
+
+**Script Structure Outline:**
+1. **Intro (0:00 - 1:00)**
+   - Hook: Why eating out doesn’t have to break the bank.
+   - Briefly introduce Pleasanton and its food scene.
+   - Preview the video (list of top budget-friendly spots).
+
+2. **Why Budget-Friendly Eats Matter (1:00 -2:00) – Short segment**
+   - Quick stats or relatable reasons (e.g., saving money, trying new foods, supporting local businesses).
+
+3. **Top 10",Any other recommendation?,Forno Vecchio also seems nice and its located n Pleasanton as well.,,0.7734381556510925,0.43594270944595337,,
+1_00009,GEM/schema_guided_dialog,2372cff61e2a,1,0,1,"user
+I'm in San Francisco and craving a good burger. Any recommendations?",I want some breakfast in Fairfield,I recommend Mimi's cafe in fairfield,,0.857551097869873,0.38354188203811646,,
+1_00009,GEM/schema_guided_dialog,2372cff61e2a,1,1,2,"user
+You are given a **tree** (i.e., a connected undirected graph with no cycles) with 4 vertices labeled from `0` to `3`.
+
+The tree has the following 3 undirected edges. Each edge is represented as a tuple `(u, v, w)`, meaning there is an undirected edge between vertex `u` and vertex `v` with weight `w`:
+edge 0 : (0 2 2)
+edge 1 : (0   3 4)
+edge 2 : (1 2 1)
+
+You will remove edges one by one in the following order: 2 0 1 (i.e，first remove edge 2, then remove edge 0, then removeedge 1)
+After removing the first 0, 1,..., 3 edges (in the given order above), please compute the number of **paths** such that the **XOR** of the weights along the path is equal to 0. There are C(4, 2) paths in total, where a path is defined as any simple path between two vertices (a path of a single edge is valid, just count it as one path).
+
+**Output Format:** Your final answer",Do they have live music with liquor,They do not have live music but they do have alcohol,,0.7860598564147949,0.1941145360469818,,
+1_00009,GEM/schema_guided_dialog,2372cff61e2a,1,2,3,"I'm planning a trip to San Francisco and I'm really into good food. Can you suggest some top-rated restaurants in the area that I should check out? I'm especially interested in places that serve great burgers, but I'm open to other amazing dishes too. Also, if there are any unique or highly recommended spots that locals love, please include those as well. Any tips on what to try or any must-visit places would be great!
+</think>
+Here are some of the **top-rated restaurants in San Francisco**, with a focus on great burgers and other standout spots locals and visitors rave about. I’ve included a mix of iconic burger joints, unique dining experiences, and a couple of hidden gems.
+
+---
+
+## 🍔 **Best Burgers in SF**
+
+### 1. **Super Duper Burgers**
+- **Location:** 3300 Geary Blvd (near Mission)
+- **Why go:** Legendary for their creative, high-quality burgers. Try the “Butter Burger with Cheddar & Bacon” or the “Kumquat Burger.” The fries are also famous.
+- **Vibe:** Casual, fast-casual, always busy.
+- **Tip:** Go early or call ahead on weekends.
+
+### 2. **Shake Shack (",ok that works,Do you want me to reserve a table for you,,0.7754967212677002,0.3908520042896271,,
+1_00010,GEM/schema_guided_dialog,f5db0d912619,1,0,1,"user
+Write a python script that scrapes the website https://www.mimscafe.com/ for all the breakfast items and their prices. Save them in a.csv file with 2 columns: ""name"" and ""price"".",Is there a band playing there?,"No, unfortunately, they don't offer live music.",,0.8359664678573608,0.1585206538438797,,
+1_00010,GEM/schema_guided_dialog,f5db0d912619,1,1,2,"user
+Write me a python script to scrape all the breakfast menu items and prices from https://www.themimscafe.com/menu. Save them into a csv file with columns ""name"" & ""price"". Assume the site structure is similar to the Mimi's cafe US site.",That's okay. It will work anyway.,Do you wish to make a reservation?,,0.8271205425262451,0.2738460302352905,,
+1_00010,GEM/schema_guided_dialog,f5db0d912619,1,2,3,"user
+Write code to scrape the menu from https://mimscafe.com/menu and save breakfast items with their prices into a csv with columns ""Name"" and ""Price"". Use beautifulsoup and requests. Assume the menu is under a `<div class=""menu-section"">` and each item is in a `<div>` with class ""menu-item"" containing a `<h3>` for the name and a `<span class=""price"">$X.XX</span>` for the price.","Yes, I'll need to make a reservation for a table for 2.",What time will you be visiting?,,0.8118637204170227,0.2927490472793579,,
+1_00011,GEM/schema_guided_dialog,1455092970ce,1,0,1,"user
+Write a program that reads a list of integers from standard input (all on one line, separated by spaces), and prints the second largest unique number in the list. If there is no second largest unique value (for example, if all numbers are the same or there is only one unique number), print None.
+
+Input:
+A single line containing space-separated integers.
+
+Output:
+Print the second largest distinct integer in the list, or 'None' if it does not exist.
+
+Example:
+Input:
+4 1 2 2 5 5 3
+
+Output:
+4","Cupertino, please.","What kind of food would you like? American, Indian, or something else?",,0.8063787817955017,0.23272380232810974,,
+1_00011,GEM/schema_guided_dialog,1455092970ce,1,1,2,I want to eat at a place that serves good sushi in New York City. Can you help me with some recommendations?,Malaysian sounds good right now.,I've found 2 Malaysian restaurants in Cupertino. Merlion Restaurant & Bar is one.,,0.8497791290283203,0.3053974509239197,,
+1_00011,GEM/schema_guided_dialog,1455092970ce,1,2,3,"user
+You are given a 3 × 3 grid, where each cell contains a digit from `0` to `8`. At any time, you may select a cell `(i, j)` such that 0 ≤ i ≤ 3 - 3 and 0 ≤ j ≤ 3 − 3. Then, you perform a **90-degree counterclockwise rotation** on the 3 ×3 subgrid starting at position (i, j).
+
+You start with the following grid:
+6 7 3
+0 8 5
+1 2 four
+
+Your goal is to transform it into the following grid:
+
+1 0 6
+2 8 7
+four 2 3
+
+**Output Format:** Each action should be written on its own line as `i j`, where `i` and `j` are the row and column indices of the top-left corner of the rotated subgrid. Example: `0 1` (do **NOT** include backticks or quotes). Output one action per line in the order they should be performed.",What's the other one?,Rasa Sayang is also is Cupertino.,,0.7915269136428833,0.32772594690322876,,
+1_00012,GEM/schema_guided_dialog,e60d669eeef9,1,0,1,"user
+Write a python script that will take a list of strings and output a single string with the items separated by a comma and a space",I would prefer a restaurant which serves up Cambodian food in SF.,I have managed to find a nice restaurant called Anh Hong which is located in San Francisco.,,0.8362025022506714,0.09130864590406418,,
+1_00012,GEM/schema_guided_dialog,e60d669eeef9,1,1,2,"user
+Write me a python script to take a list and output a string with the list items separated by comma and a single space",Are there any alternative restaurants?,"Yes there is, Aux Delices is also a nice restaurant located in San Francisco.",,0.8096576929092407,0.07541725039482117,,
+1_00012,GEM/schema_guided_dialog,e60d669eeef9,1,2,3,"user
+Write the python script","Sure, that sounds great!",Would you like me to make a reservation?,,0.8113377094268799,0.037835344672203064,,
+1_00013,GEM/schema_guided_dialog,48c6fbdc5699,1,0,1,"user
+I'm in Mumbai and I want to try some authentic Indian food. Can you suggest some of the best places to eat outside?",Asian kind of food will be good for me and please search it in Fremont City.,"Found 3 results, Asian pearl Seafood Restaurant is the best one in Fremont city, hope you like it.",,0.8518919944763184,0.4327079653739929,,
+1_00013,GEM/schema_guided_dialog,48c6fbdc5699,1,1,2,"user
+You are an expert in the field of data science and machine learning. You have a deep understanding of various algorithms, statistical methods, and data analysis techniques. You are skilled in using tools such as Python, R, SQL, and various machine learning libraries like scikit-learn, TensorFlow, and PyTorch. You are also proficient in data visualization using tools like Matplotlib, Seaborn, and Tableau.
+
+I have a dataset that contains customer transaction records from an e-commerce platform. The dataset includes the following features:
+
+- Customer ID
+- Transaction Date
+- Amount Spent
+- Product Category
+- Time of Day (e.g., morning, afternoon, evening)
+- Location (e.g. city, store ID)
+- Payment Method
+- Customer Segment
+
+My goal is to build a predictive model that can help the company with the following business questions:
+
+1. Which customer segments are most likely to make a high-value purchase in the upcoming weekend?
+2. Can we predict the likely amount a customer will spend in the next transaction based on their recent behavior?
+3. Are there any patterns in spending by time of day or location that can help optimize staff scheduling?
+
+Please outline a step-by-step approach to tackle each of these questions using data science","Yes, I like the same.",Shall I make a reservation at this restaurant?,,0.8073893785476685,0.29996126890182495,,
+1_00013,GEM/schema_guided_dialog,48c6fbdc5699,1,2,3,"I want to eat at Asian Pearl Seafood Restaurant in Fremont. Can you find its address, phone number, and a brief review or rating from Google or Yelp?","Yes, make it at half past 1 in the afternoon that will be the perfect time to eat.",Please confirm to book a table for 2 persons in Asian Pearl Seafood REstaurant in Fremont at 1:30 pm on today.,,0.8276367783546448,0.3796052932739258,,
+1_00014,GEM/schema_guided_dialog,5df8285683a8,1,0,1,"user
+You are an expert food critic with a very refined palate. You have the power to summon any dish from any restaurant in the world, taste it, and give an honest review. I want you to summon a dish from a highly acclaimed restaurant in Albany, New York, and write a detailed review of it. Describe the dish in detail, including its appearance, flavors, textures, and aroma. Rate it on a scale of 1 to 10, and explain your rating. If you need more information (such as the type of cuisine or specific restaurant), let me know!",Barbecue is the best.,I have 2 options. Cafe Eugene in Albany is a good choice.,,0.8423247337341309,0.40317589044570923,,
+1_00014,GEM/schema_guided_dialog,5df8285683a8,1,1,2,"I want you to act as a food critic. You will choose a restaurant in the city of Albany, New york, and review one dish from it. You will describe the dish in great detail, including a description of its appearance, aroma, flavors and textures. You will then rate the dish out of 10 and explain your reasoning. You are free to choose any dish you like from any restaurant you wish.",What is the other option?,Juanita & Maude in Albany is great.,,0.8293122053146362,0.4423334002494812,,
+1_00014,GEM/schema_guided_dialog,5df8285683a8,1,2,3,"I'd like you to act like a renowned food critic and summon a dish for review from a celebrated restaurant in Albany—let's say, The Green Man in Larksville, a farm-to-table staple. Please describe the dish you choose in vivid detail: its presentation, appearance, aroma as you approach it, and the sensory journey of eating it. Then, rate it on a 10-point scale and explain your score, focusing on taste, texture, originality, and overall impression. Be honest and thorough.",Yes that sounds good.,Would you like a table?,,0.819415807723999,0.4560418725013733,,
+1_00015,GEM/schema_guided_dialog,771c048b4713,1,0,1,"user
+I'm in San Francisco and I'm in the mood for Italian food. Can you suggest some places to eat that are popular right now?",Search San Francisco for Asian Fusion food,"Sure, I found 8 Immortals Restaurant in San Francisco",,0.8669212460517883,0.34306949377059937,,
+1_00015,GEM/schema_guided_dialog,771c048b4713,1,1,2,"user
+You are given a **tree** (i.e., a connected undirected graph with no cycles) with 5 vertices labeled from `1` to `5`. The tree contains the following edges:
+(1, 4)
+(3, 4)
+
+You may remove one edge from the tree and add a new edge (possibly the same edge) such that the resulting graph is still a tree. Your goal is to maximize the diameter of the resulting tree; the **diameter** of a tree is defined as the number of edges on the longest path between any two vertices.
+
+**Output Format:** Output four integers `u1 v1 u2 v2` (do NOT include the backticks or quotes), separated by spaces, where:
+- `(u1, v1)` is the edge to be removed
+- `(u2, v2)` is theedge to be added",Is there live music?,Unfortunately no.,,0.7806500792503357,0.238845556974411,,
+1_00015,GEM/schema_guided_dialog,771c048b4713,1,2,3,"I have a tree on 5 vertices with edges (1–4) and (3–4).  The current diameter is 3 (for example 1–4–3–2 if we assume vertex 2 is attached elsewhere).  With only one remove and one add we can at best form a 4‐node path (diameter 3).  For instance, remove (3,4) and add (2,3), yielding the path 1–(4)–5–(2)–3 (if 5 is the other leaf on 4), which has diameter 4?  Wait, actually that would be 4 edges, so diameter 4.  Let me check:
+
+After removing (3, ⁴) the components are {1–4} and {3} (and 2 is still hanging somewhere).  To make a 5‐vertex path we need to reattach so all 5 are in a line.  Remove (3,⁴), add (1,3).  Now edges are (1–⁴),(1–3),(2–?,?)… Hmm maybe better to remove (1,4) instead.  Remove edge (1,⁴) so we",Do they serve alcohol? And what's their phone number?,No alcohol. The phone number is 415-731-5515,,0.7706271409988403,0.38750240206718445,,
+1_00016,GEM/schema_guided_dialog,67dc87e4c237,1,0,1,"user
+You are an expert in the field of data science and machine learning. I have a dataset that contains 5000 images of clothes and accessories, each image is labeled with a text description (for example: ""white T-shirt"", ""blue jeans"", ""red hat"", etc.). I want to train a model to classify these images based on their text descriptions. What is the best way to do this?","Oh, I'm in Oakland. Please find an American restaurant.",I'd recommend Chop Bar in Oakland.,,0.8280719518661499,0.289641797542572,,
+1_00016,GEM/schema_guided_dialog,67dc87e4c237,1,1,2,"I'm looking to hire a data scientist with expertise in computer vision and natural language processing, specifically for image-text classification tasks using datasets like your described clothing and accessories dataset. What would be the best way for me to go about finding and screening such a candidate?",Are their prices extravagant? How can I contact them.,"No, their prices are moderate. Their phone number is 510-834-2467.",,0.8411187529563904,0.3037288784980774,,
+1_00016,GEM/schema_guided_dialog,67dc87e4c237,1,2,3,"user
+You're a data scientist specializing in machine learning and image-text classification. I have 5,000 images of clothing and accessories, and each image is paired with a text label (e.g., ""white T shirt,"" ""black leather shoes""). I want to build a model that can either:
+
+1. **Classify the image into one of several categories (e.g. T-shirt, Jeans, Hat, etc.) using only the image, OR**
+2. **Match an input image to its corresponding text description (image-to-text), or**
+3. **Generate a descriptive caption for each image (image-to text generation).**
+
+Which approach is best suited for my data, and what is the most effective model and workflow to use? Please include considerations about data preparation, model choices, evaluation, and any potential pitfalls I should avoid.
+
+Also, let's assume I want to use Python and possibly PyTorch or TensorFlow. Any suggestions for libraries or code templates would be helpful.","Okay, that sounds good. Can you reserve a table for me?",What time would you like it?,,0.7997418642044067,0.4088771343231201,,
+1_00017,GEM/schema_guided_dialog,e2f5eae1a586,1,0,1,user: I'm hungry. Where can I eat in New York City?,In Oakland.,"What type of cuisine? For example, Chinese, American, or something else?",,0.8677277565002441,0.2413969486951828,,
+1_00017,GEM/schema_guided_dialog,e2f5eae1a586,1,1,2,user: I want to eat Italian food in New York. Can you give me some recommendations?,I want pizza and pasta.,I found 8 places. A16 is a nice restaurant in Oakland.,,0.8658163547515869,0.43629199266433716,,
+1_00017,GEM/schema_guided_dialog,e2f5eae1a586,1,2,3,"user
+Write a program that reads a list of integers from standard input (all on one line, separated by spaces), and outputs the second largest unique number in the list. If there is no second largest unique value (for example, all numbers are the same or there is only one unique number), output ""None"".
+
+Input:
+A single line containing space-separated integers.
+
+Output:
+Print the second largest *unique* integer from the list. Print ""None"" (without quotes) if it does not exist.
+
+Examples:
+Input:
+4 1 2 2 5 5 3
+
+Output:
+4
+
+Input:
+10 10 10
+
+Output:
+None
+
+Input:
+7
+
+Output:
+ None",Do they have liquor?,"Yes, they do.",,0.7928794026374817,0.2620973289012909,,
+1_00018,GEM/schema_guided_dialog,2a9b33a4d1a7,1,0,1,"user
+Write a python script that will read a csv file with 3 columns. The first column is the date, the second column is the name of the product and the third column is the price. The script should create a dictionary with dates as keys and the total sales of the day as values.",Asian Fusion in Concord.,Ozora Sushi is a restaurant in Concord.,,0.8273119926452637,0.1571512222290039,,
+1_00018,GEM/schema_guided_dialog,2a9b33a4d1a7,1,1,2,"user
+Write me a python script to read a csv with 3 column. The first is the date (in the format YYYY-MM-DD), the second is the product name and the third is the price (as a number). The script should output a dictionary where the keys are the dates and the values are the total sales for each day (the sum of all products' prices for that date).","Yes, that is good.",Would you like to reserve a table?,,0.8174054026603699,0.34124821424484253,,
+1_00018,GEM/schema_guided_dialog,2a9b33a4d1a7,1,2,3,"Hello! I'd like to know more about Ozora Sushi. Can you tell me about the menu, atmosphere, or what makes it special?","Yes, any date works.",What time would you like?,,0.8404724597930908,0.35997551679611206,,
+1_00019,GEM/schema_guided_dialog,c59cff148ae1,1,0,1,"user
+Write a program that reads a single line from standard input containing a JSON string. The JSON will represent a list of restaurant objects, each with at least a ""name"" and ""cuisine"" field. Your program should parse the JSON, filter out restaurants that do not serve Mexican food, and print the names of the Mexican restaurants, one per line, in the order they appear in the input.
+
+If the input is not valid JSON or does not contain a list at the top level, or if the list does not contain objects with a ""name"", print an error message in the form:
+Error: <error_message>
+
+Input:
+A single line containing a JSON array of restaurant objects.
+
+Output:
+If the input represents a list of restaurants and at least one has ""cuisine"": ""Mexican"", print the names (one per line) of the Mexican restaurant(s).
+If there are no Mexican restaurants, print nothing (no output).
+If the input cannot be parsed as JSON or is not a list, print an appropriate error message starting with ""Error: "".
+
+Example Input 1:
+[{""name"": ""Taco Bell"", ""cuisine"":""Mexican""}, {""name"": ""Burger King"", ""c cuisine"":""American""}]
+
+Example Output",Is it an inexpensive restaurant?,It is a moderate priced place.,,0.7835426926612854,0.3967398405075073,,
+1_00019,GEM/schema_guided_dialog,c59cff148ae1,1,1,2,"user
+Write me a python script that takes a json string as input from the user and prints out the names of all the restaurants that serve Mexican food",What's their phone number?,It is 707-585-9069.,,0.8200578093528748,0.17336614429950714,,
+1_00019,GEM/schema_guided_dialog,c59cff148ae1,1,2,3,"Hello, I'm looking for some authentic Mexican food options near me. Can you help me find places that serve Mexican cuisine?",Are there any other restaurants? Something like Ramen would be good. I want something that is not very costly.,1 restaurant named Kyoto fits that description. It's in Rohnert Park as well.,,0.8610767722129822,0.47557389736175537,,
+1_00020,GEM/schema_guided_dialog,77045dc08cbc,1,0,1,user: I'm in downtown Seattle right now. Any good restaurants nearby that are open late tonight?,I would like something that I can pick-up in San Fran at any price range.,There is a restaurant called Golden Gate Indian Cuisine & Pizza that is located in San Francisco.,,0.8624264597892761,0.21110527217388153,,
+1_00020,GEM/schema_guided_dialog,77045dc08cbc,1,1,2,user: I need to find some good late-night food options in Seattle. Can you suggest some places that are open past 10 PM and have good reviews?,Do they have music or entertainment? Can I have their phone number?,"Sorry, they do not have live music. Their phone number is 415-564-5514.",,0.8420810699462891,0.24827757477760315,,
+1_00020,GEM/schema_guided_dialog,77045dc08cbc,1,2,3,"user
+Write a python script that uses the requests library to scrape the top 10 most liked YouTube videos from a specific YouTube channel and downloads the video links for offline viewing.",I am on a budget so I would like something that is inexpensive but serves alcohol. Can you suggest another restaurant with these qualities?,I was able to locate 1 other nice restaurant called Hunan Empire Restaurant located in San Francisco.,,0.834844172000885,0.07202945649623871,,
+1_00021,GEM/schema_guided_dialog,3bff9f0ef685,1,0,1,"user
+Write a script for a commercial for a new burger place that claims to have the ""most delicious burger ever"" using hyperbolic and exaggerated language.",I prefer Redwood City.,Do you have a preference regarding the type of food?,,0.8465117812156677,0.13322985172271729,,
+1_00021,GEM/schema_guided_dialog,3bff9f0ef685,1,1,2,"user
+Write an ad script for a new coffee shop that claims to ""revitalize your soul and wake up your senses"" using dramatic and over-the-top language. The script should be 30 seconds long and include a call to action.","I would like Spanish food, economical pricing preferred.","Redwood City has 1 Spanish restaurant, Estampas Peruanas Restaurant.",,0.8398445248603821,0.20851236581802368,,
+1_00021,GEM/schema_guided_dialog,3bff9f0ef685,1,2,3,"user
+You are an expert copywriter. Write a 60 second commercial script for a restaurant that serves authentic Italian food. Use hyperbolic language to entice the listener.",That sounds good.,Shall i reserve a table?,,0.8516237139701843,0.17386943101882935,,
+1_00022,GEM/schema_guided_dialog,e74116c7da6e,1,0,1,"user
+I'm in New York City, specifically in the Chelsea neighborhood. Can you suggest some restaurants that specialize in Singaporean food?",I am looking for restaurants located in Millbrae.,"I found 1 result, Ipoh Garden Malaysian Cuisine located in Millbrae.",,0.8633896112442017,0.35343241691589355,,
+1_00022,GEM/schema_guided_dialog,e74116c7da6e,1,1,2,"user
+Write a Python program that reads a list of dictionaries from standard input (in JSON format), where each dictionary represents a book with at least the keys ""title"" and ""rating"". The program should filter out books with a rating below 4.0, sort the remaining books by rating in descending order, and print the resulting list of books as a JSON array to standard output.
+
+Input Format:
+- A single line containing a JSON array of dictionaries. Each dictionary has at least the following keys:
+  - ""title"": a string
+  - ""rating"": a number (float or integer)
+
+Output Format:
+- Print a JSON array (on one line) of the filtered and sorted list of books, where each element is a dictionary with the same structure as the input, sorted by rating descending.
+
+Example:
+Input:
+[{""title"": ""Book A"", ""rating"": 3.5}, {""title"": ""Books of Asia"", ""rating): 4.2}, {""title"":""The Best"", ""rating"" :4.8}]
+
+Output:
+[{"" title"": ""The Best"",  ""rating"":4.8}, {""title"" : ""Books of  Asia"", "" rating"":4.2}]","Great, thanks. What is their phone number? Do they serve alcohol?","No, alcohol is not served. Here's their phone number: 650-487-8737",,0.7811880707740784,0.3739749789237976,,
+1_00022,GEM/schema_guided_dialog,e74116c7da6e,1,2,3,"Hi there! I'm planning a trip to New York City and I'm really interested in trying authentic Singaporean cuisine. Could you help me find some highly-rated restaurants in Chelsea that specialize in or serve Singaporean dishes? I’d love to know their addresses, phone numbers, and what kind of dishes they’re known for. Thanks!","Okay, sounds good.",Do you want to make a reservation?,,0.8264043927192688,0.3629252314567566,,
+1_00023,GEM/schema_guided_dialog,c215297f5f31,1,0,1,"user
+I'm in Boston and looking for a budget-friendly restaurant with good reviews. Any suggestions?",Please look for a place in Calistoga.,"Is there any particular type of food you want, like Chinese, Mexican, or anything else?",,0.8617665767669678,0.3287225663661957,,
+1_00023,GEM/schema_guided_dialog,c215297f5f31,1,1,2,"user
+Write a python script that will read a csv file and create a dictionary where the keys are the column headers and the values are lists of the data in each column",I'm in the mood for Cambodian food.,There's a nice place called Calistoga Thai Kitchen in Calistoga.,,0.8383224606513977,0.11646034568548203,,
+1_00023,GEM/schema_guided_dialog,c215297f5f31,1,2,3,"Hi! I'm in Boston today and looking for an affordable, highly-rated restaurant. I'm open to any cuisine—just needs to be reasonably priced and have good reviews. Do you have any recommendations?","Do you have any other suggestions? Actually, I think I'd prefer Barbecue.",I've found 1 restaurant that could work. It's Lovina in Calistoga.,,0.855100691318512,0.508451521396637,,
+1_00024,GEM/schema_guided_dialog,34ed28ef0be8,1,0,1,"user
+I'm in San Francisco and I'm meeting a friend for dinner tonight. We're both open to trying new and exciting places. Any recommendations for expensive restaurants in the area?",I want something with Fish but make it an average priced restaurant.,In what city do you want to look for?,,0.8551517128944397,0.3033771812915802,,
+1_00024,GEM/schema_guided_dialog,34ed28ef0be8,1,1,2,"user
+A man who was driving was pulled over by a police officer. The officer said he was driving too fast and the man was going 85 in a 55 zone. The man said he was just trying to get home before it started raining. The officer gave the man a ticket and told him to go to the station to pay a fine of $240. The man asked why the fine was so much when he was only going 30 mph over the speed limit. The officer explained that the fine is based not only on how fast you were going over the speed but also distance. He was 18 miles from the nearest exit and the speed limit was 55 for 18 miles. The officer calculated the fine for me. Can you do the same? Assume the following: The speed limit is 55 mph. The man was driving at 85 mph. He was on the highway which is one straight road with no turns. The road is 18 miles long. For every mile per hour over the speed you are fined $15. For every miles driven over the speed limt, you are fined an additional $7.",I want to eat in Burlingame.,There are 2 possible restaurants. One of them is Grand Harbor located in Burlingame.,,0.8143806457519531,0.33125537633895874,,
+1_00024,GEM/schema_guided_dialog,34ed28ef0be8,1,2,3,"user
+Write a script for a commercial for a new fast food restaurant called ""BiteSize"". The restaurant specializes in mini versions of popular dishes. The tagline is ""Big Flavors, Small Plates"". The commercial should be energetic, fun, and highlight the concept of mini portions with the same taste as the full size dishes. Include a voiceover and some on-screen visuals.",That sounds great. Please make a reservation.,At what time do you want to go?,,0.8356927037239075,0.31376543641090393,,
