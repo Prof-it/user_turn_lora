@@ -85,7 +85,7 @@
 
 \begin{document}
 
-\title{LoRA Fine-Tuning for Next User Turn Prediction in Multi-Turn Dialogues}
+\title{QLoRA Fine-Tuning for Next User Turn Prediction and Multi-Step Dialogue Rollouts}
 
 \author{
 \IEEEauthorblockN{Sebastian Boehler\IEEEauthorrefmark{1} and Tianxiang Lu\IEEEauthorrefmark{1}}
@@ -95,7 +95,7 @@ Email: sebastian.boehler@iu-study.org, tianxiang.lu@iu.org}
 \maketitle
 
 \begin{abstract}
-Most dialogue research optimizes assistant responses, leaving user-turn prediction underexplored. We investigate quantized low-rank adaptation fine-tuning of four open-source instruction-tuned large language models spanning 1.2B to 7B parameters for generating the next user utterance in multi-turn conversations. Models are trained on 6{,}000 samples from two complementary corpora, one open-domain and one task-oriented, and evaluated against pretrained models and GPT-4o-mini prompt baselines using automated metrics and a blinded human study of 369 samples. Fine-tuning consistently improves fluency and semantic quality across three of four model families, with Llama-3B achieving the highest performance. Human evaluation confirms a 0.34 average improvement on a 5-point scale, with task-oriented dialogue benefiting more (0.45) than open-domain conversation (0.21). A systematic ablation identifies the optimal LoRA configuration. Our results demonstrate that fine-tuning enables practical and reproducible user-turn prediction on a single GPU with limited data.
+Most dialogue research optimizes assistant responses, leaving user-turn prediction underexplored. We investigate quantized low-rank adaptation fine-tuning of four open-source instruction-tuned large language models spanning 1.2B to 7B parameters for generating the next user utterance from multi-turn dialogue context. Models are trained on 6{,}000 samples from two complementary corpora, one open-domain and one task-oriented, and evaluated against pretrained models, GPT-4o-mini prompt baselines using automated metrics, short multi-step rollouts, and a blinded human study of 369 samples. Fine-tuning consistently improves fluency and semantic quality across three of four model families, with Llama-3B achieving the highest single-turn performance. Reference-assisted rollouts show stable three-step behavior for the strongest fine-tuned models. Human evaluation confirms a 0.34 average improvement on a 5-point scale, with task-oriented dialogue benefiting more (0.45) than open-domain conversation (0.21). A systematic ablation identifies the optimal LoRA configuration. Our results show that fine-tuning enables practical and reproducible user-turn prediction, and that short rollout evaluation is necessary to separate single-turn gains from longer-horizon stability..
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -108,17 +108,17 @@ Conversational AI has progressed from rule-based systems to end-to-end generativ
 
 Predicting the next user turn is inherently more challenging than generating assistant responses: user utterances are less constrained, span a wider range of intents, and depend heavily on conversational context. Naous et al.~\cite{naous2025flipping} recently demonstrated that assistant-trained LLMs make poor user simulators, with the counterintuitive finding that stronger assistants produce worse user simulations. Accurate generative user modeling would enable realistic dialogue simulation, continuous system evaluation, and stress testing without requiring human participants.
 
-In this paper, we investigate QLoRA fine-tuning~\cite{dettmers2023qlora} of four open-source instruction-tuned LLMs (1.2B--7B parameters) for next user turn prediction. We train on 6{,}000 samples drawn equally from an open-domain corpus (WildChat~\cite{zhao2024wildchat}) and a task-oriented corpus (Schema-Guided Dialog~\cite{rastogi2020sgd}), and compare against unfine-tuned base models and GPT-4o-mini zero-shot and few-shot prompt baselines.
+In this paper, we investigate QLoRA fine-tuning~\cite{dettmers2023qlora} of four open-source instruction-tuned LLMs (1.2B--7B parameters) for next user turn prediction. We train on 6{,}000 samples drawn equally from an open-domain corpus (WildChat~\cite{zhao2024wildchat}) and a task-oriented corpus (Schema-Guided Dialog~\cite{rastogi2020sgd}), and compare against pretrained base models. We further evaluate short multi-step rollouts to test whether one-step improvements remain stable when generated user turns are fed back into the dialogue context.
 
 To structure our investigation, we pose the following research question:
 
-\textit{``Can QLoRA-based fine-tuning improve user-turn prediction quality across open-source instruction-tuned large language models under low-data constraints, and do these improvements differ between open-domain and task-oriented dialogues?''}
+\textit{``Can QLoRA-based fine-tuning improve user-turn prediction quality across open-source instruction-tuned large language models under low-data constraints, and do these improvements differ between open-domain and task-oriented dialogues, and do they remain stable in short multi-step rollouts''}
 
 Our contributions are as follows:
 \begin{enumerate}
     \item A multi-model QLoRA study for generative user-turn prediction, evaluating four architectures across open-domain and task-oriented dialogue.
     \item A systematic two-stage ablation of LoRA hyperparameters comprising 56 experiments.
-    \item A combined evaluation using three automated metrics and a blinded human study of 369 samples.
+    \item A combined evaluation using three automated metrics, multi-step rollouts, and a blinded human study of 369 samples.
     \item Evidence that fine-tuning yields substantially larger gains on task-oriented dialogue than on open-domain conversation.
 \end{enumerate}
 
@@ -210,7 +210,7 @@ Dettmers et al.~\cite{dettmers2023qlora} & \xmark & \cmark & \cmark & \xmark & \
 \node[box=teal!15,   right=of data]   (prep)  {\textbf{Preprocess}\\[1pt]{\footnotesize Chat-template}\\[-1pt]{\footnotesize formatting}};
 \node[box=orange!15, right=of prep]   (abl)   {\textbf{Ablation}\\[1pt]{\footnotesize 56 experiments}\\[-1pt]{\footnotesize (2-stage)}};
 \node[box=red!15,    right=of abl]    (train) {\textbf{QLoRA}\\[1pt]{\footnotesize Fine-tune}\\[-1pt]{\footnotesize 4 models}};
-\node[box=violet!15, right=of train]  (eval)  {\textbf{Auto Eval}\\[1pt]{\footnotesize PPL + BERTScore}\\[-1pt]{\footnotesize + BLEURT}};
+\node[box=violet!15, right=of train]  (eval)  {\textbf{Auto Eval}\\[1pt]{\footnotesize PPL + BERTScore}\\[-1pt]{\footnotesize BLEURT + rollouts}};
 \node[box=olive!15,  right=of eval]   (human) {\textbf{Human Eval}\\[1pt]{\footnotesize Blinded study}\\[-1pt]{\footnotesize $n{=}369$ samples}};
 \node[num, above=2pt of data]  {1};
 \node[num, above=2pt of prep]  {2};
@@ -229,11 +229,11 @@ Dettmers et al.~\cite{dettmers2023qlora} & \xmark & \cmark & \cmark & \xmark & \
 \end{figure*}
 \subsection{Task Definition}
 
-Our pipeline (Fig.~\ref{fig:pipeline}) takes a multi-turn conversation history $C = (u_1, a_1, u_2, a_2, \ldots, a_{t-1})$ and generates the next user utterance $\hat{u}_t$, where $u_i$ and $a_i$ are user and assistant turns, respectively. The model receives $C$ formatted as a chat template and produces $\hat{u}_t$ autoregressively. During training, only target user-turn tokens are supervised, while all context tokens are masked (label $= -100$), focusing the model on user-turn generation in a controlled single-turn setting. Multi-turn rollouts are left for future work.
+Our pipeline (Fig.~\ref{fig:pipeline}) takes a multi-turn conversation history $C = (u_1, a_1, u_2, a_2, \ldots, a_{t-1})$ and generates the next user utterance $\hat{u}_t$, where $u_i$ and $a_i$ are user and assistant turns, respectively. The model receives $C$ formatted as a chat template and produces $\hat{u}_t$ autoregressively. During training, only target user-turn tokens are supervised, while all context tokens are masked (label $= -100$), focusing the model on user-turn generation. Evaluation uses both one-step prediction and short multi-step rollouts. In the rollout setting, we seed each dialogue with an initial user--assistant exchange, generate the next user turn, append it to the history, and continue for up to three user turns.
 
 \subsection{Datasets}
 
-We use two complementary datasets to evaluate cross-domain generalization. \textbf{WildChat-1M}~\cite{zhao2024wildchat} contains one million real user--ChatGPT conversations spanning diverse topics and languages; we filter for English, multi-turn ($\geq$3 turns) dialogues ending with an assistant turn, yielding context--target pairs where the target is the penultimate user utterance. \textbf{Schema-Guided Dialog} (SGD)~\cite{rastogi2020sgd} provides over 16k task-oriented dialogues across 16 service domains with structured intents. To explore PEFT under limited data, we sample 3{,}200 pairs per dataset (6{,}400 total; Table~\ref{tab:dataset}), which is three orders of magnitude less than the 1M+ samples used by Naous et al.~\cite{naous2025flipping}. This setup evaluates whether meaningful adaptation can be achieved on small, balanced datasets, making the approach feasible for research groups with constrained compute resources. Pairs are interleaved to maintain domain balance, and a fixed seed (42) ensures reproducibility.
+We use two complementary datasets to evaluate cross-domain generalization. \textbf{WildChat-1M}~\cite{zhao2024wildchat} contains one million real user--ChatGPT conversations spanning diverse topics and languages; we filter for English, multi-turn ($\geq$3 turns) dialogues ending with an assistant turn, yielding context--target pairs for single-turn prediction and full trajectories for rollout evaluation. \textbf{Schema-Guided Dialog} (SGD)~\cite{rastogi2020sgd} provides over 16k task-oriented dialogues across 16 service domains with structured intents. To explore PEFT under limited data, we sample 3{,}200 pairs per dataset (6{,}400 total; Table~\ref{tab:dataset}), which is three orders of magnitude less than the 1M+ samples used by Naous et al.~\cite{naous2025flipping}. This setup evaluates whether meaningful adaptation can be achieved on small, balanced datasets, making the approach feasible for research groups with constrained compute resources. Pairs are interleaved to maintain domain balance, and a fixed seed (42) ensures reproducibility.
 
 The full pipeline and code are publicly available.\footnote{\url{https://github.com/Prof-it/user_turn_lora}}
 
@@ -281,7 +281,7 @@ All models are trained with QLoRA~\cite{dettmers2023qlora}: base weights quantiz
 
 \subsection{LoRA Configuration}
 
-The LoRA hyperparameters in Table~\ref{tab:lora-config} were determined through a systematic two-stage ablation study (Section~\ref{sec:ablation}). LoRA adapters are applied to all linear projection layers in each transformer block (query, key, value, output, gate, up, and down projections). Notably, a rank of just 8 performs comparably to 64, while the scaling factor $\alpha = 64$ is the most impactful parameter, suggesting that user-turn adaptation resides on a very low-rank subspace.
+The LoRA hyperparameters in Table~\ref{tab:lora-config} were determined through a systematic two-stage ablation study on the 1.2B model (Section~\ref{sec:ablation}) and then applied to the other model families for the main comparison. LoRA adapters are applied to all linear projection layers in each transformer block (query, key, value, output, gate, up, and down projections). Because larger models may require different scaling factors, we additionally run a targeted OLMo-7B sweep over $\alpha \in \{16,32,64\}$ and learning rate $\in \{1{\times}10^{-4},2{\times}10^{-4}\}$. Notably, a rank of just 8 performs comparably to 64, while the scaling factor $\alpha = 64$ is the most impactful parameter, suggesting that user-turn adaptation resides on a very low-rank subspace.
 
 \begin{table}[ht]
 \centering
@@ -307,15 +307,20 @@ Target modules & q, k, v, o, gate, up, down \\
 
 \subsection{Evaluation Metrics}
 
-We report three automated metrics. \textbf{Perplexity} (PPL) measures token-level fluency; lower values indicate the model assigns higher probability to ground-truth tokens. \textbf{BERTScore} F1~\cite{zhang2020bertscore} computes contextual embedding similarity, capturing semantic overlap beyond surface-level word matching. \textbf{BLEURT}~\cite{sellam2020bleurt} is a learned metric trained on human judgments that is robust to distribution shifts. For human evaluation, a single rater assessed 369 blinded samples across four conditions (baseline, fine-tuned, GPT-4o-mini zero-shot, GPT-4o-mini few-shot) on relevance, coherence, and naturalness using a 1--5 Likert scale with randomized labels (A--D).
+We report three automated metrics. \textbf{Perplexity} (PPL) measures token-level fluency; lower values indicate the model assigns higher probability to ground-truth tokens. \textbf{BERTScore} F1~\cite{zhang2020bertscore} computes contextual embedding similarity, capturing semantic overlap beyond surface-level word matching. \textbf{BLEURT}~\cite{sellam2020bleurt} is a learned metric trained on human judgments that is robust to distribution shifts. For rollouts, we report macro BERTScore and BLEURT over generated user turns, step-wise degradation from the first to final rollout step, and collapse rate, defined as the fraction of dialogues ending early due to empty or repeated user generations or empty assistant generations. For human evaluation, a single rater assessed 369 blinded samples across four conditions (baseline, fine-tuned, GPT-4o-mini zero-shot, GPT-4o-mini few-shot) on relevance, coherence, and naturalness using a 1--5 Likert scale with randomized labels (A--D).
 
 \subsection{Baselines}
 
 Each fine-tuned model is compared against three baselines: (1) the \emph{base model} without fine-tuning, measuring what the pretrained instruction-tuned model already captures; (2) \emph{GPT-4o-mini zero-shot}, where the model receives a system instruction and conversation context with no examples; and (3) \emph{GPT-4o-mini few-shot}, which additionally includes three fixed exemplar context--user-turn pairs drawn from the training set. The prompt baselines test whether a larger proprietary model can solve the task without any training data. They also probe a fundamental limitation of API-based models: since these models are instruction-tuned to respond as assistants, they must be explicitly prompted to adopt a user role, which may conflict with their training objective.
 
+\subsection{Rollout Protocol}
+
+To address error accumulation, we evaluate short rollouts on reconstructed WildChat and SGD trajectories. We use a reference-assisted protocol as the main rollout setting: the simulator generates a user turn, the generated turn is appended to the history, and the next gold assistant turn from the dataset is appended before the following user prediction. This isolates user-simulator drift without confounding results with assistant-model errors. We also run a smaller closed-loop setting with a fixed Qwen2.5-3B-Instruct assistant, where both user and assistant turns are generated. All rollouts use one seed user--assistant pair and a maximum of three generated user turns.
+
+
 \subsection{Ablation Study}\label{sec:ablation}
 
-We conducted a two-stage ablation on LiquidAI/LFM2.5-1.2B-Instruct, the smallest model in our study, to enable rapid iteration. Stage~1 searched over LoRA architecture parameters (rank $r \in \{8, 16, 32, 64\}$, $\alpha \in \{16, 32, 64\}$, dropout $\in \{0.0, 0.05\}$; 24 experiments). Stage~2 fixed the best LoRA configuration and searched over training hyperparameters (learning rate, epochs, warmup ratio, weight decay; 32 experiments). The full ablation comprised 56 experiments completed in approximately 4 hours on a single A100 GPU. The resulting optimal configuration (Table~\ref{tab:lora-config}) was then applied uniformly to all four model families. Larger models may require different scaling factors, though.
+We conducted a two-stage ablation on LiquidAI/LFM2.5-1.2B-Instruct, the smallest model in our study, to enable rapid iteration. Stage~1 searched over LoRA architecture parameters (rank $r \in \{8, 16, 32, 64\}$, $\alpha \in \{16, 32, 64\}$, dropout $\in \{0.0, 0.05\}$; 24 experiments). Stage~2 fixed the best LoRA configuration and searched over training hyperparameters (learning rate, epochs, warmup ratio, weight decay; 32 experiments). The full ablation comprised 56 experiments completed in approximately 4 hours on a single A100 GPU. The resulting optimal configuration (Table~\ref{tab:lora-config}) was applied to all four model families. Because OLMo-7B showed degraded semantic metrics under this transferred configuration, we additionally ran a targeted six-run OLMo-7B sweep over $\alpha \in \{16,32,64\}$ and learning rate $\in \{1{\times}10^{-4},2{\times}10^{-4}\}$. Larger models may require different scaling factors, though.
 
 \subsection{Temperature Sweep}
 
@@ -347,20 +352,25 @@ LiquidAI-1.2B & 0.756 & 0.323 & 409.6 & 0.837 & 0.373 & 9.4 \\
 \end{tabular}
 \end{table}
 
+The targeted OLMo-7B follow-up sweep confirms that the transferred 1.2B configuration is not universally optimal. The best OLMo setting in this six-run sweep uses $\alpha{=}64$ and learning rate $2{\times}10^{-4}$, reaching 0.811 BERTScore, 0.245 BLEURT, and 8.9 perplexity. This improves over the original OLMo fine-tuned run on semantic metrics but remains below the OLMo base model's BLEURT, so we treat OLMo as evidence of scale-specific tuning sensitivity rather than as a successful adaptation case.
+
 \begin{table}[ht]
 \centering
-\caption{Prompt Baseline Results (GPT-4o-mini)}
+\caption{Prompt Baseline Results}
 \label{tab:prompt-baseline}
-\begin{tabular}{lcc}
+\begin{tabular}{lcccc}
 \toprule
-\textbf{Condition} & \textbf{BERTScore} & \textbf{BLEURT} \\
+\textbf{Model} & \textbf{Zero-shot BERT} & \textbf{Zero-shot BLEURT} & \textbf{Few-shot BERT} & \textbf{Few-shot BLEURT} \\
 \midrule
-Zero-shot & 0.841 & 0.393 \\
-Few-shot (3 examples) & 0.847 & 0.401 \\
+LiquidAI-1.2B & 0.833 & 0.369 & 0.812 & 0.385 \\
+Qwen-3B & 0.832 & 0.367 & 0.826 & 0.363 \\
+Llama-3B & 0.833 & 0.336 & 0.830 & 0.340 \\
+OLMo-7B & 0.840 & 0.391 & 0.828 & 0.380 \\
+GPT-4o-mini & 0.841 & 0.393 & \textbf{0.847} & \textbf{0.401} \\
 \bottomrule
 \end{tabular}
 \end{table}
-Table~\ref{tab:prompt-baseline} shows the prompt baseline results. GPT-4o-mini achieves competitive BERTScore (0.841 zero-shot, 0.847 few-shot) and BLEURT (0.393, 0.401), matching or slightly exceeding the fine-tuned Qwen-3B (0.846, 0.384). Few-shot prompting provides a modest improvement over zero-shot. Notably, the best fine-tuned open-source model (Llama-3B: 0.854 BERTScore, 0.393 BLEURT) surpasses GPT-4o-mini on automated metrics despite being substantially smaller. Perplexity is not reported for GPT-4o-mini as the API does not expose token-level log-probabilities under the same formulation.
+Table~\ref{tab:prompt-baseline} shows the prompt baseline results. GPT-4o-mini achieves competitive BERTScore (0.841 zero-shot, 0.847 few-shot) and BLEURT (0.393, 0.401), matching or slightly exceeding the fine-tuned Qwen-3B (0.846, 0.384). Few-shot prompting does not consistently improve the open-source base models: LiquidAI improves on BLEURT but loses BERTScore, while Qwen and OLMo decrease. This indicates that the gains in Table~\ref{tab:automated-results} are not explained by in-context learning alone. Perplexity is not reported for prompt baselines as the API does not expose token-level log-probabilities under the same formulation.
 
 
 
@@ -392,6 +402,34 @@ LiquidAI-1.2B & 0.3 & 0.857 \\
 \caption{Base vs.\ fine-tuned comparison across all four models on BERTScore F1, BLEURT, and perplexity (log scale). Fine-tuning improves all metrics for three of four models. OLMo-7B is the exception: perplexity decreases but BERTScore and BLEURT degrade after fine-tuning.}
 \label{fig:cross-model}
 \end{figure*}
+
+\subsection{Multi-Step Rollouts}
+
+Table~\ref{tab:rollout-results} reports the full-dataset rollout evaluation over balanced WildChat and SGD trajectories. The reference-assisted setting measures user-simulator error accumulation while holding assistant behavior fixed to the dataset trajectory. Degradation is computed as first-step minus final-step user BERTScore; lower values indicate more stable multi-step behavior.
+
+\begin{table}[ht]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\caption{Reference-Assisted Multi-Step Rollout Results on WildChat+SGD}
+\label{tab:rollout-results}
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Model} & \textbf{Condition} & \textbf{User BERT} & \textbf{User BLEURT} & \textbf{Degradation} & \textbf{Collapse} \\
+\midrule
+LiquidAI-1.2B & Base & 0.755 & 0.298 & 0.064 & 0.16 \\
+LiquidAI-1.2B & Fine-tuned & 0.855 & 0.366 & 0.033 & 0.02 \\
+Qwen-3B & Base & 0.839 & 0.352 & 0.016 & 0.00 \\
+Qwen-3B & Fine-tuned & 0.858 & 0.347 & 0.007 & 0.02 \\
+Llama-3B & Base & 0.823 & 0.357 & 0.008 & 0.00 \\
+Llama-3B & Fine-tuned & \textbf{0.864} & \textbf{0.377} & 0.013 & 0.00 \\
+OLMo-7B & Base & 0.819 & 0.302 & 0.005 & 0.00 \\
+OLMo-7B & Fine-tuned & 0.799 & 0.218 & \textbf{0.004} & 0.10 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We additionally run closed-loop rollouts with a fixed Qwen2.5-3B-Instruct assistant to verify that reference-assisted stability is not solely an artifact of using gold assistant turns. These closed-loop results are used as a robustness check rather than the main comparison, because assistant errors and user-simulator errors are coupled in that setting.
 
 \subsection{Human Evaluation}
 
@@ -428,7 +466,10 @@ QLoRA fine-tuning consistently improves user-turn prediction across three of fou
 
 A notable domain asymmetry emerges: fine-tuning yields a substantial gain on task-oriented dialogue (SGD, +0.45, $p < 10^{-8}$), whereas the observed gain for open-domain conversation (WildChat, +0.21) was not statistically significant (p = 0.12). This suggests that structured intent patterns are more readily learned from limited data, while open-domain dialogues may require more data or different adaptation strategies to achieve meaningful improvement.
 
-OLMo-7B is the only model in which fine-tuning degrades semantic metrics (BERTScore 0.813$\to$0.798) despite improving perplexity (11.1$\to$9.0). Since the ablation was conducted on the 1.2B model, the learning rate ($2{\times}10^{-4}$) and $\alpha{=}64$ may over-adapt the 7B model's larger parameter space, causing it to memorize surface patterns (lower perplexity) while losing semantic generalization. A per-model ablation would likely resolve this.
+The rollout protocol directly tests whether one-step prediction gains remain usable after generated user turns enter the context. The reference-assisted setting is intentionally conservative: it isolates user-simulator drift while preventing assistant errors from dominating the measurement. The closed-loop setting with a fixed assistant provides a secondary robustness check, but it is not used as the primary comparison because both agents can introduce errors.
+
+
+OLMo-7B is the only model in which fine-tuning degrades semantic metrics (BERTScore 0.813$\to$0.798) despite improving perplexity (11.1$\to$9.0). Since the original ablation was conducted on the 1.2B model, the learning rate ($2{\times}10^{-4}$) and $\alpha{=}64$ may over-adapt the 7B model's larger parameter space, causing it to memorize surface patterns (lower perplexity) while losing semantic generalization. The targeted OLMo-7B sweep improves the fine-tuned BLEURT score to 0.245 but does not close the gap to the base model, confirming that hyperparameter transfer across model scales must be treated cautiously. A per-model ablation would likely resolve this.
 
 The GPT-4o-mini prompt baselines score highest in human evaluation (4.80--4.82), yet the fine-tuned Llama-3B surpasses GPT-4o-mini on automated metrics (0.854 BERTScore, 0.393 BLEURT), demonstrating that PEFT of small open models can exceed large proprietary alternatives.
 
@@ -436,19 +477,19 @@ The ablation reveals that $\alpha$ is the most impactful LoRA hyperparameter, wh
 
 \textbf{Implications.} Our results suggest that user-turn adaptation lies on a low-rank subspace that PEFT can capture with minimal data. This makes realistic user simulation accessible to research groups without large compute budgets, enabling continuous dialogue system evaluation, data augmentation for underrepresented domains, and stress-testing of deployed assistants---all without human participants.
 
-\textbf{Limitations.} The human evaluation relies on a single rater. The ablation was conducted on the smallest model only; OLMo's regression shows configurations may not transfer across scales. All experiments are English-only, and evaluation uses a single ground-truth user-turn reference. Moreover, user-turn prediction is evaluated independently for each utterance rather than in interactive multi-turn simulations, limiting conclusions about long-horizon conversational dynamics. 
+\textbf{Limitations.} The human evaluation relies on a single rater. The main ablation was conducted on the smallest model, and the OLMo follow-up shows configurations may not transfer across scales. All experiments are English-only, and evaluation uses a single ground-truth user-turn reference. The rollout evaluation is deliberately short and mostly reference-assisted, si it measures local error accumulation rather than long-horizon task success in fully interactive simulations.
 Future work should assess performance in closed-loop settings where errors may accumulate across turns. 
 Additionally, the study focuses exclusively on QLoRA; alternative parameter-efficient methods or reinforcement-based strategies may reveal different trade-offs between data efficiency and conversational realism.
 
 \section{Conclusion}
 
-We investigated QLoRA fine-tuning for next user turn prediction across four open-source LLMs (1.2B--7B). Training on 6{,}000 samples yields consistent improvements for three of four models, with Llama-3B achieving the best scores (0.854 BERTScore, 0.393 BLEURT). A blinded human evaluation ($n{=}369$) confirms a +0.34 average improvement overall, driven primarily by task-oriented dialogues (+0.45, $p < 10^{-8}$), while the observed gain for open-domain conversation (+0.21) was not statistically significant ($p = 0.12$). 
+We investigated QLoRA fine-tuning for next user turn prediction and short multi-step rollout stability across four open-source LLMs (1.2B--7B). Training on 6{,}000 samples yields consistent improvements for three of four models, with Llama-3B achieving the best single-turn scores (0.854 BERTScore, 0.393 BLEURT). A blinded human evaluation ($n{=}369$) confirms a +0.34 average improvement overall, driven primarily by task-oriented dialogues (+0.45, $p < 10^{-8}$), while the observed gain for open-domain conversation (+0.21) was not statistically significant ($p = 0.12$).
 
 These results demonstrate that realistic user-turn simulation can be achieved with limited data and modest computational resources (single GPU), without relying on large proprietary models. This makes it feasible for smaller research groups and enterprises to conduct cost-effective evaluation, stress testing, and iterative development of conversational systems. 
 
-While OLMo-7B showed degraded semantic metrics, our ablation suggests that careful per-model hyperparameter tuning is necessary, highlighting a limitation in scaling QLoRA uniformly across architectures. Evaluation was conducted on single-turn predictions in English, with a single human rater, which constrains generalization and multi-turn robustness.
+While OLMo-7B showed degraded semantic metrics, the targeted follow-up sweep confirms that careful per-model hyperparameter tuning is necessary, highlighting a limitation in scaling QLoRA uniformly across architectures. Evaluation was conducted on single-turn predictions in English, with a single human rater, and the rollout study is limited to short trajectories, which constrains claims about long-horizon robustness.
 
-Future work should explore multi-turn rollouts, multilingual data, domain-specific evaluation, and alternative parameter-efficient or reinforcement-learning methods to further enhance user-turn modeling and cross-domain generalization. 
+Future work should explore longer closed-loop rollouts, multilingual data, domain-specific task-success metrics, and alternative parameter-efficient or reinforcement-learning methods to further enhance user-turn modeling and cross-domain generalization.
 
 Overall, this study shows that low-rank fine-tuning provides a practical and reproducible path to improve user-turn prediction, bridging a key gap in conversational AI research.
 \bibliographystyle{IEEEtran}
