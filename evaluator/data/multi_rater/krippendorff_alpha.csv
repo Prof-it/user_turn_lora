@@ -1,0 +1,7 @@
+condition,category,krippendorff_alpha
+base,relevance,0.45778414599407546
+base,coherence,0.5533653068599986
+base,naturalness,0.6212740204319152
+fine_tuned,relevance,0.3869739296007929
+fine_tuned,coherence,0.3856203802785667
+fine_tuned,naturalness,0.4476738097001868

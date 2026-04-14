@@ -1,0 +1,17 @@
+{
+  "raters": [
+    "rater_1",
+    "rater_2",
+    "rater_3"
+  ],
+  "num_raters": 3,
+  "num_samples": 369,
+  "num_rater_rows": 1107,
+  "primary_conditions": [
+    "base",
+    "fine_tuned"
+  ],
+  "note": "Prompt columns are preserved in merged_ratings.csv but excluded from the multi-rater aggregate because rater exports used different prompt-baseline sources.",
+  "mean_pairwise_quadratic_weighted_kappa": 0.4786037679467041,
+  "mean_krippendorff_alpha": 0.47544859881092266
+}

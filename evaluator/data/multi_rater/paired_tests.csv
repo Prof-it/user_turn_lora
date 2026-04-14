@@ -1,0 +1,2 @@
+left,right,left_mean,right_mean,delta,wilcoxon_p,n_samples
+fine_tuned,base,4.6196928635953025,4.249623607347185,0.3700692562481181,3.1702096046117955e-12,369
