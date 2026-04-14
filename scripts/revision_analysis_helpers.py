@@ -104,13 +104,13 @@ def sweep_rows(outputs: Path, model_specs: list[tuple[str, str]]) -> pd.DataFram
     return pd.DataFrame(rows)
 
 
-def plot_rollout_by_step(outputs: Path, figures: Path, model_specs: list[tuple[str, str]]) -> None:
+def plot_rollout_by_step(outputs: Path, figures: Path, model_specs: list[tuple[str, str]], *, dataset: str = "all") -> None:
     series = []
     for model_dir, label in model_specs:
         ft_path = resolve_rollout_file(
             outputs,
             model_dir,
-            "rollout_reference_assisted_finetuned_sgd_steps.csv",
+            f"rollout_reference_assisted_finetuned_{dataset}_steps.csv",
             prefer_best_sweep=True,
         )
         if ft_path is not None:
@@ -122,7 +122,7 @@ def plot_rollout_by_step(outputs: Path, figures: Path, model_specs: list[tuple[s
         base_path = resolve_rollout_file(
             outputs,
             model_dir,
-            "rollout_reference_assisted_base_sgd_steps.csv",
+            f"rollout_reference_assisted_base_{dataset}_steps.csv",
         )
         if base_path is not None:
             df = pd.read_csv(base_path).groupby("step_index", as_index=False)["user_bertscore_f1"].mean()

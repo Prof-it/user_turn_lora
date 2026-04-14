@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "rollout_mode": "reference_assisted",
+    "dataset": "all",
+    "num_dialogues": 50,
+    "seed_pairs": 1,
+    "max_rollout_steps": 3,
+    "simulator": {
+      "model_name": "meta-llama/Llama-3.2-3B-Instruct",
+      "simulator_kind": "finetuned",
+      "num_few_shot_examples": 0
+    },
+    "assistant": null
+  },
+  "summary": {
+    "num_dialogues": 50,
+    "num_rollout_steps": 139,
+    "average_completed_steps": 2.78,
+    "user_bertscore_f1_macro": 0.8642601370811462,
+    "user_bleurt_macro": 0.3766467620035727,
+    "assistant_bertscore_f1_macro": null,
+    "assistant_bleurt_macro": null,
+    "empty_user_rate": 0.0,
+    "repeated_user_stop_rate": 0.0,
+    "collapse_rate": 0.0,
+    "user_bertscore_degradation": 0.012530889113744115,
+    "per_step": {
+      "user_bertscore_f1_macro": {
+        "0": 0.8683311998844147,
+        "1": 0.8667876172065735,
+        "2": 0.8558003107706705
+      },
+      "user_bleurt_macro": {
+        "0": 0.3678338214755058,
+        "1": 0.3725005029141903,
+        "2": 0.39326112048748213
+      }
+    }
+  }
+}

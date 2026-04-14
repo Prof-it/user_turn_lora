@@ -123,6 +123,7 @@ def compute_bleurt(
     """
     import os
     os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"  # Suppress TF warnings
+    checkpoint = os.environ.get("BLEURT_CHECKPOINT", checkpoint)
     
     import tensorflow as tf
     # Force TensorFlow to use CPU only to avoid GPU memory conflicts with PyTorch

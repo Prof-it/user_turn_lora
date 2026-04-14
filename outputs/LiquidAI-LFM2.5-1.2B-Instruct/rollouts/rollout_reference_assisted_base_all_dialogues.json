@@ -1,0 +1,402 @@
+[
+  {
+    "dialogue_id": "aa7c3f49343e097be66442288abd1dac",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 7,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00000",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 12,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "576e59afd66835b3797517cd1cd8a08b",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 3,
+    "completed_steps": 2,
+    "stop_reason": "dialogue_exhausted"
+  },
+  {
+    "dialogue_id": "1_00001",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 13,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "94e4291a6e14137c52e57fb86548e91f",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 3,
+    "completed_steps": 2,
+    "stop_reason": "dialogue_exhausted"
+  },
+  {
+    "dialogue_id": "1_00002",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "3ae27f2a38590dcb18027cf906e680c9",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 3,
+    "completed_steps": 2,
+    "stop_reason": "dialogue_exhausted"
+  },
+  {
+    "dialogue_id": "1_00003",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 8,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "920e334e72831962ebc64f6d490fa550",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 3,
+    "completed_steps": 2,
+    "stop_reason": "dialogue_exhausted"
+  },
+  {
+    "dialogue_id": "1_00004",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 10,
+    "completed_steps": 3,
+    "stop_reason": "empty_user"
+  },
+  {
+    "dialogue_id": "034d3607cf21cbc378e76b65f597d5a9",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 3,
+    "completed_steps": 2,
+    "stop_reason": "dialogue_exhausted"
+  },
+  {
+    "dialogue_id": "1_00005",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 8,
+    "completed_steps": 3,
+    "stop_reason": "empty_user"
+  },
+  {
+    "dialogue_id": "49f2df1f57031159e37e648404f84d0b",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 6,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00006",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "2bcddb7c5cf05e83e0341732a1361857",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 3,
+    "completed_steps": 2,
+    "stop_reason": "dialogue_exhausted"
+  },
+  {
+    "dialogue_id": "1_00007",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "empty_user"
+  },
+  {
+    "dialogue_id": "d257adf7aa7439c7a84e9a2b4665b580",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 4,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00008",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 13,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "8cd3a500d1d3a4f873587e60c85e0fd2",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 5,
+    "completed_steps": 1,
+    "stop_reason": "empty_user"
+  },
+  {
+    "dialogue_id": "1_00009",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "beba14d11b0bbb83dc2491d905fa0c90",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 3,
+    "completed_steps": 2,
+    "stop_reason": "dialogue_exhausted"
+  },
+  {
+    "dialogue_id": "1_00010",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "c44e503d8db7dec95b7e852e2abc3a38",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 4,
+    "completed_steps": 2,
+    "stop_reason": "empty_user"
+  },
+  {
+    "dialogue_id": "1_00011",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 12,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "0101919a0f86824c2e1db3301d828174",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 6,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00012",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "f3af4414c2421c311503181b6e6f75a6",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 3,
+    "completed_steps": 2,
+    "stop_reason": "dialogue_exhausted"
+  },
+  {
+    "dialogue_id": "1_00013",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 8,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "2203630c5af01c9b4a9a521ff84dcc7b",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 3,
+    "completed_steps": 2,
+    "stop_reason": "dialogue_exhausted"
+  },
+  {
+    "dialogue_id": "1_00014",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "ffe98a5fca1986aebd69905a6774d333",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 5,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00015",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 10,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "f7fe2dbfaa14e930fdf0cfb9aa6a87b5",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 4,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00016",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 7,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "63c1886ef9f2fe4cbd0e51d455aa2019",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 4,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00017",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 10,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "534630ac176820ad5edeead321696ce2",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 3,
+    "completed_steps": 2,
+    "stop_reason": "dialogue_exhausted"
+  },
+  {
+    "dialogue_id": "1_00018",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 1,
+    "stop_reason": "empty_user"
+  },
+  {
+    "dialogue_id": "fbd2fbd5b3ae46eb2d43e1517ea46a59",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 16,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00019",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "empty_user"
+  },
+  {
+    "dialogue_id": "1acdcdad76b79f051866989973152b87",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 5,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00020",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 10,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "47042f7ff92f01ae413cfaeabcdb6f7e",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 5,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00021",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 8,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "8da7b68f06d5ee77b141bbef51c47ec8",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 3,
+    "completed_steps": 2,
+    "stop_reason": "dialogue_exhausted"
+  },
+  {
+    "dialogue_id": "1_00022",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 8,
+    "completed_steps": 2,
+    "stop_reason": "empty_user"
+  },
+  {
+    "dialogue_id": "e61a357cafc6ff38046389aadd62a87f",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 9,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00023",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 10,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "cd80a7669840c63bbb8d7537c6585586",
+    "dataset": "allenai/WildChat-1M",
+    "service": "",
+    "num_pairs": 5,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  },
+  {
+    "dialogue_id": "1_00024",
+    "dataset": "GEM/schema_guided_dialog",
+    "service": "Restaurants_1",
+    "num_pairs": 7,
+    "completed_steps": 3,
+    "stop_reason": "max_steps"
+  }
+]

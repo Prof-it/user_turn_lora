@@ -4,7 +4,7 @@ Dialogue trajectory loaders for multi-turn rollout evaluation.
 
 from __future__ import annotations
 
-from typing import Dict, Iterable, List, Optional
+from typing import Callable, Dict, Iterable, List, Optional
 
 from datasets import load_dataset
 
@@ -169,6 +169,31 @@ def filter_dialogues_for_rollout(
     return filtered
 
 
+def _load_rollout_ready(
+    load_dialogues: Callable[[int], List[Dict]],
+    num_dialogues: int,
+    *,
+    seed_pairs: int,
+    min_rollout_steps: int,
+    max_rollout_steps: Optional[int] = None,
+) -> List[Dict]:
+    """Collect enough dialogues after applying rollout-length constraints."""
+    best: List[Dict] = []
+    for multiplier in (1, 2, 4, 8):
+        candidates = load_dialogues(num_dialogues * multiplier)
+        ready = filter_dialogues_for_rollout(
+            candidates,
+            seed_pairs=seed_pairs,
+            min_rollout_steps=min_rollout_steps,
+            max_rollout_steps=max_rollout_steps,
+        )
+        if len(ready) > len(best):
+            best = ready
+        if len(ready) >= num_dialogues:
+            return ready[:num_dialogues]
+    return best[:num_dialogues]
+
+
 def load_rollout_dialogues(
     dataset_name: str,
     *,
@@ -180,21 +205,35 @@ def load_rollout_dialogues(
 ) -> List[Dict]:
     """Load rollout-ready dialogues from one dataset or a balanced mix."""
     if dataset_name == "wildchat":
-        dialogues = load_wildchat_dialogues(num_dialogues)
-    elif dataset_name == "sgd":
-        dialogues = load_sgd_dialogues(num_dialogues)
-    elif dataset_name == "all":
-        wildchat_count = max(1, int(round(num_dialogues * wildchat_ratio)))
-        sgd_count = max(1, num_dialogues - wildchat_count)
-        dialogues = []
-        wc = filter_dialogues_for_rollout(
-            load_wildchat_dialogues(wildchat_count),
+        return _load_rollout_ready(
+            load_wildchat_dialogues,
+            num_dialogues,
             seed_pairs=seed_pairs,
             min_rollout_steps=min_rollout_steps,
             max_rollout_steps=max_rollout_steps,
         )
-        sgd = filter_dialogues_for_rollout(
-            load_sgd_dialogues(sgd_count),
+    elif dataset_name == "sgd":
+        return _load_rollout_ready(
+            load_sgd_dialogues,
+            num_dialogues,
+            seed_pairs=seed_pairs,
+            min_rollout_steps=min_rollout_steps,
+            max_rollout_steps=max_rollout_steps,
+        )
+    elif dataset_name == "all":
+        wildchat_count = max(1, int(round(num_dialogues * wildchat_ratio)))
+        sgd_count = max(1, num_dialogues - wildchat_count)
+        dialogues = []
+        wc = _load_rollout_ready(
+            load_wildchat_dialogues,
+            wildchat_count,
+            seed_pairs=seed_pairs,
+            min_rollout_steps=min_rollout_steps,
+            max_rollout_steps=max_rollout_steps,
+        )
+        sgd = _load_rollout_ready(
+            load_sgd_dialogues,
+            sgd_count,
             seed_pairs=seed_pairs,
             min_rollout_steps=min_rollout_steps,
             max_rollout_steps=max_rollout_steps,
@@ -207,10 +246,3 @@ def load_rollout_dialogues(
         return dialogues[:num_dialogues]
     else:
         raise ValueError(f"Unknown dataset_name: {dataset_name}")
-
-    return filter_dialogues_for_rollout(
-        dialogues,
-        seed_pairs=seed_pairs,
-        min_rollout_steps=min_rollout_steps,
-        max_rollout_steps=max_rollout_steps,
-    )[:num_dialogues]

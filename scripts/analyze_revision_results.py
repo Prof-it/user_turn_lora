@@ -6,6 +6,7 @@ Aggregate revision experiments into paper-ready tables and plots.
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -25,6 +26,7 @@ from revision_analysis_helpers import (
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUTS = ROOT / "outputs"
 FIGURES = ROOT / "paper" / "figures"
+ROLLOUT_DATASET = os.environ.get("REVISION_ROLLOUT_DATASET", "all")
 
 MODEL_SPECS = [
     ("LiquidAI-LFM2.5-1.2B-Instruct", "LiquidAI 1.2B"),
@@ -72,15 +74,15 @@ def _rollout_rows() -> pd.DataFrame:
     for model_dir, label in MODEL_SPECS:
         ft = _load_rollout_summary(
             model_dir,
-            "rollout_reference_assisted_finetuned_sgd_summary.json",
+            f"rollout_reference_assisted_finetuned_{ROLLOUT_DATASET}_summary.json",
             prefer_best_sweep=True,
         )
-        base = _load_rollout_summary(model_dir, "rollout_reference_assisted_base_sgd_summary.json")
+        base = _load_rollout_summary(model_dir, f"rollout_reference_assisted_base_{ROLLOUT_DATASET}_summary.json")
         free = None
         if model_dir == "LiquidAI-LFM2.5-1.2B-Instruct":
             free = _load_rollout_summary(
                 model_dir,
-                "rollout_free_assistant_finetuned_sgd_LiquidAI-LFM2.5-1.2B-Instruct_summary.json",
+                f"rollout_free_assistant_finetuned_{ROLLOUT_DATASET}_Qwen-Qwen2.5-3B-Instruct_summary.json",
             )
 
         row = {"model_dir": model_dir, "model": label}
@@ -278,7 +280,7 @@ def main() -> None:
     _save_table(df)
     _plot_rollout_quality(df)
     _plot_rollout_stability(df)
-    plot_rollout_by_step(OUTPUTS, FIGURES, MODEL_SPECS)
+    plot_rollout_by_step(OUTPUTS, FIGURES, MODEL_SPECS, dataset=ROLLOUT_DATASET)
     plot_prompt_fairness(FIGURES, df)
     if {"ref_base_bertscore", "ref_ft_bertscore"}.issubset(df.columns):
         _plot_liquidai_base_vs_ft(df)

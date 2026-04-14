@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "rollout_mode": "reference_assisted",
+    "dataset": "all",
+    "num_dialogues": 50,
+    "seed_pairs": 1,
+    "max_rollout_steps": 3,
+    "simulator": {
+      "model_name": "LiquidAI/LFM2.5-1.2B-Instruct",
+      "simulator_kind": "base",
+      "num_few_shot_examples": 0
+    },
+    "assistant": null
+  },
+  "summary": {
+    "num_dialogues": 50,
+    "num_rollout_steps": 133,
+    "average_completed_steps": 2.66,
+    "user_bertscore_f1_macro": 0.7554462552070618,
+    "user_bleurt_macro": 0.29815982635083954,
+    "assistant_bertscore_f1_macro": null,
+    "assistant_bleurt_macro": null,
+    "empty_user_rate": 0.06015037593984962,
+    "repeated_user_stop_rate": 0.0,
+    "collapse_rate": 0.16,
+    "user_bertscore_degradation": 0.0640382591315678,
+    "per_step": {
+      "user_bertscore_f1_macro": {
+        "0": 0.7760639560222625,
+        "1": 0.7656301371753216,
+        "2": 0.7120256968906947
+      },
+      "user_bleurt_macro": {
+        "0": 0.2752103690803051,
+        "1": 0.3070149472914636,
+        "2": 0.3188005994473185
+      }
+    }
+  }
+}

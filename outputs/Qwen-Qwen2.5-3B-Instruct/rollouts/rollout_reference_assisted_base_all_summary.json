@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "rollout_mode": "reference_assisted",
+    "dataset": "all",
+    "num_dialogues": 50,
+    "seed_pairs": 1,
+    "max_rollout_steps": 3,
+    "simulator": {
+      "model_name": "Qwen/Qwen2.5-3B-Instruct",
+      "simulator_kind": "base",
+      "num_few_shot_examples": 0
+    },
+    "assistant": null
+  },
+  "summary": {
+    "num_dialogues": 50,
+    "num_rollout_steps": 139,
+    "average_completed_steps": 2.78,
+    "user_bertscore_f1_macro": 0.8387138843536377,
+    "user_bleurt_macro": 0.35243557329229314,
+    "assistant_bertscore_f1_macro": null,
+    "assistant_bleurt_macro": null,
+    "empty_user_rate": 0.0,
+    "repeated_user_stop_rate": 0.0,
+    "collapse_rate": 0.0,
+    "user_bertscore_degradation": 0.01631029841227416,
+    "per_step": {
+      "user_bertscore_f1_macro": {
+        "0": 0.8446455132961274,
+        "1": 0.8408775699138641,
+        "2": 0.8283352148838532
+      },
+      "user_bleurt_macro": {
+        "0": 0.32709717988967896,
+        "1": 0.3783566191792488,
+        "2": 0.3516885829277528
+      }
+    }
+  }
+}
